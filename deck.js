@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611121030').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611121034').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -71,12 +71,12 @@ function render(reset=true){
   const tot=D.cards.filter(c=>c.t===st.kind).length, word=st.kind==='Unit'?'units':'events';
   const txt=`${r.length} of ${tot} ${word}`;$('count').textContent=txt;$('count2').textContent=txt;
   const shown=r.slice(0,limit);
-  $('list').innerHTML=shown.length?(view==='table'?table(shown):shown.map(card).join(''))+(r.length>limit?`<button class="more" type="button" id="more">Show ${r.length-limit} more</button>`:''):`<div class="empty">No card matches these filters. Loosen a filter or reset them.</div>`;
+  $('list').innerHTML=shown.length?(view==='table'?table(shown):shown.map(c=>card(c)).join(''))+(r.length>limit?`<button class="more" type="button" id="more">Show ${r.length-limit} more</button>`:''):`<div class="empty">No card matches these filters. Loosen a filter or reset them.</div>`;
   const m=$('more');if(m)m.onclick=()=>{limit+=100;render(false);};
 }
 function fmt(c){return esc(c.tx).split(' // ').map(p=>{const m=p.match(/^([^.]{2,32})\. (.*)$/);return c.t==='Unit'&&m?`<span class="ab">${m[1]}.</span> ${m[2]}`:p;}).join('<br>');}
 function abNames(c){return c.tx.split(' // ').map(p=>{const i=p.indexOf('. ');const nm=i>0&&i<34?p.slice(0,i):p;return `<span title="${esc(p)}">${esc(nm)}</span>`;}).join(', ');}
-function table(rows,kind=st.kind){
+function table(rows,kind=st.kind,fixed=false){
   const U=kind==='Unit', key=$('sort').value;
   const cols=U?[['Name','n'],['Faction','f'],['Class'],['Struct.'],['Cost','cost'],['Life','hp'],['Str.','str'],['Attack'],['Symbols'],['Abilities']]
               :[['Name','n'],['Faction','f'],['Class'],['Struct.'],['Cost','cost'],['Life','hp'],['Phase'],['Symbols'],['Effect']];
@@ -86,11 +86,11 @@ function table(rows,kind=st.kind){
   const body=rows.map(c=>{
     const sy=c.sy.map(s=>`<img src="img/symbols/${s}.png" alt="${s}" title="${s}">`).join('');
     const common=`<td class="nm">${esc(c.n)}</td><td class="fa">${esc(c.f)}</td><td class="cl">${c.c}</td><td class="ctr">${c.st?'<span class="yes">✓</span>':''}</td><td class="num">${v(c.cost)}</td><td class="num">${v(c.hp)}</td>`;
-    return `<tr data-card="${esc(c.n)}"${cnt(c.n)?' class="indeck"':''}><td class="dkc">${ctl(c)}</td>`+common+(U?`<td class="num">${v(c.str)}</td><td>${c.mr}</td>`:`<td class="cl">${esc((c.ph||'').replace(' Phase',''))}</td>`)+`<td class="sy">${sy}</td>`+`<td class="tx">${fmt(c)}</td></tr>`;}).join('');
+    return `<tr${fixed?'':` data-card="${esc(c.n)}"`}${fixed||cnt(c.n)?' class="indeck"':''}><td class="dkc">${fixed?'<span class="tag stu">Start</span>':ctl(c)}</td>`+common+(U?`<td class="num">${v(c.str)}</td><td>${c.mr}</td>`:`<td class="cl">${esc((c.ph||'').replace(' Phase',''))}</td>`)+`<td class="sy">${sy}</td>`+`<td class="tx">${fmt(c)}</td></tr>`;}).join('');
   return `<div class="tbl"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
 }
 function ctl(c){const k=cnt(c.n);return `<div class="dk${k?' on':''}" data-n="${esc(c.n)}"><button type="button" class="dm" aria-label="Remove one ${esc(c.n)}"${k?'':' disabled'}>−</button><span class="dn" aria-live="polite">${k}</span><button type="button" class="dp" aria-label="Add one ${esc(c.n)}">+</button></div>`;}
-function card(c){
+function card(c,fixed=false){
   const syms=c.sy.map(s=>`<img src="img/symbols/${s}.png" alt="${s}" title="${s}">`).join('');
   const stats=[];
   if(c.cost!==null)stats.push(`<span class="stat"><i>Cost</i>${c.cost}</span>`);
@@ -98,7 +98,7 @@ function card(c){
   if(c.str!==null)stats.push(`<span class="stat"><i>${c.mr==='Ranged'?'Ranged':'Melee'}</i>${c.str}</span>`);
   const tags=[];if(c.st)tags.push('Structure');if(c.lim)tags.push('Limited');if(c.ph)tags.push(c.ph);
   const tx=esc(c.tx).split(' // ').map(p=>{const m=p.match(/^([^.]{2,32})\. (.*)$/);return c.t==='Unit'&&m?`<span class="ab">${m[1]}.</span> ${m[2]}`:p;}).join('<br>');
-  return `<article class="card${cnt(c.n)?' indeck':''}" data-card="${esc(c.n)}"><div class="top"><div class="nm"><b>${esc(c.n)}</b><small>${esc(c.f)} · ${c.cls}</small></div><div class="syms">${syms}</div>${ctl(c)}</div>
+  return `<article class="card${fixed||cnt(c.n)?' indeck':''}"${fixed?'':` data-card="${esc(c.n)}"`}><div class="top"><div class="nm"><b>${esc(c.n)}</b><small>${esc(c.f)} · ${c.cls}</small></div><div class="syms">${syms}</div>${fixed?'<span class="tag stu">Starting unit</span>':ctl(c)}</div>
   <div class="stats">${stats.join('')}${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div><p class="tx">${tx}</p></article>`;
 }
 // ---- deck ----
@@ -114,21 +114,61 @@ function change(name,d){
   if(mode==='deck')renderDeck();
 }
 function total(){return Object.values(DECK).reduce((a,b)=>a+b,0);}
-function badge(){$('deckN').textContent=total();}
+function badge(){const s=Object.keys(DECK).map(n=>BY[n]).filter(c=>c.cls==='Summoner Unit');const st=s.length===1&&D.start[s[0].f]?D.start[s[0].f].length:0;$('deckN').textContent=total()+st;}
+function checks(cards){
+  const out=[];const add=(ok,txt)=>out.push({ok,txt});
+  const of=cls=>cards.filter(c=>c.cls===cls);
+  const sum=a=>a.reduce((x,c)=>x+DECK[c.n],0);
+  const S=of('Summoner Unit'), CH=of('Champion Unit'), CO=of('Common Unit'), EP=of('Epic Event'), SE=of('Standard Event');
+  const ns=sum(S);
+  add(ns===1, ns===1?`1 summoner (${S[0].n})`:`Exactly 1 summoner needed (has ${ns})`);
+  const summ=ns===1?S[0]:null;
+  const nc=sum(CH), dupC=CH.filter(c=>DECK[c.n]>1);
+  add(nc===3, nc===3?'3 champions':`Exactly 3 champions needed (has ${nc})`);
+  add(!dupC.length, dupC.length?`Each champion only once (${dupC.map(c=>c.n).join(', ')})`:'Each champion at most once');
+  const no=sum(CO), overC=CO.filter(c=>DECK[c.n]>4);
+  add(no===16, no===16?'16 commons (plus starting units)':`Exactly 16 commons needed, not counting starting units (has ${no})`);
+  add(!overC.length, overC.length?`At most 4 copies per common (${overC.map(c=>c.n).join(', ')})`:'At most 4 copies per common');
+  const nst=sum(SE), overS=SE.filter(c=>DECK[c.n]>2);
+  add(nst===6, nst===6?'6 standard events':`Exactly 6 standard events needed (has ${nst})`);
+  add(!overS.length, overS.length?`At most 2 copies per standard event (${overS.map(c=>c.n).join(', ')})`:'At most 2 copies per standard event');
+  const ne=sum(EP);
+  if(summ){
+    const own=D.cards.find(c=>c.cls==='Epic Event'&&c.f===summ.f);
+    const ok=ne===2&&EP.length===1&&EP[0]===own;
+    add(ok, ok?`2× ${own.n} (epic event of ${summ.n})`:`Epic events must be 2× ${own?own.n:'the summoner’s epic event'} (has ${ne}${EP.some(c=>c!==own)?', including another faction’s epic':''})`);
+    const sy=new Set(summ.sy);
+    const bad=cards.filter(c=>c.cls!=='Summoner Unit'&&c.cls!=='Epic Event'&&!c.sy.some(s=>sy.has(s)));
+    add(!bad.length, bad.length?`Cards without a matching deck symbol: ${bad.map(c=>c.n).join(', ')}`:'All cards share a deck symbol with the summoner');
+    const st=D.start[summ.f];
+    add(!!st, st?`Starting units: ${st.join(', ')} (added automatically)`:`Starting units for ${summ.f} are not in the data yet`);
+  }else{
+    add(ne===2,`Exactly 2 epic events needed (has ${ne})`);
+    add(false,'Deck symbols can only be checked once a summoner is chosen');
+  }
+  return {list:out,legal:out.every(x=>x.ok),summ};
+}
 function renderDeck(){
   const cards=Object.keys(DECK).map(n=>BY[n]);
   const tot=total();
-  $('deckTot').textContent=tot===1?'1 card':`${tot} cards`;
+  const chk=checks(cards);
+  const start=chk.summ&&D.start[chk.summ.f]?D.start[chk.summ.f].map(n=>BY[n]):[];
+  $('deckTot').innerHTML=`${tot+start.length} cards <span class="legal ${chk.legal?'ok':'bad'}">${chk.legal?'✓ Legal deck':'✗ Not legal yet'}</span>`;
   const per=ORDER.map(([cls,l])=>[l,cards.filter(c=>c.cls===cls).reduce((a,c)=>a+DECK[c.n],0)]);
+  if(start.length)per.splice(1,0,['Starting units',start.length]);
   $('deckSum').innerHTML=per.map(([l,n])=>`<span class="pill">${l} <b>${n}</b></span>`).join('');
+  $('deckChecks').innerHTML=chk.list.map(x=>`<li class="${x.ok?'ok':'bad'}"><span aria-hidden="true">${x.ok?'✓':'✗'}</span> ${esc(x.txt)}</li>`).join('')+`<li class="info"><span aria-hidden="true">ℹ</span> Gates (one 10-life, three 5-life) are part of every deck and not listed here.</li>`;
   if(!tot){$('count2').textContent='0 cards in deck';$('list').innerHTML=`<div class="empty">Your deck is empty. Switch to Search and use the + buttons to add cards.</div>`;return;}
-  $('count2').textContent=tot===1?'1 card in deck':`${tot} cards in deck`;
+  $('count2').textContent=`${tot+start.length} cards in deck`;
   const rank=c=>ORDER.findIndex(([cls])=>cls===c.cls);
-  $('list').innerHTML=[['Unit','Units'],['Event','Events']].map(([k,l])=>{
-    const g=sortCards(cards.filter(c=>c.t===k)).sort((a,b)=>rank(a)-rank(b));
-    if(!g.length)return '';
-    const n=g.reduce((a,c)=>a+DECK[c.n],0);
-    return `<section class="dsec"><h3 class="dgh"><span>${l}</span><span>${n}</span></h3>${view==='table'?table(g,k):g.map(card).join('')}</section>`;}).join('');
+  const sec=(l,n,body)=>`<section class="dsec"><h3 class="dgh"><span>${l}</span><span>${n}</span></h3>${body}</section>`;
+  let html='';
+  const units=sortCards(cards.filter(c=>c.t==='Unit')).sort((a,b)=>rank(a)-rank(b));
+  if(units.length)html+=sec('Units',units.reduce((a,c)=>a+DECK[c.n],0),view==='table'?table(units,'Unit'):units.map(c=>card(c)).join(''));
+  if(start.length)html+=sec('Starting units',start.length,view==='table'?table(start,'Unit',true):start.map(c=>card(c,true)).join(''));
+  const evs=sortCards(cards.filter(c=>c.t==='Event')).sort((a,b)=>rank(a)-rank(b));
+  if(evs.length)html+=sec('Events',evs.reduce((a,c)=>a+DECK[c.n],0),view==='table'?table(evs,'Event'):evs.map(c=>card(c)).join(''));
+  $('list').innerHTML=html;
 }
 function setMode(m){mode=m;
   $('tabs').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===m));
