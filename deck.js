@@ -1,12 +1,15 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611121039').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611121044').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
 const SP='start:';
-const cardOf=k=>BY[k.startsWith(SP)?k.slice(SP.length):k];
-for(const k of Object.keys(DECK))if(!cardOf(k)||!(DECK[k]>0))delete DECK[k];
+for(const k of Object.keys(DECK)){
+  if(k.startsWith(SP)&&BY[k.slice(SP.length)]&&DECK[k]>0){const n=k.slice(SP.length);DECK[n]=(DECK[n]||0)+DECK[k];}
+  if(k.startsWith(SP)||!BY[k]||!(DECK[k]>0))delete DECK[k];
+}
 const saveDeck=()=>{try{localStorage.setItem('sw-deck',JSON.stringify(DECK));}catch(e){}};
+saveDeck();
 const cnt=name=>DECK[name]||0;
 let mode='search';
 
@@ -100,21 +103,20 @@ function card(c,pre=''){
   if(c.str!==null)stats.push(`<span class="stat"><i>${c.mr==='Ranged'?'Ranged':'Melee'}</i>${c.str}</span>`);
   const tags=[];if(c.st)tags.push('Structure');if(c.lim)tags.push('Limited');if(c.ph)tags.push(c.ph);
   const tx=esc(c.tx).split(' // ').map(p=>{const m=p.match(/^([^.]{2,32})\. (.*)$/);return c.t==='Unit'&&m?`<span class="ab">${m[1]}.</span> ${m[2]}`:p;}).join('<br>');
-  return `<article class="card${cnt(pre+c.n)?' indeck':''}" data-card="${esc(pre+c.n)}"><div class="top"><div class="nm"><b>${esc(c.n)}</b><small>${esc(c.f)} · ${pre?'Starting unit':c.cls}</small></div><div class="syms">${syms}</div>${ctl(c,pre)}</div>
+  return `<article class="card${cnt(pre+c.n)?' indeck':''}" data-card="${esc(pre+c.n)}"><div class="top"><div class="nm"><b>${esc(c.n)}</b><small>${esc(c.f)} · ${c.cls}</small></div><div class="syms">${syms}</div>${ctl(c,pre)}</div>
   <div class="stats">${stats.join('')}${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div><p class="tx">${tx}</p></article>`;
 }
 // ---- deck ----
 const ORDER=[['Summoner Unit','Summoner'],['Champion Unit','Champions'],['Common Unit','Commons'],['Epic Event','Epic Events'],['Standard Event','Standard Events']];
-const isStart=k=>k.startsWith(SP);
 function change(key,d){
   const before=cnt(key), k=Math.max(0,before+d);
   setCount(key,k);
   // convenience: adding a summoner also adds its starting units and 2x its epic event (all removable)
-  const c=cardOf(key);
-  if(!isStart(key)&&c.cls==='Summoner Unit'&&before===0&&k>0){
+  const c=BY[key];
+  if(c.cls==='Summoner Unit'&&before===0&&k>0){
     const epic=D.cards.find(x=>x.cls==='Epic Event'&&x.f===c.f);
     if(epic&&!cnt(epic.n))setCount(epic.n,2);
-    if(!Object.keys(DECK).some(isStart))(D.start[c.f]||[]).forEach(n=>setCount(SP+n,cnt(SP+n)+1));
+    (D.start[c.f]||[]).forEach(n=>setCount(n,cnt(n)+1));
   }
   badge();
   if(mode==='deck')renderDeck();
@@ -128,7 +130,7 @@ function setCount(key,k){
 }
 function total(){return Object.values(DECK).reduce((a,b)=>a+b,0);}
 function badge(){$('deckN').textContent=total();}
-function checks(cards,starts){
+function checks(cards){
   const out=[];const add=(ok,txt)=>out.push({ok,txt});
   const of=cls=>cards.filter(c=>c.cls===cls);
   const sum=a=>a.reduce((x,c)=>x+DECK[c.n],0);
@@ -136,17 +138,26 @@ function checks(cards,starts){
   const ns=sum(S);
   add(ns===1, ns===1?`1 summoner (${S[0].n})`:`Exactly 1 summoner needed (has ${ns})`);
   const summ=ns===1?S[0]:null;
+  const start=summ&&D.start[summ.f]||[];
   const nc=sum(CH), dupC=CH.filter(c=>DECK[c.n]>1);
   add(nc===3, nc===3?'3 champions':`Exactly 3 champions needed (has ${nc})`);
   add(!dupC.length, dupC.length?`Each champion only once (${dupC.map(c=>c.n).join(', ')})`:'Each champion at most once');
-  const no=sum(CO), overC=CO.filter(c=>DECK[c.n]>4);
-  add(no===16, no===16?'16 commons (plus starting units)':`Exactly 16 commons needed, not counting starting units (has ${no})`);
-  add(!overC.length, overC.length?`At most 4 copies per common (${overC.map(c=>c.n).join(', ')})`:'At most 4 copies per common');
+  // starting units are ordinary commons; they come on top of the 16 and don't count toward the 4-copy limit
+  if(summ){
+    if(D.start[summ.f]){
+      const miss=start.filter(n=>!cnt(n));
+      add(!miss.length, miss.length?`Starting units missing: ${miss.join(', ')}`:`Starting units included: ${start.join(', ')}`);
+    }else add(false,`Starting units for ${summ.f} are not in the data yet`);
+  }
+  const no=sum(CO), want=16+start.length;
+  add(no===want, no===want?`${want} commons (16 + ${start.length} starting units)`:`Exactly ${want} commons needed${start.length?` (16 + ${start.length} starting units)`:''} (has ${no})`);
+  const lim=c=>4+(start.includes(c.n)?1:0);
+  const overC=CO.filter(c=>DECK[c.n]>lim(c));
+  add(!overC.length, overC.length?`At most 4 copies per common, plus the starting unit (${overC.map(c=>c.n).join(', ')})`:'At most 4 copies per common (starting units extra)');
   const nst=sum(SE), overS=SE.filter(c=>DECK[c.n]>2);
   add(nst===6, nst===6?'6 standard events':`Exactly 6 standard events needed (has ${nst})`);
   add(!overS.length, overS.length?`At most 2 copies per standard event (${overS.map(c=>c.n).join(', ')})`:'At most 2 copies per standard event');
   const ne=sum(EP);
-  const stTxt=starts.map(c=>`${DECK[SP+c.n]>1?DECK[SP+c.n]+'× ':''}${c.n}`).join(', ')||'none';
   if(summ){
     const own=D.cards.find(c=>c.cls==='Epic Event'&&c.f===summ.f);
     const ok=ne===2&&EP.length===1&&EP[0]===own;
@@ -154,11 +165,6 @@ function checks(cards,starts){
     const sy=new Set(summ.sy);
     const bad=cards.filter(c=>c.cls!=='Summoner Unit'&&c.cls!=='Epic Event'&&!c.sy.some(s=>sy.has(s)));
     add(!bad.length, bad.length?`Cards without a matching deck symbol: ${bad.map(c=>c.n).join(', ')}`:'All cards share a deck symbol with the summoner');
-    const want=D.start[summ.f];
-    if(want){
-      const ok2=starts.length===want.length&&want.every(n=>DECK[SP+n]===1);
-      add(ok2, ok2?`Starting units: ${want.join(', ')}`:`Starting units must be ${want.join(' and ')} (has ${stTxt})`);
-    }else add(false,`Starting units for ${summ.f} are not in the data yet (has ${stTxt})`);
   }else{
     add(ne===2,`Exactly 2 epic events needed (has ${ne})`);
     add(false,'Deck symbols and starting units can only be checked once a summoner is chosen');
@@ -166,26 +172,20 @@ function checks(cards,starts){
   return {list:out,legal:out.every(x=>x.ok),summ};
 }
 function renderDeck(){
-  const keys=Object.keys(DECK);
-  const cards=keys.filter(k=>!isStart(k)).map(k=>BY[k]);
-  const starts=keys.filter(isStart).map(cardOf);
+  const cards=Object.keys(DECK).map(k=>BY[k]);
   const tot=total();
-  const chk=checks(cards,starts);
+  const chk=checks(cards);
   $('deckTot').innerHTML=`${tot} cards <span class="legal ${chk.legal?'ok':'bad'}">${chk.legal?'✓ Legal deck':'✗ Not legal yet'}</span>`;
   const per=ORDER.map(([cls,l])=>[l,cards.filter(c=>c.cls===cls).reduce((a,c)=>a+DECK[c.n],0)]);
-  per.splice(1,0,['Starting units',starts.reduce((a,c)=>a+DECK[SP+c.n],0)]);
   $('deckSum').innerHTML=per.map(([l,n])=>`<span class="pill">${l} <b>${n}</b></span>`).join('');
   $('deckChecks').innerHTML=chk.list.map(x=>`<li class="${x.ok?'ok':'bad'}"><span aria-hidden="true">${x.ok?'✓':'✗'}</span> ${esc(x.txt)}</li>`).join('')+`<li class="info"><span aria-hidden="true">ℹ</span> Gates (one 10-life, three 5-life) are part of every deck and not listed here.</li>`;
   $('count2').textContent=tot===1?'1 card in deck':`${tot} cards in deck`;
-  // starting-unit rows: current ones plus the summoner's defaults (so removed ones can be added back)
-  const stRows=[...new Set([...starts.map(c=>c.n),...(chk.summ&&D.start[chk.summ.f]||[])])].map(n=>BY[n]);
-  if(!tot&&!stRows.length){$('list').innerHTML=`<div class="empty">Your deck is empty. Switch to Search and use the + buttons to add cards.</div>`;return;}
+  if(!tot){$('list').innerHTML=`<div class="empty">Your deck is empty. Switch to Search and use the + buttons to add cards.</div>`;return;}
   const rank=c=>ORDER.findIndex(([cls])=>cls===c.cls);
   const sec=(l,n,body)=>`<section class="dsec"><h3 class="dgh"><span>${l}</span><span>${n}</span></h3>${body}</section>`;
   let html='';
   const units=sortCards(cards.filter(c=>c.t==='Unit')).sort((a,b)=>rank(a)-rank(b));
   if(units.length)html+=sec('Units',units.reduce((a,c)=>a+DECK[c.n],0),view==='table'?table(units,'Unit'):units.map(c=>card(c)).join(''));
-  if(stRows.length)html+=sec('Starting units',starts.reduce((a,c)=>a+DECK[SP+c.n],0),view==='table'?table(stRows,'Unit',SP):stRows.map(c=>card(c,SP)).join(''));
   const evs=sortCards(cards.filter(c=>c.t==='Event')).sort((a,b)=>rank(a)-rank(b));
   if(evs.length)html+=sec('Events',evs.reduce((a,c)=>a+DECK[c.n],0),view==='table'?table(evs,'Event'):evs.map(c=>card(c)).join(''));
   $('list').innerHTML=html;

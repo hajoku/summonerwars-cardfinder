@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611121039').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611121044').then(r=>r.json());
 
 const $=id=>document.getElementById(id);
 const CLS={Unit:['Summoner Unit','Champion Unit','Common Unit'],Event:['Standard Event','Epic Event']};
