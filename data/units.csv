@@ -1,12 +1,12 @@
 ﻿Code,Faction,Name,Class,Structure,Limited,Copies,Cost,Life,Strength,Melee/Ranged,Deck Symbol,Groups,Abilities
 bdu1,Breakers,Tacullu,Summoner Unit,False,False,1,,13,3,Ranged,"Mercenary, Resolve, Air",Disruption,Mind Capture
-bdu2,Breakers,Gulldune,Champion Unit,False,False,1,6,6,4,Melee,Resolve,Extra Attack,Telepathic Command
-bdu3,Breakers,Gwalark,Champion Unit,False,False,1,6,8,3,Ranged,"Resolve, Air","Ally Support, Movement",Flight; Levitate
-bdu4,Breakers,Kalal,Champion Unit,False,False,1,7,8,4,Ranged,Air,"Push/Pull Enemies, Defense",Greater Push; Steadfast
-bdu5,Breakers,Deceiver,Common Unit,False,False,4,1,4,1,Ranged,Resolve,"Retaliation, Defense, Disruption",Stupefy; Engage
-bdu6,Breakers,Mind Witch,Common Unit,False,False,4,1,2,3,Ranged,Resolve,Ally Support,Mimic
-bdu7,Breakers,Wind Archer,Common Unit,False,False,4,2,2,4,Ranged,Air,"Attack Range, Movement",Swift; Far Shot
-bdu8,Breakers,Wind Mage,Common Unit,False,False,4,1,3,2,Ranged,Air,Push/Pull Enemies,Push
+bdu4,Breakers,Gulldune,Champion Unit,False,False,1,6,6,4,Melee,Resolve,Extra Attack,Telepathic Command
+bdu2,Breakers,Gwalark,Champion Unit,False,False,1,6,8,3,Ranged,"Resolve, Air","Ally Support, Movement",Flight; Levitate
+bdu3,Breakers,Kalal,Champion Unit,False,False,1,7,8,4,Ranged,Air,"Push/Pull Enemies, Defense",Greater Push; Steadfast
+bdu8,Breakers,Deceiver,Common Unit,False,False,4,1,4,1,Ranged,Resolve,"Retaliation, Defense, Disruption",Stupefy; Engage
+bdu7,Breakers,Mind Witch,Common Unit,False,False,4,1,2,3,Ranged,Resolve,Ally Support,Mimic
+bdu5,Breakers,Wind Archer,Common Unit,False,False,4,2,2,4,Ranged,Air,"Attack Range, Movement",Swift; Far Shot
+bdu6,Breakers,Wind Mage,Common Unit,False,False,4,1,3,2,Ranged,Air,Push/Pull Enemies,Push
 cgu1,Cave Goblins,Sneeks,Summoner Unit,False,False,1,,11,3,Melee,"Mercenary, Instinct, Cunning","Movement, Move Allies",Sly
 cgu2,Cave Goblins,Blarf,Champion Unit,False,False,1,0,6,0,Melee,"Cunning, Instinct","Strength, Boost",Blood Runes; Imbued Strength
 cgu3,Cave Goblins,Smeg,Champion Unit,False,False,1,0,4,2,Ranged,Cunning,"Extra Attack, Magic, Drawback",Magic Junkie; Relentless
@@ -54,8 +54,8 @@ dsu4,Drakesun Rebellion,Coal Inferno,Champion Unit,False,False,1,6,9,3,Melee,Fir
 dsu5,Drakesun Rebellion,Raze Lordslayer,Champion Unit,False,False,1,6,7,2,Melee,Air,Strength,Expert Rider; Overthrow
 dsu6,Drakesun Rebellion,Ashen Raider,Common Unit,False,False,4,1,3,2,Melee,Fire,Summoning,Raid
 dsu7,Drakesun Rebellion,Ember Outrider,Common Unit,False,False,4,1,2,2,Melee,Fire,Direct Damage,Quick Strike
-dsu8,Drakesun Rebellion,Rebel Dragoon,Common Unit,False,False,4,0,2,1,Melee,Air,Strength,Expert Rider
-dsu9,Drakesun Rebellion,Wyrmling,Common Unit,False,False,4,2,4,2,Ranged,Air,"Movement, Move Allies",Lesser Flight; Mount
+dsu9,Drakesun Rebellion,Rebel Dragoon,Common Unit,False,False,4,0,2,1,Melee,Air,Strength,Expert Rider
+dsu8,Drakesun Rebellion,Wyrmling,Common Unit,False,False,4,2,4,2,Ranged,Air,"Movement, Move Allies",Lesser Flight; Mount
 ecu1,Eternal Council,Praefectus Edia,Summoner Unit,False,False,1,,13,3,Ranged,"Mercenary, Resolve, Light",Boost,Kinetic Siphon; Persist
 ecu2,Eternal Council,Dominus Katu,Champion Unit,False,False,1,6,10,2,Ranged,Light,"Strength, Boost",Resolute; Imbued Strength
 ecu3,Eternal Council,Dominus Malunar,Champion Unit,False,False,1,5,8,3,Melee,Resolve,Disruption,Punish
@@ -105,9 +105,9 @@ ivu6,Isle Vekkid,Crab Knight,Common Unit,False,False,4,3,4,2,Melee,Water,"Streng
 ivu7,Isle Vekkid,Fleetfoot Fighter,Common Unit,False,False,4,1,2,2,Melee,Spirit,Movement,Swift; Fluid
 ivu8,Isle Vekkid,Seashard Sniper,Common Unit,False,False,4,1,3,2,Ranged,Water,Strength,Spot Weakness
 mru1,Mercenary,Ashia the Silent,Champion Unit,False,False,1,5,3,3,Melee,Mercenary,Defense,Elusive
-mru2,Mercenary,Blacksaber,Champion Unit,False,False,1,1,5,3,Melee,Mercenary,Drawback,Treacherous
-mru3,Mercenary,Brub,Champion Unit,False,False,1,5,7,1,Ranged,Mercenary,Extra Attack,Chain Shot
-mru4,Mercenary,Khan Queso,Champion Unit,False,False,1,4,6,2,Melee,Mercenary,"Direct Damage, Splash Damage",Plague; Spread
+mru3,Mercenary,Blacksaber,Champion Unit,False,False,1,1,5,3,Melee,Mercenary,Drawback,Treacherous
+mru4,Mercenary,Brub,Champion Unit,False,False,1,5,7,1,Ranged,Mercenary,Extra Attack,Chain Shot
+mru2,Mercenary,Khan Queso,Champion Unit,False,False,1,4,6,2,Melee,Mercenary,"Direct Damage, Splash Damage",Plague; Spread
 mru5,Mercenary,The Realm Walker,Champion Unit,False,False,1,4,5,3,Melee,Mercenary,Movement,Gatewalk
 mru6,Mercenary,Tress,Champion Unit,False,False,1,4,5,1,Melee,Mercenary,"Strength, Defense",Adapt; Overcome
 mru7,Mercenary,Veldimax the Great,Champion Unit,False,False,1,0,2,2,Ranged,Mercenary,"Magic, Drawback",Magician; Dubious
@@ -192,8 +192,8 @@ sau6,Skyspear Avians,Aerie Sage,Common Unit,False,False,4,1,3,1,Ranged,Spirit,"S
 sau7,Skyspear Avians,Aerie Sentinel,Common Unit,False,False,4,2,4,3,Melee,Air,Defense,Stalwart
 sau8,Skyspear Avians,Aerie Steward,Common Unit,False,False,4,2,5,2,Ranged,Spirit,Strength,Worthy
 scu1,Spectral Conclave,Feyrin,Summoner Unit,False,False,1,,11,3,Ranged,"Mercenary, Resolve, Cunning","Card Advantage, Summoning",Illusionist
-scu2,Spectral Conclave,Miro,Champion Unit,False,False,1,6,8,3,Ranged,"Resolve, Cunning",Extra Attack,Spectral Command
-scu3,Spectral Conclave,Sylke,Champion Unit,False,False,1,5,7,3,Ranged,Resolve,Defense,Dissipate
+scu3,Spectral Conclave,Miro,Champion Unit,False,False,1,6,8,3,Ranged,"Resolve, Cunning",Extra Attack,Spectral Command
+scu2,Spectral Conclave,Sylke,Champion Unit,False,False,1,5,7,3,Ranged,Resolve,Defense,Dissipate
 scu4,Spectral Conclave,Taelo,Champion Unit,False,False,1,5,6,3,Melee,Cunning,"Movement, Move Allies",Illusory Projection
 scu5,Spectral Conclave,Illusory Fox,Common Unit,False,False,4,0,2,2,Melee,Cunning,"Movement, Boost",Lesser Feint; Depart
 scu6,Spectral Conclave,Illusory Hawk,Common Unit,False,False,4,0,2,2,Ranged,Resolve,"Push/Pull Enemies, Boost",Lesser Repel; Depart
@@ -203,10 +203,10 @@ stu1,Storm Goblins,Thrak,Summoner Unit,False,False,1,,11,3,Ranged,"Mercenary, Ai
 stu2,Storm Goblins,Brakka,Champion Unit,False,False,1,4,6,3,Melee,Air,"Movement, Defense",Lightning Speed; Lightning Ward
 stu3,Storm Goblins,Ezzik,Champion Unit,False,False,1,4,6,3,Ranged,Cunning,Move Allies,Lightning Pull
 stu4,Storm Goblins,Skizz,Champion Unit,False,False,1,4,6,3,Ranged,"Air, Cunning",Direct Damage,Bottled Lightning
-stu5,Storm Goblins,Gust Strider,Common Unit,False,False,4,2,5,2,Melee,Air,"Movement, Defense",Tireless; Lightning Ward
-stu6,Storm Goblins,Kite Rider,Common Unit,False,False,4,1,4,1,Melee,Air,"Splash Damage, Movement",Flight; Lightning Strike
-stu7,Storm Goblins,Storm Witch,Common Unit,False,False,4,1,4,1,Ranged,Cunning,Strength,Lightning Wrath
-stu8,Storm Goblins,Voltswapper,Common Unit,False,False,4,0,1,1,Melee,Cunning,Movement,Lightning Step
+stu6,Storm Goblins,Gust Strider,Common Unit,False,False,4,2,5,2,Melee,Air,"Movement, Defense",Tireless; Lightning Ward
+stu7,Storm Goblins,Kite Rider,Common Unit,False,False,4,1,4,1,Melee,Air,"Splash Damage, Movement",Flight; Lightning Strike
+stu8,Storm Goblins,Storm Witch,Common Unit,False,False,4,1,4,1,Ranged,Cunning,Strength,Lightning Wrath
+stu5,Storm Goblins,Voltswapper,Common Unit,False,False,4,0,1,1,Melee,Cunning,Movement,Lightning Step
 sou1,Swamp Orcs,Mugglug,Summoner Unit,False,False,1,,13,3,Melee,"Mercenary, Water, Earth","Strength, Attack Range",Reap; Far Strike
 sou2,Swamp Orcs,Blub,Champion Unit,False,False,1,5,7,3,Melee,Water,"Strength, Movement",Rush; Aggressive Attack
 sou3,Swamp Orcs,Glurp,Champion Unit,False,False,1,6,7,3,Melee,"Water, Earth","Card Advantage, Summoning",Germinate
