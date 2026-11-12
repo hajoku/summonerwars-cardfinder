@@ -76,8 +76,8 @@ function render(reset=true){
 }
 function fmt(c){return esc(c.tx).split(' // ').map(p=>{const m=p.match(/^([^.]{2,32})\. (.*)$/);return c.t==='Unit'&&m?`<span class="ab">${m[1]}.</span> ${m[2]}`:p;}).join('<br>');}
 function abNames(c){return c.tx.split(' // ').map(p=>{const i=p.indexOf('. ');const nm=i>0&&i<34?p.slice(0,i):p;return `<span title="${esc(p)}">${esc(nm)}</span>`;}).join(', ');}
-function table(rows){
-  const U=st.kind==='Unit', key=$('sort').value;
+function table(rows,kind=st.kind){
+  const U=kind==='Unit', key=$('sort').value;
   const cols=U?[['Name','n'],['Faction','f'],['Class'],['Struct.'],['Cost','cost'],['Life','hp'],['Str.','str'],['Attack'],['Symbols'],['Abilities']]
               :[['Name','n'],['Faction','f'],['Class'],['Struct.'],['Cost','cost'],['Life','hp'],['Phase'],['Symbols'],['Effect']];
   cols.unshift(['Deck']);
@@ -121,20 +121,20 @@ function renderDeck(){
   $('deckTot').textContent=tot===1?'1 card':`${tot} cards`;
   const per=ORDER.map(([cls,l])=>[l,cards.filter(c=>c.cls===cls).reduce((a,c)=>a+DECK[c.n],0)]);
   $('deckSum').innerHTML=per.map(([l,n])=>`<span class="pill">${l} <b>${n}</b></span>`).join('');
-  const mine=cards.filter(c=>c.t===st.kind), word=st.kind==='Unit'?'units':'events';
-  const k=mine.reduce((a,c)=>a+DECK[c.n],0);
-  $('count2').textContent=`${k} ${word} in deck`;
-  if(!mine.length){$('list').innerHTML=`<div class="empty">${tot?`No ${word} in your deck yet.`:'Your deck is empty.'} Switch to Search and use the + buttons to add cards.</div>`;return;}
-  $('list').innerHTML=ORDER.filter(([cls])=>cls.endsWith(st.kind)).map(([cls,l])=>{
-    const g=sortCards(mine.filter(c=>c.cls===cls));
+  if(!tot){$('count2').textContent='0 cards in deck';$('list').innerHTML=`<div class="empty">Your deck is empty. Switch to Search and use the + buttons to add cards.</div>`;return;}
+  $('count2').textContent=tot===1?'1 card in deck':`${tot} cards in deck`;
+  const rank=c=>ORDER.findIndex(([cls])=>cls===c.cls);
+  $('list').innerHTML=[['Unit','Units'],['Event','Events']].map(([k,l])=>{
+    const g=sortCards(cards.filter(c=>c.t===k)).sort((a,b)=>rank(a)-rank(b));
     if(!g.length)return '';
     const n=g.reduce((a,c)=>a+DECK[c.n],0);
-    return `<section class="dsec"><h3 class="dgh"><span>${l}</span><span>${n}</span></h3>${view==='table'?table(g):g.map(card).join('')}</section>`;}).join('');
+    return `<section class="dsec"><h3 class="dgh"><span>${l}</span><span>${n}</span></h3>${view==='table'?table(g,k):g.map(card).join('')}</section>`;}).join('');
 }
 function setMode(m){mode=m;
   $('tabs').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===m));
   document.querySelector('.wrap').classList.toggle('deckmode',m==='deck');
   $('deckView').hidden=m!=='deck';
+  document.querySelector('#sort option[value="str"]').hidden=m==='deck'?false:st.kind!=='Unit';
   render(false);
   try{localStorage.setItem('sw-mode',m);}catch(e){}
 }
