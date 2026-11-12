@@ -10,8 +10,10 @@
 .tabs button[aria-pressed="true"] .badge{background:var(--stat-ink);color:var(--accent)}
 
 /* deck mode: hide search UI, deck view spans full width */
-.wrap.deckmode .filters,.wrap.deckmode main.list,.wrap.deckmode #kind,.wrap.deckmode #count{display:none}
-.wrap.deckmode .deckview{grid-column:1/-1}
+.wrap.deckmode .filters,.wrap.deckmode #count{display:none}
+.wrap.deckmode .deckview,.wrap.deckmode main.list{grid-column:1/-1}
+.dsec{display:grid;gap:10px;min-width:0}
+.dgh{margin:6px 0 0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:4px}
 
 /* +/- control */
 .dk{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg);flex:none}

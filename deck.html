@@ -59,6 +59,14 @@
     </div>
   </section>
 
+  <section class="deckview" id="deckView" hidden aria-label="Current deck">
+    <div class="dhead">
+      <div class="dtot" id="deckTot"></div>
+      <div class="dsum" id="deckSum"></div>
+      <div class="dact"><button type="button" class="reset" id="clearDeck">Clear deck</button></div>
+    </div>
+  </section>
+
   <main class="list">
     <div class="toolbar"><span class="count" id="count2"></span>
       <div class="tools"><div class="seg view" id="view"><button type="button" data-v="list" aria-pressed="true">List</button><button type="button" data-v="table" aria-pressed="false">Table</button></div>
@@ -66,14 +74,6 @@
         <select id="sort"><option value="n">Name</option><option value="f">Faction</option><option value="cost">Cost</option><option value="hp">Life</option><option value="str" data-for="Unit">Strength</option></select></label></div></div>
     <div class="list" id="list"></div>
   </main>
-  <section class="deckview" id="deckView" hidden aria-label="Current deck">
-    <div class="dhead">
-      <div class="dtot" id="deckTot"></div>
-      <div class="dsum" id="deckSum"></div>
-      <div class="dact"><button type="button" class="reset" id="clearDeck">Clear deck</button></div>
-    </div>
-    <div id="deckList"></div>
-  </section>
 
   <footer class="foot">
     <p>Unofficial fan-made reference. Not affiliated with or endorsed by Plaid Hat Games. Free and non-commercial.</p>

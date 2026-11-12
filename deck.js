@@ -6,6 +6,7 @@ try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={}
 for(const k of Object.keys(DECK))if(!BY[k]||!(DECK[k]>0))delete DECK[k];
 const saveDeck=()=>{try{localStorage.setItem('sw-deck',JSON.stringify(DECK));}catch(e){}};
 const cnt=name=>DECK[name]||0;
+let mode='search';
 
 const $=id=>document.getElementById(id);
 const CLS={Unit:['Summoner Unit','Champion Unit','Common Unit'],Event:['Standard Event','Epic Event']};
@@ -47,7 +48,10 @@ function setView(v){view=v;$('view').querySelectorAll('button').forEach(x=>x.set
 setView(view);
 $('view').addEventListener('click',e=>{const b=e.target.closest('button');if(b){setView(b.dataset.v);render(false);}});
 $('list').addEventListener('click',e=>{const h=e.target.closest('th[data-k]');if(h){$('sort').value=h.dataset.k;render(false);}});
+function sortCards(r){const key=$('sort').value,num=['cost','str','hp'].includes(key);
+  return r.sort((a,b)=>{if(num){const x=a[key]??-1,y=b[key]??-1;if(x!==y)return y-x;}else if(key==='f'&&a.f!==b.f)return a.f.localeCompare(b.f);return a.n.localeCompare(b.n);});}
 function render(reset=true){
+  if(mode==='deck'){renderDeck();return;}
   if(reset)limit=60;
   const q=$('q').value.trim().toLowerCase(), fac=$('fac').value, key=$('sort').value;
   const cm=n('costMin'),cM=n('costMax'),sm=n('strMin'),sM=n('strMax'),hm=n('hpMin'),hM=n('hpMax');
@@ -63,8 +67,7 @@ function render(reset=true){
     if(!inRange(c.cost,cm,cM)||!inRange(c.hp,hm,hM)||!inRange(c.str,sm,sM))return false;
     if(q&&!(c.n+' '+c.f+' '+c.tx+' '+c.cls+' '+(c.ph||'')).toLowerCase().includes(q))return false;
     return true;});
-  const num=['cost','str','hp'].includes(key);
-  r.sort((a,b)=>{if(num){const x=a[key]??-1,y=b[key]??-1;if(x!==y)return y-x;}else if(key==='f'&&a.f!==b.f)return a.f.localeCompare(b.f);return a.n.localeCompare(b.n);});
+  sortCards(r);
   const tot=D.cards.filter(c=>c.t===st.kind).length, word=st.kind==='Unit'?'units':'events';
   const txt=`${r.length} of ${tot} ${word}`;$('count').textContent=txt;$('count2').textContent=txt;
   const shown=r.slice(0,limit);
@@ -112,43 +115,33 @@ function change(name,d){
 }
 function total(){return Object.values(DECK).reduce((a,b)=>a+b,0);}
 function badge(){$('deckN').textContent=total();}
-const open=new Set();
 function renderDeck(){
   const cards=Object.keys(DECK).map(n=>BY[n]);
   const tot=total();
   $('deckTot').textContent=tot===1?'1 card':`${tot} cards`;
   const per=ORDER.map(([cls,l])=>[l,cards.filter(c=>c.cls===cls).reduce((a,c)=>a+DECK[c.n],0)]);
   $('deckSum').innerHTML=per.map(([l,n])=>`<span class="pill">${l} <b>${n}</b></span>`).join('');
-  if(!tot){$('deckList').innerHTML=`<div class="dempty">Your deck is empty. Switch to Search and use the + buttons to add cards.</div>`;return;}
-  $('deckList').innerHTML=ORDER.map(([cls,l])=>{
-    const g=cards.filter(c=>c.cls===cls).sort((a,b)=>(b.cost??-1)-(a.cost??-1)||a.n.localeCompare(b.n));
+  const mine=cards.filter(c=>c.t===st.kind), word=st.kind==='Unit'?'units':'events';
+  const k=mine.reduce((a,c)=>a+DECK[c.n],0);
+  $('count2').textContent=`${k} ${word} in deck`;
+  if(!mine.length){$('list').innerHTML=`<div class="empty">${tot?`No ${word} in your deck yet.`:'Your deck is empty.'} Switch to Search and use the + buttons to add cards.</div>`;return;}
+  $('list').innerHTML=ORDER.filter(([cls])=>cls.endsWith(st.kind)).map(([cls,l])=>{
+    const g=sortCards(mine.filter(c=>c.cls===cls));
     if(!g.length)return '';
     const n=g.reduce((a,c)=>a+DECK[c.n],0);
-    return `<section class="dgrp"><h3><span>${l}</span><span>${n}</span></h3>${g.map(drow).join('')}</section>`;}).join('');
+    return `<section class="dsec"><h3 class="dgh"><span>${l}</span><span>${n}</span></h3>${view==='table'?table(g):g.map(card).join('')}</section>`;}).join('');
 }
-function drow(c){
-  const st=[];
-  if(c.cost!==null)st.push(`<span class="stat"><i>Cost</i>${c.cost}</span>`);
-  if(c.hp!==null)st.push(`<span class="stat"><i>Life</i>${c.hp}</span>`);
-  if(c.str!==null)st.push(`<span class="stat"><i>${c.mr==='Ranged'?'Ranged':'Melee'}</i>${c.str}</span>`);
-  const sy=c.sy.map(s=>`<img src="img/symbols/${s}.png" alt="${s}" title="${s}">`).join('');
-  const isOpen=open.has(c.n);
-  return `<div class="drow">${ctl(c)}<div class="di"><button type="button" data-tx="${esc(c.n)}" aria-expanded="${isOpen}">${esc(c.n)}</button><small>${esc(c.f)}${c.ph?' · '+esc(c.ph):''}</small></div><div class="dr">${st.join('')}<span class="syms">${sy}</span></div>${isOpen?`<p class="dtx">${fmt(c)}</p>`:''}</div>`;
-}
-let mode='search';
 function setMode(m){mode=m;
   $('tabs').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===m));
   document.querySelector('.wrap').classList.toggle('deckmode',m==='deck');
   $('deckView').hidden=m!=='deck';
-  if(m==='deck')renderDeck();else render(false);
+  render(false);
   try{localStorage.setItem('sw-mode',m);}catch(e){}
 }
 $('tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b&&b.dataset.v!==mode)setMode(b.dataset.v);});
 document.addEventListener('click',e=>{
   const p=e.target.closest('.dk .dp'),m=e.target.closest('.dk .dm');
   if(p||m){change((p||m).closest('.dk').dataset.n,p?1:-1);return;}
-  const t=e.target.closest('[data-tx]');
-  if(t){const n=t.dataset.tx;open.has(n)?open.delete(n):open.add(n);renderDeck();}
 });
 let armed=null;
 $('clearDeck').addEventListener('click',()=>{
