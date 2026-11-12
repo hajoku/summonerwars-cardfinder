@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611121034').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611121037').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -104,14 +104,23 @@ function card(c,fixed=false){
 // ---- deck ----
 const ORDER=[['Summoner Unit','Summoner'],['Champion Unit','Champions'],['Common Unit','Commons'],['Epic Event','Epic Events'],['Standard Event','Standard Events']];
 function change(name,d){
-  const k=Math.max(0,cnt(name)+d);
+  const before=cnt(name), k=Math.max(0,before+d);
+  setCount(name,k);
+  // adding a summoner also adds 2 copies of its faction's epic event (can be removed again)
+  const c=BY[name];
+  if(c.cls==='Summoner Unit'&&before===0&&k>0){
+    const epic=D.cards.find(x=>x.cls==='Epic Event'&&x.f===c.f);
+    if(epic&&!cnt(epic.n))setCount(epic.n,2);
+  }
+  badge();
+  if(mode==='deck')renderDeck();
+}
+function setCount(name,k){
   if(k)DECK[name]=k;else delete DECK[name];
   saveDeck();
   document.querySelectorAll(`.dk[data-n="${CSS.escape(name)}"]`).forEach(el=>{
     el.classList.toggle('on',k>0);el.querySelector('.dn').textContent=k;el.querySelector('.dm').disabled=!k;});
   document.querySelectorAll(`[data-card="${CSS.escape(name)}"]`).forEach(el=>el.classList.toggle('indeck',k>0));
-  badge();
-  if(mode==='deck')renderDeck();
 }
 function total(){return Object.values(DECK).reduce((a,b)=>a+b,0);}
 function badge(){const s=Object.keys(DECK).map(n=>BY[n]).filter(c=>c.cls==='Summoner Unit');const st=s.length===1&&D.start[s[0].f]?D.start[s[0].f].length:0;$('deckN').textContent=total()+st;}
