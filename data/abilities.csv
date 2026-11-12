@@ -1,0 +1,319 @@
+﻿Ability,Text,Groups
+Adapt,This unit cannot be targeted by an attack more than once per turn.,Defense
+Aerie Captain,"While on the battlefield, this unit has the abilities of every friendly Aerie unit on the battlefield.",Ally Support
+Aerie Support,Friendly adjacent Aerie units have Strong.,Ally Support
+Aggressive Attack,This unit has +2 strength during the turn it was summoned.,Strength
+Agile,"After this unit moves or attacks, you may place it on a space that is diagonal to it.",Movement
+Ambush,"After summoning this unit, you may resolve an extra attack with it.",Extra Attack
+Analyze,"After this unit attacks an enemy unit, you may draw 1 card.",Card Advantage
+Annul,"At the start of your Move Phase, this unit may target a common within 3 spaces. The target has no abilities until the end of your turn.",Disruption
+Arcane Brew,"Once per turn, during your Magic Phase, this unit may target a friendly unit within 3 spaces. Move any number of boost from the target to this unit or from this unit to the target.",Boost
+Arcane Cry,"After a friendly unit within 3 spaces of this unit is destroyed, add boost to this unit equal to the number of boost that was on the destroyed unit.",Boost
+Arrow of Light,"Before this unit attacks, reveal and discard any number of distinct units from your hand. Gain 1 magic for each. This unit has +1 strength during that attack for each.","Strength, Magic"
+Assault,"When this unit attacks, Special = add 1 damage to each enemy card adjacent or diagonal to this unit other than the target of the attack.",Splash Damage
+Atone,"After this unit attacks and damages a card, add 1 damage to this unit.",Drawback
+Attend,This unit may be summoned adjacent to a friendly Arbiter unit.,Summoning
+Attract,"Once per turn, during your Attack Phase, this unit may target a friendly structure within 2 spaces. Place this unit adjacent to the target.","Movement, Structures"
+Augment,"Instead of attacking with this unit, you may spend 2 boost to resolve an extra attack with a friendly adjacent summoner or champion.",Extra Attack
+Backstab,"When this unit attacks a unit from behind, it has +2 strength.",Strength
+Backtrack,"At the end of your Attack Phase, if this unit attacked an enemy unit this turn, you may spend 1 boost to place this unit adjacent to your summoner.",Movement
+Blaze Step,"Once per turn, during your Attack Phase, you may either spend 1 boost from your summoner or add 1 damage to your summoner to place this unit adjacent to your summoner.",Movement
+Blood Begotten,"Before this unit attacks, you may add 1 damage to your summoner. If you do, this unit has +2 strength during that attack.",Strength
+Blood Bloom,"After each time a friendly unit within 2 spaces of this unit is destroyed, boost all friendly units that were within 2 spaces of this unit at that time.",Boost
+Blood Bond,"After this unit attacks an enemy unit, add boost to your summoner equal to the number of Special rolled.",Boost
+Blood Drain,"After this unit attacks and damages a unit, remove 1 damage from this unit.",Healing
+Blood Fervor,Friendly adjacent damaged units have +1 strength.,Ally Support
+Blood Fury,"Each time a unit is destroyed on your turn, boost this unit. At the end of your turn, remove 2 boost from this unit.",Boost
+Blood Hunger,"At the end of your Attack Phase, if this unit did not destroy a unit this turn, add 2 damage to this unit.",Drawback
+Blood Imbue,"Once per turn, during your Move Phase, this unit may target a friendly unit within 2 spaces. Boost the target, then add 1 damage to it.",Boost
+Blood Magic,"During your turn, after each time 1 or more damage is added to a friendly card within 3 spaces of this unit, boost this unit.",Boost
+Blood Runes,"At the start of your Attack Phase, either spend 1 magic to boost this unit or add 1 damage to this unit.",Boost
+Blood Rush,"After summoning this unit, you may add 1 damage to it to force it 1 space.",Movement
+Blood Thrall,"After this unit attacks and destroys an enemy unit, you may retrieve a Cultist unit from your discard pile, reveal it, and add it to your hand.",Card Advantage
+Blood Ward,"Each time 1 or more damage would be added to this unit, do not add more than 1 damage.",Defense
+Bolster,"After this unit moves, it may boost a friendly structure within 2 spaces.","Boost, Structures"
+Bonded,"This unit has the abilities of every friendly adjacent common. When this unit moves or is forced, its abilities do not change until the end of that move or force.",Ally Support
+Born of Fire,This unit may be summoned adjacent to a friendly Ember unit.,Summoning
+Bottled Lightning,"Once per turn, during your Attack Phase, this unit may target a friendly unit with a Lightning ability that is up to 4 straight spaces away. Add 1 damage to each unit between this unit and the target.",Direct Damage
+Bounty,"After this unit is destroyed, your opponent gains 3 magic.","On Death, Drawback"
+Bow Captain,"After this unit attacks an enemy unit, the next Ranged common that attacks this turn has +1 strength during that attack.",Ally Support
+Brimstorm Bond,"While this unit is adjacent to a friendly Brimstorm, this unit and that Brimstorm have +1 strength and cannot be forced.",Ally Support
+Bully,"After this unit moves, it may target any number of adjacent enemy units. Force each target 1 space.",Push/Pull Enemies
+Burn Hot,"After this unit moves, you may discard the top card of your draw pile. If you do, you may force it 1 or 2 spaces and it has +1 strength until the end of your turn.","Strength, Movement"
+Burning,"At the start of each player's turn, add 1 damage to every card with On Fire.",Direct Damage
+Burning Rage,"After this unit attacks an enemy card, if 0 or 1 Special were rolled, add 2 boost to this unit. Otherwise, remove 1 boost from it.",Boost
+Burst,"After this unit is destroyed, add 1 damage to each enemy card that was within 2 spaces of it.","Direct Damage, Splash Damage, On Death"
+Call Protection,"At the end of your Attack Phase, if this unit attacked an enemy card this turn, it may target a friendly unit. Place the target adjacent to this unit.",Move Allies
+Call Reinforcements,"After this unit attacks an enemy unit, you may summon a unit.",Summoning
+Call Seasons,"After summoning this unit, you may retrieve up to 1 each of a Spring, a Summer, and an Autumn event from your discard pile, reveal them, and add them to your hand.",Card Advantage
+Call to Arms,"After summoning this unit, you may target a friendly unit within 3 spaces of it. Force the target 1 space.",Move Allies
+Carry,"Before this unit moves, it may target any number of friendly adjacent units. After it moves, place each target adjacent to this unit.",Move Allies
+Chain Lightning,"Once per turn, during your Attack Phase, you may add 1 damage to every other unit that has Circuit.","Direct Damage, Splash Damage"
+Chain Shot,"After each time this unit attacks, if all dice rolled have a Ranged symbol, it may attack again.",Extra Attack
+Charge,"Instead of moving normally, this unit may move 1 to 4 clear straight spaces. If this unit moves 3 or more spaces in one direction, it has +1 strength until the end of your turn.","Strength, Movement"
+Charged,"After summoning this unit, boost it.",Boost
+Circuit,Adjacent units have Circuit.,Ally Support
+Citadel Champion,This unit has +1 strength for each friendly Citadel unit within 2 spaces.,Strength
+Climb,"When this unit moves, it may move 1 extra space and through structures.",Movement
+Cling,"When a friendly unit starts its move adjacent to this unit, after that move, you may place this unit adjacent to that unit.",Move Allies
+Cold Snap,Friendly structures have +1 life.,"Defense, Structures"
+Commander,Friendly units within 2 spaces of this unit have +1 strength.,Ally Support
+Commune with Spirits,"After this unit moves, either boost it or spend 1 boost to boost a friendly unit within 3 spaces.",Boost
+Compound,Friendly adjacent structures have Compound.,Structures
+Concoct,"After this unit attacks and destroys an enemy unit, you may retrieve a Potion event from your discard pile, reveal it, and add it to your hand.",Card Advantage
+Coordinated Shot,This unit may attack through friendly units.,Attack Range
+Coordinated Strike,"After this unit attacks an enemy card, you may spend 3 boost to resolve an extra attack with your summoner.",Extra Attack
+Corrupt,"At the end of your Move Phase, add 1 damage to this unit. If this unit is still in play, you may then target a friendly adjacent unit. Add 2 boost to the target.","Boost, Drawback"
+Counter Shot,"After a friendly unit within 3 spaces of this unit is attacked by an enemy unit, spend 1 boost, if able. If you do, add 1 damage to the attacking unit.",Retaliation
+Cover Fire,"After this unit attacks an enemy unit, this unit may target a friendly unit within 2 spaces. Force the target 1 or 2 spaces.",Move Allies
+Crash,"After this unit moves, add 1 damage to it and add 1 damage to an adjacent card, if able.","Direct Damage, Drawback"
+Cunning,"Once per turn, during your Move or Attack Phase, this unit may exchange places with an adjacent unit.","Movement, Push/Pull Enemies"
+Curse,"After this unit is destroyed, if it was within 2 spaces of the enemy summoner, add 1 damage to that summoner.","Direct Damage, On Death"
+Dark Pact,"After summoning this unit, either spend 1 boost from your summoner or add 1 damage to your summoner.",Drawback
+Dark Prophecy,"Each time a friendly unit leaves the battlefield, boost this unit.",Boost
+Death Pact,"After this unit is destroyed, add 1 damage to your summoner.","On Death, Drawback"
+Demonic Visage,"While this unit has 2 or fewer damage, adjacent enemy units have -1 strength.","Defense, Disruption"
+Depart,"After an enemy unit ends its move adjacent to this unit, discard this unit. If you do, boost your summoner.",Boost
+Deploy Troops,"During your turn, you may spend 1 boost from a friendly structure to target a friendly unit under it that has Take Post. Place the target adjacent to that structure.","Move Allies, Structures"
+Descend,"After this unit is destroyed, if its owner's draw pile is not empty, place this unit on the bottom of that draw pile.","Card Advantage, On Death"
+Design,"After summoning this unit, you may retrieve a structure or Upgrade event from your draw or discard pile, reveal it, and add it to your hand.","Card Advantage, Structures"
+Dictate,"After this unit moves or attacks, it may target a common within 2 spaces. Force the target 1 space.",Push/Pull Enemies
+Disciple,"Each time 1 or more boost is added to your summoner, add the same number of boost to this unit.",Boost
+Dissipate,"The first time a friendly Illusory unit that is adjacent or diagonal to this unit is destroyed by your opponent on a turn, your opponent does not gain magic.",Defense
+Dive In,This unit may be summoned on a space within 2 spaces of your summoner.,Summoning
+Divine Shield,"Each time a friendly Citadel unit within 3 spaces of this unit is targeted by an attack from an enemy, roll 2 dice. For each Special rolled, reduce the attacking unit's strength by 1 during that attack, to a minimum of 1.",Defense
+Dredge,"After summoning this unit, you may draw 1 card from the bottom of your draw pile.",Card Advantage
+Driver's Seat,"Once per turn, during your turn, if there is a unit under this card, you may force this card 1 or 2 spaces.","Movement, Structures"
+Driving Strike,"Once per turn, after this unit attacks, if there is a unit under it, you may resolve an extra attack with this unit.","Extra Attack, Structures"
+Dubious,"At the end of your attack phase, if this unit did not attack an enemy unit, discard this unit.",Drawback
+Ebb and Flow,"After this unit moves, you may spend 1 boost to either remove 1 damage from this unit or add 2 damage to an adjacent common or champion.","Direct Damage, Healing"
+Elusive,"If this unit is not adjacent to any cards at the start of a turn, commons and champions cannot target it with attacks during that turn.",Defense
+Embark,"During your turn, you may spend 1 boost to force this unit 1 space toward your opponent's back row.",Movement
+Empowered,This unit has +1 strength while it is boosted.,Strength
+Empowering Sacrifice,"After this unit is destroyed, boost your summoner.","Boost, On Death"
+Engage,"Each time an adjacent enemy unit moves or is forced away from this unit, add 1 damage to that enemy.",Retaliation
+Enlightening Sacrifice,"After this unit is destroyed, draw 1 card.","Card Advantage, On Death"
+Entwine,"After a friendly unit ends its move within 2 spaces of this unit, if this unit has 2 or fewer boost, boost this unit.",Boost
+Expand,"Once per turn, during your Build Phase, you may boost this card. When building a structure, you may spend 1 boost to build it adjacent to a friendly card with Compound.","Boost, Structures"
+Expert Rider,This unit has +2 strength if it was placed by Mount this turn.,Strength
+Exploit,"After this unit attacks an enemy unit, you may choose 1 card in your hand and place it on the bottom of your draw pile to target an adjacent unit. Add 1 damage to the target.",Direct Damage
+Faithful Servants,"At the start of your Magic Phase, you may summon a Cultist unit adjacent to this unit.",Summoning
+Far Shot,This unit may attack cards up to 4 clear straight spaces away.,Attack Range
+Far Strike,This unit may attack cards up to 2 clear straight spaces away.,Attack Range
+Favorable Winds,"After this unit moves, it may target a friendly unit. Force the target 1 or 2 spaces toward your opponent's back row.",Move Allies
+Feed the Eater,"At the end of your Attack Phase, if this unit did not destroy a unit this turn, either discard a friendly adjacent unit or discard this unit.",Drawback
+Feed the Pack,"During your turn, this unit may target a damaged friendly Wolf unit within 2 spaces. If it does, destroy this unit and remove 2 damage from the target.",Healing
+Feint,"After this unit attacks, you may force it 1 or 2 spaces.",Movement
+Fetch,"After this unit attacks and destroys an enemy unit, add 2 boost to your summoner.",Boost
+Fiery Summon,You may summon Ember units adjacent to this unit.,Summoning
+Final Form,"When paying costs to summon this unit, you must also destroy a friendly Fungal Beast that has 5 or more boost. Replace the destroyed unit with this unit.",Summoning
+Fire Breath,"This unit may attack through units. When it does, Special = add 1 damage to each unit between this unit and its target.","Attack Range, Splash Damage"
+Flesh Harvest,"After a friendly unit within 3 spaces of this unit is destroyed, boost this unit.",Boost
+Flight,"When this unit moves, it may move 1 extra space and through cards.",Movement
+Fluid,This unit may move through friendly units. Friendly units may attack through this unit.,Movement
+Follow Scent,"Once per turn, during your turn, you may force this unit 1 space toward the enemy summoner. If this unit is a Wolf unit, this ability is ""twice per turn"" instead.",Movement
+Footwork,"After this unit targets an adjacent enemy common for an attack, before rolling dice, it may exchange places with that enemy.","Movement, Push/Pull Enemies"
+Forbidden Knowledge,"After this unit moves, you may add 1 damage to either this unit or an adjacent gate to draw 1 card.",Card Advantage
+Forceful Attack,"After this unit attacks and damages a unit, you may force that unit 1 space away from this unit.",Push/Pull Enemies
+Forceful Shot,"After this unit attacks an enemy common or champion, you may force that enemy 1 space away from this unit.",Push/Pull Enemies
+Forged in Flames,"After building a structure adjacent or diagonal to this unit, add 1 damage to each enemy card adjacent to that structure.","Direct Damage, Structures"
+Form Up,"Once per turn, during your turn, this unit may target a friendly common or champion within 2 spaces. Place the target adjacent to this unit.",Move Allies
+Forsaken,"After this unit is destroyed, your opponent gains 1 magic.","On Death, Drawback"
+Frenzy,"After each time this unit attacks an adjacent enemy card, roll a die. If a Special is rolled, you may force this unit 1 space. If you do, this unit may resolve an extra attack against an adjacent enemy card.","Extra Attack, Movement"
+Frost Axe,"After this unit moves, you may either boost it or spend all of its boost to place it under a friendly common within 3 spaces. When that common attacks, Special = Melee.",Boost
+Frost Bolt,This unit has +1 strength for each adjacent friendly structure.,"Strength, Structures"
+Fungal Transformation,"After this unit is destroyed, if it had 3 or more boost, replace it with a Fungal Beast from your discard pile, if able.","Card Advantage, Summoning, On Death"
+Gang Up,"When this unit attacks, it has +1 strength for each other friendly unit adjacent to its target.",Strength
+Gate Breaker,You cannot build gates on your opponent's side of the battlefield.,Drawback
+Gatewalk,"Instead of moving this unit, if it is adjacent to a gate, you may place it adjacent to any other gate on the battlefield.",Movement
+Germinate,"After this unit attacks and destroys an enemy unit, you may replace the destroyed unit with a Vine Gate retrieved from your draw pile, hand or discard pile.","Card Advantage, Summoning"
+Gift of Life,"You may summon units adjacent to this unit. After you do, you may move 1 boost from this unit to the summoned unit.","Boost, Summoning"
+Greater Engage,"Each time an adjacent enemy unit moves or is forced away from this unit, add 2 damage to that enemy.",Retaliation
+Greater Frost Bolt,This unit has +1 strength for each friendly structure within 2 spaces.,"Strength, Structures"
+Greater Push,"After this unit attacks, or instead of attacking, this unit may target a common or champion within 3 spaces. Force the target 1 space.",Push/Pull Enemies
+Grow,"After this unit moves, boost it.",Boost
+Guarded,"The first time this unit is attacked on a turn, do not add more than 1 damage to it for that attack.",Defense
+Guardian,"After this unit attacks an enemy unit, you may place this unit adjacent to your summoner.",Movement
+Guidance,"At the start of your Summon Phase, draw 2 cards.",Card Advantage
+Heal,"Before this unit attacks a friendly common or champion, you may discard 1 card from your hand. If you do, instead of adding damage, remove a number of damage equal to the number of Melee and Special rolled.",Healing
+Healing Aura,"At the end of your Attack Phase, remove 1 damage from every common within 2 spaces of this unit.",Healing
+Heavy Mobile,"This card may move. After it moves, add 1 damage to it.","Movement, Structures, Drawback"
+Heist,"At the end of your turn, if this unit is in your opponent's back row, you may place it in your back row to gain 1 magic.",Magic
+Hero's Dance,"After your summoner moves or attacks, you may force this unit 1 space.",Movement
+Hibernate,"At the end of your Magic Phase, spend 1 boost. If you cannot, place this unit on the bottom of your draw pile.",Drawback
+Ice Shards,"At the end of your Build Phase, you may spend 1 boost to add 1 damage to each enemy unit adjacent to 1 or more structures you control.","Direct Damage, Structures"
+Ignite,Friendly adjacent Ember units have +1 strength.,Ally Support
+Illusionist,"During your turn, you may spend 1 boost to retrieve an Illusory unit from your discard pile and summon it adjacent to this unit.","Card Advantage, Summoning"
+Illusions,"After this unit moves, it may exchange places with a friendly structure.","Movement, Structures"
+Illusory Possession,"Once per turn, during your Attack Phase, you may spend 1 magic to target an enemy common within 2 clear straight spaces of this unit. Take control of the target until the end of the phase.","Magic, Disruption"
+Illusory Projection,"Once per turn, during your turn, this unit may exchange places with a friendly Illusory unit within 3 spaces.","Movement, Move Allies"
+Imbued Life,"This unit has +1 life for each boost it has, to a maximum of +5.",Defense
+Imbued Speed,"When this unit moves, it may move 1 extra space for each boost it has, to a maximum of +5.",Movement
+Imbued Spirit,"This unit has +1 strength and +1 life for each boost it has, to a maximum of +5.","Strength, Defense"
+Imbued Strength,"This unit has +1 strength for each boost it has, to a maximum of +5.",Strength
+Immobile,This unit cannot move.,Drawback
+Immolate,"After this unit is destroyed, add 1 damage to each enemy unit that was adjacent to it.","Direct Damage, Splash Damage, On Death"
+Inanimate,This unit cannot move or attack.,Drawback
+Inevitable Doom,"At the end of your Attack Phase, if this unit destroyed an enemy unit this turn, add 1 damage to the enemy summoner. Otherwise, add 1 damage to your summoner.","Direct Damage, Drawback"
+Infect,"After this unit destroys a unit, you may replace the destroyed unit with a Carrier unit from your discard pile.","Card Advantage, Summoning"
+Infiltrate,"At the end of your turn, if this unit is in your opponent's back row, you may place it in your back row to add 1 damage to the enemy summoner.",Direct Damage
+Influence,"When a friendly unit within 3 spaces of this unit rolls dice for an attack or ability during your turn, you may spend 1 boost to re-roll all of those dice.",Ally Support
+Inspire,"After this unit moves, boost each friendly adjacent unit.",Boost
+Inspired,This unit has +1 strength if you control 1 or more champions.,Strength
+Intel,"After this unit moves, you may draw 1 card.",Card Advantage
+Intercession,"After this unit attacks an enemy unit, draw cards equal to the number of Special rolled.",Card Advantage
+Invigorate,"After summoning this unit, you may remove 1 damage from an adjacent common.",Healing
+Invoke Fear,"After an enemy unit ends its move adjacent to this unit, your opponent must discard 1 card from their hand, if able.",Disruption
+Judgment,"After this unit moves, you may spend any number of boost to add the same number of damage to an adjacent common or champion.",Direct Damage
+Juiced,This unit has +1 strength for each friendly Potion event in play.,Strength
+Kinetic Siphon,"Once per turn, after this unit attacks an enemy unit or is attacked by an enemy unit, boost this unit.",Boost
+Launch,"After building or summoning this structure, you may target a non-summoner within 3 spaces of it. Add 1 damage to the target.","Direct Damage, Structures"
+Law of Atonement,All commons within 2 spaces of this unit have Atone.,Ally Support
+Law of Fortitude,All commons within 2 spaces of this unit have Tough.,"Ally Support, Defense"
+Law of Strength,All commons within 2 spaces of this unit have Strong.,Ally Support
+Lesser Feint,"After this unit attacks, you may force it 1 space.",Movement
+Lesser Flight,"When this unit moves, it may move through cards.",Movement
+Lesser Repel,"After summoning this unit, you may target an adjacent enemy common. Force the target 1 space.",Push/Pull Enemies
+Leverage,"While this unit is adjacent to a friendly structure, it may attack other cards that are adjacent to that structure.","Attack Range, Structures"
+Levitate,Any friendly common that starts its move within 2 spaces of this unit has Flight during that move.,Ally Support
+Life Drain,"Before this unit attacks, it may destroy a friendly unit within 2 spaces. If it does, during that attack, Special = Melee.",Strength
+Lightning Pull,"After this unit moves, it may target a friendly unit within 3 spaces. Place the target adjacent to this unit.",Move Allies
+Lightning Speed,"When this unit moves, it may move up to 2 extra spaces.",Movement
+Lightning Step,"Once per turn, during your Move Phase, if this unit has Circuit, you may place it adjacent to your summoner or any other common or champion that has Circuit.",Movement
+Lightning Strike,"When this unit attacks, Special = add 1 damage to each common and champion adjacent to its target.",Splash Damage
+Lightning Ward,Ignore damage that would be added to this unit from Lightning abilities.,Defense
+Lightning Wrath,This unit has +2 strength while it is damaged.,Strength
+Living Gate,This card is a gate.,"Summoning, Structures"
+Lunge,"This unit may attack through friendly units. After it attacks, place it adjacent to the target of the attack, if able.","Attack Range, Movement"
+Magic Junkie,"At the end of your turn, either spend 1 magic or discard this unit.","Magic, Drawback"
+Magician,"After this unit attacks, if 1 or more Special were rolled, gain 1 magic.",Magic
+Malleable,"Once per turn, during your turn, you may choose a Mutant unit in your hand and place it under this unit. If you do, remove 1 damage from this unit. This unit has +1 strength for each Mutant unit under it, and has the base abilities of those units.",Healing
+Master Builder,You may build structures diagonal to this unit.,Structures
+Master Plan,"At the start of your Build Phase, you may draw 1 card from the bottom of your draw pile.",Card Advantage
+Master of the Art,"At the end of your Summon Phase, this unit may target a friendly unit. This unit has the target's abilities until the end of your turn.",Ally Support
+Mastermind,This unit has +1 strength for every 2 cards you have in your hand.,Strength
+Mend Structure,"After placing this unit under a friendly structure, remove 1 damage from that structure.","Healing, Structures"
+Mimic,"At the start of your Move Phase, this unit may target a common within 3 spaces. This unit has the target's abilities until the end of your turn.",Ally Support
+Mind Capture,"When this unit attacks an enemy unit, if the damage added would be enough to destroy the target, you may instead ignore that damage and take control of the target.",Disruption
+Mobile Structure,This card may move.,"Movement, Structures"
+Momentum,"Once per turn, after this unit attacks an enemy unit, boost this unit.",Boost
+Morph,"After paying costs to summon this unit, you may return a friendly common or champion without Morph to its owner's hand and replace it with this unit.",Summoning
+Mount,"Before this unit moves, it may target a friendly adjacent unit without Mount. After it moves, place the target adjacent to this unit.",Move Allies
+Mutagist,"During your turn, you may spend 3 boost to retrieve a Mutant unit from your discard pile, reveal it, and add it to your hand.",Card Advantage
+Mutate,"When paying costs to summon this unit, you must also destroy a friendly Cultist or Mutant unit. Replace the destroyed unit with this unit.",Summoning
+On Fire,Adjacent cards have On Fire.,Direct Damage
+Overcome,"When this unit attacks an adjacent unit, it has its strength increased by the base strength of its target.",Strength
+Overthrow,This unit has +2 strength when attacking an adjacent champion or summoner.,Strength
+Pack Call,"After summoning this unit, it may target a friendly Wolf common within 2 spaces. Place the target adjacent to this unit.",Move Allies
+Pack Leader,"After summoning this unit, if it is a Wolf unit, retrieve up to two 0-cost common units from your discard pile and summon them adjacent to this unit.","Card Advantage, Summoning"
+Pack Strength,"When this unit attacks an enemy unit, it has +1 strength for each other friendly Wolf unit adjacent or diagonal to the target.",Strength
+Parasitic,"At the end of your Attack Phase, either spend 1 boost or add 1 damage to this unit.",Drawback
+Peer,"After summoning this unit, you may draw 1 card. Then, you may discard 1 card from your hand to gain 1 magic.","Card Advantage, Magic"
+Persist,"When you would discard an active event, you may instead spend 2 boost to keep that event in play.",Boost
+Piercing Frost,Friendly adjacent Frost units have +1 strength.,Ally Support
+Piercing Light,This unit may attack through units during the turn it was summoned.,Attack Range
+Plague,"After this unit moves, roll 2 dice. Add damage to each adjacent unit equal to the number of Special rolled.","Direct Damage, Splash Damage"
+Post Commander,"While this unit is under a structure, that structure has this effect: Friendly adjacent commons have +1 strength.","Ally Support, Structures"
+Preemptive Fire,"At the start of your opponent's Attack Phase, add 1 damage to each enemy unit within 3 clear straight spaces of this unit.","Direct Damage, Retaliation"
+Prepare,"Instead of moving this unit, you may boost it.",Boost
+Prey,"Once per turn, during your Attack Phase, you may spend 1 boost to place this unit adjacent to a damaged enemy common or champion.",Movement
+Primed,This unit has +1 strength the first time it attacks during the turn it was built or summoned.,Strength
+Protect,"When an adjacent enemy attacks, the target of that attack must be a unit with the Protect ability.",Defense
+Protector,This unit may be summoned adjacent to your summoner.,Summoning
+Prune,"When 1 or more damage would be added to your summoner, if it is adjacent to any friendly units with Prune, instead destroy those units.",Defense
+Psychic Field,"After this unit or a friendly unit within 2 spaces is attacked and damaged by an enemy unit, boost this unit.",Boost
+Psychic Strike,"This unit may attack commons within a number of spaces equal to the number of boost it has, to a maximum of 5 spaces away.",Attack Range
+Punish,"After an enemy unit is summoned within 2 spaces of this unit, your opponent must discard 1 card from their hand, if able.",Disruption
+Push,"After this unit attacks, or instead of attacking, this unit may target a common or champion within 2 spaces. Force the target 1 space.",Push/Pull Enemies
+Quick Shot,"After this unit moves, it may target a unit within 3 clear straight spaces. Add 1 damage to the target.",Direct Damage
+Quick Strike,"After this unit moves, it may target a unit that is adjacent or diagonal to it. Add 1 damage to the target.",Direct Damage
+Radiant Shot,This unit has +1 strength for every 2 magic you have.,"Strength, Magic"
+Raid,This unit may be summoned adjacent to a friendly unit that is on your opponent's side of the battlefield.,Summoning
+Raise the Dead,"Once per turn, during your Summon Phase, you may add 2 damage to this unit to retrieve an Undead unit from your discard pile and place it adjacent to this unit.","Card Advantage, Summoning"
+Ram,"At the start of your Move Phase, this unit may target an adjacent enemy unit. Force the target 1 space. If you do, add 1 damage to it.","Direct Damage, Push/Pull Enemies"
+Rampage,"Twice per turn, after this unit attacks, if it is a Wolf unit, force it 1 space toward the enemy summoner, if able. If you do, resolve an extra attack with this unit, if able.","Extra Attack, Movement"
+Reach,This unit may attack cards that are diagonal to it or up to 2 clear straight spaces away.,Attack Range
+Reap,"Before this unit attacks, it may spend 1 boost from any number of friendly units within 3 spaces. This unit has +1 strength during that attack for each boost spent.",Strength
+Recalibrate,"After this unit moves, it may target a friendly adjacent structure. Force the target 1 space.","Move Allies, Structures"
+Redeploy,"After this unit moves, it may target a friendly adjacent structure with 5 or fewer base life. Place the target on the bottom of its owner's draw pile.",Structures
+Refill,"After this unit attacks an enemy unit, it may boost a friendly active event or a friendly unit within 3 spaces.",Boost
+Regenerate,"At the end of your turn, you may spend 1 magic to remove 2 damage from this unit.","Healing, Magic"
+Relentless,You may choose this unit as an extra attacking unit during your Attack Phase.,Extra Attack
+Relocate,"After this unit moves, it may target a friendly adjacent structure. Place the target adjacent to this unit.","Move Allies, Structures"
+Rend the Veil,"Once per turn, after this unit moves, if it is adjacent to a damaged enemy gate, you may place a friendly common adjacent to that gate.",Summoning
+Repair,"After this unit destroys an enemy card, remove 1 damage from each friendly structure within 3 spaces of this unit.","Healing, Structures"
+Resolute,"At the end of your turn, if your draw pile is empty, boost this unit.",Boost
+Restore,"After this unit moves, if it is unboosted, boost it.",Boost
+Return to Shadow,"During your turn, you may spend 2 boost to target a friendly unit within 3 spaces of this unit. Return the target to your hand.","Move Allies, Card Advantage"
+Return to Soil,"After this unit is destroyed, if it was boosted, boost your summoner.","Boost, On Death"
+Rig Explosives,"During your turn, you may place this unit under an adjacent card. After that card is destroyed, add 1 damage to each card that was adjacent to it.",Direct Damage
+Riposte,"After this unit is attacked by an adjacent enemy unit, if this unit is still in play, add 1 damage to that enemy.",Retaliation
+Rooted,"Unless your draw pile is empty, this unit has -1 strength and cannot move or be forced.",Drawback
+Rupture,"At the end of your Magic Phase, if this unit has 3 or more boost, destroy it.","On Death, Drawback"
+Rush,"After summoning this unit, you may force it 1 space.",Movement
+Salvage,"After this unit destroys an enemy card on your turn, you may retrieve a structure from your discard pile, reveal it, and place it on top of your draw pile.","Card Advantage, Structures"
+Save the Queen,Friendly adjacent units cannot be attacked through or forced.,Defense
+Scurry,"After each time this unit enters the battlefield, you may force it 1 space.",Movement
+Shadow Summon,"When summoning this unit, target a friendly card that does not have Shadow Summon. Place this unit adjacent to the target. Add 1 damage to the target.",Summoning
+Shockwave,"After this unit attacks and destroys a card, add 1 damage to each other card that was adjacent to the destroyed card.",Splash Damage
+Shove,"After this unit attacks an adjacent enemy common or champion, you may force that enemy 1 space.",Push/Pull Enemies
+Slow,This unit moves 1 fewer space.,Drawback
+Sluggish,"When this unit is being attacked, Special = add 1 extra damage to this unit.",Drawback
+Sly,"Once per turn, during your Attack Phase, this unit may exchange places with a friendly 0 cost unit.","Movement, Move Allies"
+Smashing Strike,"After this unit attacks and destroys an enemy card, boost this unit.",Boost
+Smelt Down,"After this unit attacks an enemy card, it may target a friendly structure within 3 spaces. Place the target on the bottom of its owner's draw pile.",Structures
+Sneak Attack,This unit may attack cards that are diagonal to it.,Attack Range
+Soul Shift,"After a unit within 3 spaces of this unit is destroyed during your turn, you may replace the destroyed unit with this unit.",Summoning
+Soulless,Do not gain magic when this unit destroys an enemy unit.,"Disruption, Drawback"
+Sow Seeds,"After this unit attacks an enemy unit, it may boost a friendly unit within 3 spaces.",Boost
+Spawn,"You may summon commons adjacent to this unit. After summoning a common adjacent to this unit, add 1 damage to this unit.","Summoning, Drawback"
+Spectral Command,"After this unit attacks an enemy unit, this unit may target a friendly Illusory common within 3 spaces. The target resolves an extra attack.",Extra Attack
+Spirit Bond,"After this unit moves, you may target a friendly unit within 3 spaces. Boost the target and move all boost from this unit to the target.",Boost
+Spirit Leap,"After this unit moves, you may place it adjacent to a friendly unit within 2 spaces.",Movement
+Splatter,"After this unit moves, add 1 damage to each enemy unit within 2 clear straight spaces.","Direct Damage, Splash Damage"
+Spot Weakness,This unit has +1 strength when it attacks a unit that was already attacked this turn.,Strength
+Spread,Any unit that starts its move adjacent to this unit has Plague until the end of the turn.,Direct Damage
+Squadron,This unit has +1 strength for each friendly adjacent boosted card.,Strength
+Stalwart,"This unit cannot be forced, moved through, or attacked through by effects on cards your opponent controls.",Defense
+Steadfast,This unit cannot be forced.,Defense
+Steady Shot,"If this unit moved 1 or fewer spaces this turn, it may attack through units.",Attack Range
+Store,"After this unit attacks an enemy unit, this unit may boost a friendly structure within 3 spaces.","Boost, Structures"
+Strong,This unit has +1 strength.,Strength
+Structural Shift,"After this unit moves, it may target a friendly structure within 3 spaces. Force the target 1 space.","Move Allies, Structures"
+Stupefy,"When an adjacent enemy attacks any card, if 1 or more Special are rolled, the attack adds 1 less damage.","Defense, Disruption"
+Sudden Strike,"After summoning this unit, you may add 1 damage to an adjacent enemy unit.",Direct Damage
+Summoned by Fire,"When paying costs to summon this unit, you must also destroy a friendly unit. Replace the destroyed unit with this unit.",Summoning
+Swift,"When this unit moves, it may move 1 extra space.",Movement
+Swift Shot,"Once per turn, after this unit attacks, you may spend 1 boost to resolve an extra attack with it.",Extra Attack
+Take Post,"At the end of your Build and Attack Phases, you may place this unit under a friendly adjacent structure.",Structures
+Take to the Skies,"At the start of your Move Phase, friendly Aerie units within 2 spaces of this unit gain Flight until the end of your turn.",Ally Support
+Telepathic Command,"After this unit attacks an enemy card, this unit may target a friendly common within 3 spaces. The target resolves an extra attack.",Extra Attack
+Tempo,"After this unit attacks an enemy unit, it may target a friendly adjacent unit. Place this unit adjacent to the target.",Movement
+The Citadel's Might,"After this unit attacks an enemy unit, if there are 1 or more friendly Citadel units on the battlefield, you may retrieve a Citadel unit from your discard pile, reveal it, and add it to your hand.",Card Advantage
+Tidal Shift,"After this unit attacks an enemy card, you may force that card 1 space toward your opponent's back row. Then, you may force this unit 1 space toward your opponent's back row.","Movement, Push/Pull Enemies"
+Tireless,You may choose this unit as an extra moving unit during your Move Phase.,Movement
+Top Wrench,"Once per turn, during your Build Phase, you may discard the top card of your draw pile to retrieve an Upgrade event or a Wrench unit from your discard pile, reveal it, and add it to your hand.","Card Advantage, Structures"
+Tough,"The first time this unit is attacked on a turn, that attack adds 1 less damage.",Defense
+Trample,"When this unit moves, it may move through commons. After this unit moves, add 1 damage to each common it moved through.","Direct Damage, Movement"
+Transfer,"After this unit moves, it may target 1 or 2 friendly units within 2 spaces. Move any number of boost either from this unit to one target, or from one target to the other.",Boost
+Treacherous,"At the start of your opponent's turn, they may spend 2 magic to take control of this unit.",Drawback
+Turbo,"Once per turn, during your Build Phase, you may force this unit 1 to 3 spaces.",Movement
+Undying Devotion,"After this unit is destroyed, roll a die. If a Special is rolled and this unit is in a discard pile, add it to its owner's hand.","Card Advantage, On Death"
+Unwieldy Magic,"When this unit attacks, if 0 Special are rolled, no damage is added to the target.",Drawback
+Versatile,This unit may attack instead of moving and may move instead of attacking.,Extra Attack
+Vile Oration,Friendly 0-cost units within 2 spaces of this unit have +1 strength.,Ally Support
+Vine Grab,"After this unit moves, you may spend 1 boost to target an enemy common within 3 spaces. Force the target 1 space toward this unit.",Push/Pull Enemies
+Vine Pull,"Once per turn, during your Attack Phase, you may spend 1 boost to target a friendly unit or enemy common within 3 spaces of this unit. Force the target 1 space toward this unit.","Move Allies, Push/Pull Enemies"
+Warn,"After this unit attacks an enemy unit, you may choose 1 card in your hand and place it on the bottom of your draw pile to force your summoner 1 space.",Move Allies
+Wax & Wane,"At the start of your turn, boost this unit. At the end of your opponent's turn, if this unit has 3 or more boost, remove all boost and 1 damage from it. While this unit has 3 or more boost, it is a Wolf unit, has +3 strength, and when it moves, it may move 1 extra space.","Healing, Boost"
+Well-Prepared,"After summoning this unit, add 2 boost to it.",Boost
+Well-Traveled,"This unit has +1 strength for each friendly unit on your opponent's side of the battlefield, to a maximum of +3.",Strength
+Wild Strike,"When this unit attacks, add 1 damage to the target for each Special rolled, instead of each Melee symbol rolled.",Strength
+Wild Swing,"When this unit attacks, Special = add 1 damage to each card adjacent to this unit other than the target of the attack.",Splash Damage
+Wildfire,"At the start of your Move Phase, add 1 damage to each adjacent enemy unit.","Direct Damage, Splash Damage"
+Wise,"After summoning this unit, you may draw 1 card.",Card Advantage
+Withdraw,"After this unit attacks, you may spend either 1 boost or 1 magic. If you do, force this unit 1 or 2 spaces.",Movement
+Wolf Form,"While your summoner is a Wolf unit, this unit is a Wolf unit.",
+Work the Forge,"Once per turn, during your turn, you may add 1 damage to this unit to retrieve a Hellforged event from your discard pile and play it under a viable unit within 3 spaces.",Card Advantage
+Worthy,"When this unit attacks, if it is adjacent to your summoner, Special = Ranged.",Strength
+Wrath,This unit has +1 strength for each damage it has.,Strength

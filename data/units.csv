@@ -1,0 +1,269 @@
+﻿Faction,Name,Class,Structure,Limited,Copies,Cost,Life,Strength,Melee/Ranged,Deck Symbol,Groups,Abilities
+Breakers,Tacullu,Summoner Unit,False,False,1,,13,3,Ranged,"Mercenary, Resolve, Air",Disruption,Mind Capture
+Breakers,Gulldune,Champion Unit,False,False,1,6,6,4,Melee,Resolve,Extra Attack,Telepathic Command
+Breakers,Gwalark,Champion Unit,False,False,1,6,8,3,Ranged,"Resolve, Air","Ally Support, Movement",Flight; Levitate
+Breakers,Kalal,Champion Unit,False,False,1,7,8,4,Ranged,Air,"Push/Pull Enemies, Defense",Greater Push; Steadfast
+Breakers,Deceiver,Common Unit,False,False,4,1,4,1,Ranged,Resolve,"Retaliation, Defense, Disruption",Stupefy; Engage
+Breakers,Mind Witch,Common Unit,False,False,4,1,2,3,Ranged,Resolve,Ally Support,Mimic
+Breakers,Wind Archer,Common Unit,False,False,4,2,2,4,Ranged,Air,"Attack Range, Movement",Swift; Far Shot
+Breakers,Wind Mage,Common Unit,False,False,4,1,3,2,Ranged,Air,Push/Pull Enemies,Push
+Cave Goblins,Sneeks,Summoner Unit,False,False,1,,11,3,Melee,"Mercenary, Instinct, Cunning","Movement, Move Allies",Sly
+Cave Goblins,Blarf,Champion Unit,False,False,1,0,6,0,Melee,"Cunning, Instinct","Strength, Boost",Blood Runes; Imbued Strength
+Cave Goblins,Smeg,Champion Unit,False,False,1,0,4,2,Ranged,Cunning,"Extra Attack, Magic, Drawback",Magic Junkie; Relentless
+Cave Goblins,The Eater,Champion Unit,False,False,1,6,9,5,Melee,Instinct,Drawback,Feed the Eater
+Cave Goblins,Beast Rider,Common Unit,False,False,4,2,3,3,Melee,Instinct,"Strength, Movement",Charge
+Cave Goblins,Horde Climber,Common Unit,False,False,4,0,3,1,Melee,Cunning,Movement,Climb
+Cave Goblins,Horde Clinger,Common Unit,False,False,4,0,2,2,Melee,Cunning,"Move Allies, Drawback",Immobile; Cling
+Cave Goblins,Horde Slinger,Common Unit,False,False,4,0,1,2,Ranged,Instinct,Extra Attack,Relentless
+Chosen Grove,Eldiri Nimid,Summoner Unit,False,False,1,,20,4,Melee,"Mercenary, Earth, Divine","Boost, Summoning, Drawback",Rooted; Gift of Life
+Chosen Grove,Adric Brighton,Champion Unit,False,False,1,5,6,3,Ranged,Divine,"Retaliation, Boost",Well-Prepared; Counter Shot
+Chosen Grove,Eldiri Ursa,Champion Unit,False,False,1,4,5,4,Melee,Earth,"Boost, Drawback",Charged; Hibernate
+Chosen Grove,Knight of Seasons,Champion Unit,False,False,1,6,8,1,Melee,"Earth, Divine","Strength, Card Advantage",Call Seasons; Imbued Strength
+Chosen Grove,Oaksworn Guard,Common Unit,False,False,4,2,5,2,Melee,Divine,"Push/Pull Enemies, Defense",Protect; Shove
+Chosen Grove,Sapling,Common Unit,False,False,4,0,3,1,Melee,Earth,"Strength, Boost, On Death",Empowered; Return to Soil
+Chosen Grove,Seed Bearer,Common Unit,False,False,4,1,3,2,Ranged,Earth,"Push/Pull Enemies, Boost",Sow Seeds; Vine Grab
+Chosen Grove,Stag Rider,Common Unit,False,False,4,2,2,3,Ranged,Divine,Movement,Swift; Backtrack
+Cloaks,Vlox,Summoner Unit,False,False,1,,13,3,Ranged,"Mercenary, Logic, Cunning",Ally Support,Master of the Art
+Cloaks,Dagger,Champion Unit,False,False,1,4,6,3,Melee,"Logic, Cunning","Strength, Movement, Move Allies",Sly; Backstab
+Cloaks,Sin-Sin,Champion Unit,False,False,1,0,6,2,Melee,Cunning,"Direct Damage, On Death, Drawback",Bounty; Infiltrate
+Cloaks,The Admiral,Champion Unit,False,False,1,6,7,4,Ranged,Logic,"Extra Attack, Movement",Relentless; Swift
+Cloaks,Guild Gunner,Common Unit,False,False,4,1,2,3,Ranged,Logic,Move Allies,Cover Fire
+Cloaks,Guild Machinist,Common Unit,False,False,4,2,4,2,Melee,Logic,Extra Attack,Versatile
+Cloaks,Guild Sniper,Common Unit,False,False,4,1,3,2,Ranged,Cunning,Attack Range,Steady Shot
+Cloaks,Rustside Bandit,Common Unit,False,False,4,0,3,1,Melee,Cunning,"Strength, Magic",Gang Up; Heist
+Crimson Order,Baron Daemar,Summoner Unit,False,False,1,,10,3,Ranged,"Mercenary, Divine, Dark","Healing, Summoning",Blood Drain; Faithful Servants
+Crimson Order,Casimira,Champion Unit,False,False,1,5,7,3,Melee,"Divine, Dark",Card Advantage,Blood Thrall
+Crimson Order,Sekhmet,Champion Unit,False,False,1,7,10,4,Melee,Dark,"Movement, Drawback",Flight; Blood Hunger
+Crimson Order,Vesna Brana,Champion Unit,False,False,1,3,3,3,Ranged,Divine,Defense,Blood Ward
+Crimson Order,Devout Cultist,Common Unit,False,False,4,0,2,2,Ranged,Divine,"Card Advantage, On Death",Undying Devotion
+Crimson Order,Doom Cultist,Common Unit,False,False,4,0,2,2,Melee,Dark,"Direct Damage, On Death",Curse
+Crimson Order,Royal Warrior,Common Unit,False,False,4,2,5,2,Melee,Dark,Strength,Blood Begotten
+Crimson Order,Sacral Priest,Common Unit,False,False,4,1,3,2,Ranged,Divine,"Ally Support, Summoning",Protector; Blood Fervor
+Deepwood Groaks,Hekateia,Summoner Unit,False,False,1,,12,4,Ranged,"Mercenary, Resolve, Earth",Boost,Momentum; Arcane Brew
+Deepwood Groaks,Eldarath,Champion Unit,False,False,1,3,5,3,Ranged,Resolve,Boost,Arcane Cry
+Deepwood Groaks,Kaelik,Champion Unit,False,False,1,4,6,2,Ranged,Earth,"Strength, Boost",Blood Bond; Juiced
+Deepwood Groaks,Myrrden,Champion Unit,False,False,1,5,7,3,Melee,"Resolve, Earth",Card Advantage,Concoct
+Deepwood Groaks,Bloom Mystic,Common Unit,False,False,4,1,2,3,Ranged,Earth,Boost,Refill
+Deepwood Groaks,Bloom Warrior,Common Unit,False,False,4,2,4,1,Melee,Earth,"Strength, Boost",Well-Prepared; Imbued Strength
+Deepwood Groaks,Mind Warden,Common Unit,False,False,4,2,5,2,Melee,Resolve,"Defense, Boost",Psychic Field; Protect
+Deepwood Groaks,Sightless Seer,Common Unit,False,False,4,1,3,2,Melee,Resolve,"Attack Range, Boost",Well-Prepared; Psychic Strike
+Drakesun Rebellion,Pyra Stormrider,Summoner Unit,False,False,1,,10,3,Melee,"Mercenary, Fire, Air","Ally Support, Drawback",Gate Breaker; Brimstorm Bond
+Drakesun Rebellion,Brimstorm,Champion Unit,False,False,1,7,10,3,Ranged,"Fire, Air","Movement, Move Allies",Flight; Mount
+Drakesun Rebellion,Cinderwing,Champion Unit,False,False,1,5,7,3,Ranged,"Fire, Air","Movement, Move Allies",Flight; Mount
+Drakesun Rebellion,Coal Inferno,Champion Unit,False,False,1,6,9,3,Melee,Fire,Direct Damage,On Fire; Burning
+Drakesun Rebellion,Raze Lordslayer,Champion Unit,False,False,1,6,7,2,Melee,Air,Strength,Expert Rider; Overthrow
+Drakesun Rebellion,Ashen Raider,Common Unit,False,False,4,1,3,2,Melee,Fire,Summoning,Raid
+Drakesun Rebellion,Ember Outrider,Common Unit,False,False,4,1,2,2,Melee,Fire,Direct Damage,Quick Strike
+Drakesun Rebellion,Rebel Dragoon,Common Unit,False,False,4,0,2,1,Melee,Air,Strength,Expert Rider
+Drakesun Rebellion,Wyrmling,Common Unit,False,False,4,2,4,2,Ranged,Air,"Movement, Move Allies",Lesser Flight; Mount
+Eternal Council,Praefectus Edia,Summoner Unit,False,False,1,,13,3,Ranged,"Mercenary, Resolve, Light",Boost,Kinetic Siphon; Persist
+Eternal Council,Dominus Katu,Champion Unit,False,False,1,6,10,2,Ranged,Light,"Strength, Boost",Resolute; Imbued Strength
+Eternal Council,Dominus Malunar,Champion Unit,False,False,1,5,8,3,Melee,Resolve,Disruption,Punish
+Eternal Council,Dominus Ovi,Champion Unit,False,False,1,4,6,2,Ranged,"Resolve, Light",Strength,Mastermind
+Eternal Council,Ancient Scholar,Common Unit,False,False,4,1,2,3,Melee,Light,Card Advantage,Wise; Analyze
+Eternal Council,Citadel Advisor,Common Unit,False,False,4,1,3,2,Ranged,Light,"Move Allies, Card Advantage",Intel; Warn
+Eternal Council,Enigma Sage,Common Unit,False,False,4,2,4,3,Ranged,Resolve,Direct Damage,Exploit
+Eternal Council,Mind Knight,Common Unit,False,False,4,2,4,2,Melee,Resolve,"Push/Pull Enemies, Disruption",Invoke Fear; Shove
+Fallen Kingdom,Ret-Talus,Summoner Unit,False,False,1,,14,2,Ranged,"Mercenary, Fire, Dark","Card Advantage, Summoning",Raise the Dead
+Fallen Kingdom,Dragos,Champion Unit,False,False,1,6,8,4,Melee,Dark,Strength,Life Drain
+Fallen Kingdom,Elut-Bal,Champion Unit,False,False,1,6,6,6,Melee,Fire,Summoning,Summoned by Fire
+Fallen Kingdom,Gul-Dass,Champion Unit,False,False,1,6,9,2,Melee,"Fire, Dark","Strength, Summoning, Drawback",Spawn; Wrath
+Fallen Kingdom,Hellfire Cultist,Common Unit,False,False,4,0,2,2,Ranged,Fire,"Direct Damage, Splash Damage, On Death",Immolate
+Fallen Kingdom,Undead Archer,Common Unit,False,False,4,2,2,3,Ranged,Fire,Summoning,Soul Shift
+Fallen Kingdom,Undead Carrier,Common Unit,False,False,4,1,3,2,Melee,Dark,"Card Advantage, Summoning, Disruption, Drawback",Soulless; Infect
+Fallen Kingdom,Undead Warrior,Common Unit,False,False,4,2,4,2,Melee,Dark,"Strength, Boost",Blood Fury; Imbued Strength
+Fungal Dwarves,Kuldak,Summoner Unit,False,False,1,,12,4,Melee,"Mercenary, Dark, Earth",Boost,Blood Bloom
+Fungal Dwarves,Maldar,Champion Unit,False,False,1,3,8,3,Melee,"Dark, Earth","Boost, Drawback",Corrupt
+Fungal Dwarves,Monstrosity,Champion Unit,False,False,1,3,13,5,Melee,Earth,Summoning,Final Form
+Fungal Dwarves,Thoon,Champion Unit,False,False,1,6,7,2,Ranged,Dark,"Strength, Boost",Blood Fury; Imbued Strength
+Fungal Dwarves,Blight Mage,Common Unit,False,False,4,2,3,4,Ranged,Dark,Boost,Blood Imbue
+Fungal Dwarves,Blood Shaman,Common Unit,False,False,4,1,2,3,Ranged,Dark,Boost,Transfer
+Fungal Dwarves,Fungal Beast,Common Unit,False,False,4,3,5,3,Melee,Earth,"Card Advantage, Summoning, Drawback",Infect; Parasitic
+Fungal Dwarves,Spore Carrier,Common Unit,False,False,4,0,2,2,Melee,Earth,"Card Advantage, Summoning, On Death, Drawback",Rupture; Fungal Transformation
+Guild Dwarves,Oldin,Summoner Unit,False,False,1,,12,3,Ranged,"Mercenary, Logic, Light","Card Advantage, Structures",Redeploy; Master Plan
+Guild Dwarves,Dwaf,Champion Unit,False,False,1,5,6,3,Melee,Logic,"Attack Range, Structures",Leverage
+Guild Dwarves,Grundor,Champion Unit,False,False,1,3,5,2,Melee,Light,"Card Advantage, Structures",Design; Master Builder
+Guild Dwarves,Grundor's Tower,Champion Unit,True,False,1,4,5,4,Ranged,"Logic, Light","Boost, Structures",Compound; Expand
+Guild Dwarves,Ballista,Common Unit,True,False,4,1,3,2,Ranged,Logic,"Strength, Push/Pull Enemies",Primed; Forceful Shot
+Guild Dwarves,Catapult,Common Unit,True,False,4,1,3,2,Ranged,Light,"Direct Damage, Structures",Launch
+Guild Dwarves,Guild Defender,Common Unit,False,False,4,2,5,2,Melee,Light,Retaliation,Greater Engage
+Guild Dwarves,Guild Engineer,Common Unit,False,False,4,1,3,2,Ranged,Logic,"Move Allies, Structures",Recalibrate
+High Elves,Valeria the Just,Summoner Unit,False,False,1,,12,2,Melee,"Mercenary, Divine, Resolve","Retaliation, Push/Pull Enemies",Dictate; Greater Engage
+High Elves,Albus the Wise,Champion Unit,False,False,1,3,5,3,Ranged,Resolve,Disruption,Annul
+High Elves,Cassia the Gentle,Champion Unit,False,False,1,4,6,3,Ranged,Divine,Healing,Healing Aura
+High Elves,Titus the Devout,Champion Unit,False,False,1,6,9,3,Melee,"Divine, Resolve","Retaliation, Defense",Greater Engage; Protect
+High Elves,Arbiter of Justice,Common Unit,False,False,4,2,5,3,Melee,Resolve,"Ally Support, Drawback",Atone; Law of Atonement
+High Elves,Arbiter of Peace,Common Unit,False,False,4,1,3,2,Ranged,Divine,"Ally Support, Defense",Tough; Law of Fortitude
+High Elves,Arbiter of War,Common Unit,False,False,4,2,3,2,Melee,Resolve,"Strength, Ally Support",Strong; Law of Strength
+High Elves,Attendant Priest,Common Unit,False,False,4,1,3,2,Ranged,Divine,"Healing, Summoning",Attend; Invigorate
+Isle Vekkid,Rokomoko,Summoner Unit,False,False,1,,13,3,Ranged,"Mercenary, Water, Spirit",Ally Support,Bonded
+Isle Vekkid,Saka Uwa,Champion Unit,False,False,1,3,5,3,Melee,Spirit,Movement,Hero's Dance
+Isle Vekkid,Turanga Ivalu,Champion Unit,False,False,1,5,8,3,Melee,"Water, Spirit","Healing, Magic",Regenerate
+Isle Vekkid,Waitui,Champion Unit,False,False,1,8,8,8,Melee,Water,Splash Damage,Assault
+Isle Vekkid,Battle Dancer,Common Unit,False,False,4,2,4,2,Melee,Spirit,Movement,Tempo
+Isle Vekkid,Crab Knight,Common Unit,False,False,4,3,4,2,Melee,Water,"Strength, Defense",Strong; Tough
+Isle Vekkid,Fleetfoot Fighter,Common Unit,False,False,4,1,2,2,Melee,Spirit,Movement,Swift; Fluid
+Isle Vekkid,Seashard Sniper,Common Unit,False,False,4,1,3,2,Ranged,Water,Strength,Spot Weakness
+Mercenary,Ashia the Silent,Champion Unit,False,False,1,5,3,3,Melee,Mercenary,Defense,Elusive
+Mercenary,Blacksaber,Champion Unit,False,False,1,1,5,3,Melee,Mercenary,Drawback,Treacherous
+Mercenary,Brub,Champion Unit,False,False,1,5,7,1,Ranged,Mercenary,Extra Attack,Chain Shot
+Mercenary,Khan Queso,Champion Unit,False,False,1,4,6,2,Melee,Mercenary,"Direct Damage, Splash Damage",Plague; Spread
+Mercenary,The Realm Walker,Champion Unit,False,False,1,4,5,3,Melee,Mercenary,Movement,Gatewalk
+Mercenary,Tress,Champion Unit,False,False,1,4,5,1,Melee,Mercenary,"Strength, Defense",Adapt; Overcome
+Mercenary,Veldimax the Great,Champion Unit,False,False,1,0,2,2,Ranged,Mercenary,"Magic, Drawback",Magician; Dubious
+Moonsteppe Wolves,Luna Nightsong,Summoner Unit,False,False,1,,13,3,Melee,"Mercenary, Spirit, Dark","Healing, Boost",Wax & Wane
+Moonsteppe Wolves,Remus Nightsong,Champion Unit,False,False,1,6,9,3,Melee,Dark,"Extra Attack, Movement",Wolf Form; Rampage
+Moonsteppe Wolves,Rommi Nightsong,Champion Unit,False,False,1,4,4,3,Melee,"Spirit, Dark","Card Advantage, Summoning",Wolf Form; Pack Leader
+Moonsteppe Wolves,Wolf Spirit,Champion Unit,False,False,1,3,4,3,Ranged,Spirit,"Attack Range, Movement, Summoning",Protector; Lunge
+Moonsteppe Wolves,Dire Wolf,Common Unit,False,False,4,2,5,2,Melee,Spirit,"Strength, Move Allies",Pack Call; Pack Strength
+Moonsteppe Wolves,Moonlight Hunter,Common Unit,False,False,4,1,3,2,Ranged,Dark,Healing,Feed the Pack
+Moonsteppe Wolves,Pack Initiate,Common Unit,False,False,4,1,3,2,Melee,Dark,Movement,Wolf Form; Follow Scent
+Moonsteppe Wolves,Pack Wolf,Common Unit,False,False,4,0,3,1,Melee,Spirit,Strength,Pack Strength
+Mountain Vargath,Sunderved,Summoner Unit,False,False,1,,12,4,Melee,"Mercenary, Spirit, Instinct",Ally Support,Commander
+Mountain Vargath,Quen,Champion Unit,False,False,1,5,6,3,Ranged,"Spirit, Instinct",Splash Damage,Lightning Strike
+Mountain Vargath,Torodin,Champion Unit,False,False,1,8,12,3,Melee,Instinct,"Direct Damage, Movement",Climb; Trample
+Mountain Vargath,Varn,Champion Unit,False,False,1,5,7,3,Melee,Spirit,Move Allies,Form Up
+Mountain Vargath,Glory Caller,Common Unit,False,False,4,1,4,1,Melee,Spirit,Move Allies,Call to Arms
+Mountain Vargath,Shale Slinger,Common Unit,False,False,4,1,2,2,Ranged,Spirit,Attack Range,Coordinated Shot
+Mountain Vargath,Slagborn Fighter,Common Unit,False,False,4,1,3,2,Melee,Instinct,Push/Pull Enemies,Forceful Attack
+Mountain Vargath,Wolfsbane Brute,Common Unit,False,False,4,2,5,2,Melee,Instinct,"Direct Damage, Push/Pull Enemies, Drawback",Slow; Ram
+Obsidian Dwarves,Balzar,Summoner Unit,False,False,1,,13,2,Ranged,"Mercenary, Fire, Instinct","Strength, Boost",Burning Rage; Imbued Strength
+Obsidian Dwarves,Davura,Champion Unit,False,False,1,5,8,3,Ranged,"Fire, Instinct","Extra Attack, Boost",Disciple; Coordinated Strike
+Obsidian Dwarves,The Hell Forge,Champion Unit,True,False,1,3,6,0,Melee,Fire,"Card Advantage, Drawback",Inanimate; Work the Forge
+Obsidian Dwarves,Vulkør,Champion Unit,False,False,1,6,6,2,Melee,Instinct,"Strength, Defense, Boost",Disciple; Imbued Spirit
+Obsidian Dwarves,Blood Berserker,Common Unit,False,False,4,2,5,2,Melee,Instinct,Splash Damage,Wild Swing
+Obsidian Dwarves,Ember Demon,Common Unit,False,False,4,1,3,3,Melee,Fire,"Summoning, Drawback",Born of Fire; Dark Pact
+Obsidian Dwarves,Ember Guard,Common Unit,False,False,4,1,3,2,Melee,Fire,Movement,Blaze Step
+Obsidian Dwarves,Oath Sworn,Common Unit,False,False,4,1,2,3,Ranged,Instinct,Boost,Blood Bond
+Phoenix Elves,Queen Maldaria,Summoner Unit,False,False,1,,9,4,Ranged,"Mercenary, Fire, Divine","Move Allies, Defense",Call Protection; Save the Queen
+Phoenix Elves,Fanessa,Champion Unit,False,False,1,5,9,3,Melee,Divine,Retaliation,Riposte
+Phoenix Elves,Fire Drake,Champion Unit,False,False,1,8,10,4,Ranged,"Fire, Divine","Attack Range, Splash Damage, Summoning",Protector; Fire Breath
+Phoenix Elves,Holleas,Champion Unit,False,False,1,5,7,3,Ranged,Fire,"Ally Support, Summoning",Fiery Summon; Ignite
+Phoenix Elves,Ember Archer,Common Unit,False,False,4,1,2,2,Ranged,Fire,Direct Damage,Quick Shot
+Phoenix Elves,Ember Beast,Common Unit,False,False,4,2,3,3,Melee,Fire,"Direct Damage, Splash Damage, Summoning",Born of Fire; Wildfire
+Phoenix Elves,Ember Mage,Common Unit,False,False,4,1,2,2,Ranged,Divine,Defense,Guarded
+Phoenix Elves,Royal Guardian,Common Unit,False,False,4,2,4,1,Melee,Divine,"Retaliation, Push/Pull Enemies",Engage; Shove
+Polar Dwarves,Svara,Summoner Unit,False,False,1,,12,3,Ranged,"Mercenary, Logic, Water","Move Allies, Structures",Structural Shift
+Polar Dwarves,Jarmund,Champion Unit,False,False,1,5,7,3,Ranged,"Logic, Water","Direct Damage, Boost, Structures",Momentum; Ice Shards
+Polar Dwarves,Nadiana,Champion Unit,False,False,1,6,7,2,Ranged,Water,"Strength, Structures",Greater Frost Bolt
+Polar Dwarves,Ollag,Champion Unit,False,False,1,5,7,3,Melee,Logic,"Defense, Structures",Cold Snap
+Polar Dwarves,Bear Cavalry,Common Unit,False,False,4,3,5,3,Melee,Water,"Direct Damage, Movement",Trample
+Polar Dwarves,Frost Mage,Common Unit,False,False,4,1,4,1,Ranged,Water,"Strength, Structures",Frost Bolt
+Polar Dwarves,Ice Golem,Common Unit,True,False,4,2,5,2,Melee,Logic,"Movement, Summoning, Structures, Drawback",Living Gate; Mobile Structure; Slow
+Polar Dwarves,Ice Smith,Common Unit,False,False,4,0,2,2,Melee,Logic,Boost,Frost Axe
+Sand Goblins,Krusk,Summoner Unit,True,False,1,,10,3,Ranged,"Mercenary, Logic, Air","Movement, Move Allies, Structures",Mobile Structure; Carry
+Sand Goblins,Clink,Champion Unit,False,False,1,4,6,3,Melee,Logic,"Healing, Structures",Repair
+Sand Goblins,Silts,Champion Unit,False,False,1,5,7,3,Melee,Air,"Movement, Push/Pull Enemies",Cunning
+Sand Goblins,Uncle Sparks,Champion Unit,True,False,1,5,8,3,Ranged,"Logic, Air","Movement, Card Advantage, Structures",Mobile Structure; Top Wrench
+Sand Goblins,Bug Biter,Common Unit,True,False,4,0,2,1,Melee,Air,"Direct Damage, Movement, Structures, Drawback",Mobile Structure; Flight; Crash
+Sand Goblins,Rust Rider,Common Unit,True,False,4,2,5,2,Melee,Air,"Strength, Movement, Structures",Mobile Structure; Burn Hot
+Sand Goblins,Sand Scavenger,Common Unit,False,False,4,1,2,3,Melee,Logic,"Card Advantage, Structures",Salvage
+Sand Goblins,Wrench Rat,Common Unit,False,False,4,0,2,2,Ranged,Logic,Direct Damage,Rig Explosives
+Savanna Elves,Abua Shi,Summoner Unit,False,False,1,,10,4,Ranged,"Mercenary, Earth, Spirit",Boost,Spirit Bond
+Savanna Elves,Makeinda Ru,Champion Unit,False,False,1,5,9,2,Ranged,Spirit,"Extra Attack, Boost",Prepare; Swift Shot
+Savanna Elves,Miti Kyru,Champion Unit,False,False,1,5,7,4,Melee,"Earth, Spirit","Movement, Boost",Inspire; Withdraw
+Savanna Elves,Miti Mumway,Champion Unit,False,False,1,8,11,1,Melee,Earth,"Strength, Direct Damage, Movement",Imbued Strength; Trample
+Savanna Elves,Border Archer,Common Unit,False,False,4,2,4,2,Ranged,Spirit,"Extra Attack, Boost",Prepare; Swift Shot
+Savanna Elves,Lioness,Common Unit,False,False,4,2,2,3,Melee,Earth,"Defense, Boost",Momentum; Imbued Life
+Savanna Elves,Rhinoceros,Common Unit,False,False,4,2,5,2,Melee,Earth,"Direct Damage, Movement",Imbued Speed; Trample
+Savanna Elves,Spirit Mage,Common Unit,False,False,4,1,2,3,Ranged,Spirit,Boost,Charged; Commune with Spirits
+Shadow Elves,Selundar,Summoner Unit,False,False,1,,11,5,Ranged,"Mercenary, Dark, Light","Move Allies, Boost, Card Advantage",Blood Magic; Return to Shadow
+Shadow Elves,Lucian,Champion Unit,False,False,1,5,8,3,Ranged,"Dark, Light","Direct Damage, Boost",Dark Prophecy; Judgment
+Shadow Elves,Samara,Champion Unit,False,False,1,5,7,4,Melee,Dark,"Direct Damage, Drawback",Inevitable Doom
+Shadow Elves,Taliya,Champion Unit,False,False,1,5,7,3,Melee,Light,Summoning,Rend the Veil
+Shadow Elves,Sage Ranger,Common Unit,False,False,4,1,3,2,Ranged,Light,"Attack Range, Movement",Piercing Light; Rush
+Shadow Elves,Shadow Knight,Common Unit,False,False,4,1,5,2,Melee,Dark,"Summoning, On Death, Drawback",Shadow Summon; Death Pact
+Shadow Elves,Shadow Mage,Common Unit,False,False,4,2,4,3,Ranged,Dark,Card Advantage,Forbidden Knowledge
+Shadow Elves,True Seeker,Common Unit,False,False,4,1,3,1,Melee,Light,"Strength, Movement",Aggressive Attack; Feint
+Shimmersea Fae,Nymira Shoalsong,Summoner Unit,False,False,1,,12,3,Melee,"Mercenary, Light, Water","Direct Damage, Healing, Boost",Momentum; Ebb and Flow
+Shimmersea Fae,Coralis Undertow,Champion Unit,False,False,1,5,7,3,Melee,Water,"Movement, Push/Pull Enemies",Tidal Shift
+Shimmersea Fae,Enara Deepwater,Champion Unit,False,False,1,2,4,2,Ranged,"Light, Water","Extra Attack, Card Advantage, On Death",Ambush; Descend
+Shimmersea Fae,Lyra Deepwater,Champion Unit,False,False,1,2,4,2,Melee,Light,"Movement, Card Advantage, On Death",Guardian; Descend
+Shimmersea Fae,Changeling Swarm,Common Unit,False,False,4,2,3,2,Melee,Water,"Extra Attack, Summoning",Morph; Ambush
+Shimmersea Fae,Iridescent Oracle,Common Unit,False,False,4,0,2,2,Ranged,Light,"Card Advantage, Magic",Peer
+Shimmersea Fae,Luminous Scout,Common Unit,False,False,4,1,2,3,Ranged,Light,"Card Advantage, Summoning",Dredge; Call Reinforcements
+Shimmersea Fae,Tidebreaker,Common Unit,False,False,4,1,3,2,Melee,Water,"Strength, Movement",Rush; Inspired
+Skyspear Avians,Ava,Summoner Unit,False,False,1,,10,3,Ranged,"Mercenary, Air, Spirit","Ally Support, Movement",Flight; Take to the Skies
+Skyspear Avians,Gilford,Champion Unit,False,False,1,5,7,3,Ranged,"Air, Spirit","Movement, Push/Pull Enemies",Flight; Bully
+Skyspear Avians,Rath,Champion Unit,False,False,1,6,7,4,Melee,Air,"Movement, Boost",Prepare; Prey
+Skyspear Avians,Sairook,Champion Unit,False,False,1,5,6,3,Ranged,Spirit,Ally Support,Aerie Captain
+Skyspear Avians,Aerie Diver,Common Unit,False,False,4,1,2,2,Melee,Air,"Direct Damage, Summoning",Dive In; Sudden Strike
+Skyspear Avians,Aerie Sage,Common Unit,False,False,4,1,3,1,Ranged,Spirit,"Strength, Ally Support",Strong; Aerie Support
+Skyspear Avians,Aerie Sentinel,Common Unit,False,False,4,2,4,3,Melee,Air,Defense,Stalwart
+Skyspear Avians,Aerie Steward,Common Unit,False,False,4,2,5,2,Ranged,Spirit,Strength,Worthy
+Spectral Conclave,Feyrin,Summoner Unit,False,False,1,,11,3,Ranged,"Mercenary, Resolve, Cunning","Card Advantage, Summoning",Illusionist
+Spectral Conclave,Miro,Champion Unit,False,False,1,6,8,3,Ranged,"Resolve, Cunning",Extra Attack,Spectral Command
+Spectral Conclave,Sylke,Champion Unit,False,False,1,5,7,3,Ranged,Resolve,Defense,Dissipate
+Spectral Conclave,Taelo,Champion Unit,False,False,1,5,6,3,Melee,Cunning,"Movement, Move Allies",Illusory Projection
+Spectral Conclave,Illusory Fox,Common Unit,False,False,4,0,2,2,Melee,Cunning,"Movement, Boost",Lesser Feint; Depart
+Spectral Conclave,Illusory Hawk,Common Unit,False,False,4,0,2,2,Ranged,Resolve,"Push/Pull Enemies, Boost",Lesser Repel; Depart
+Spectral Conclave,Illusory Stag,Common Unit,False,False,4,0,2,2,Melee,Cunning,"Movement, Boost",Rush; Depart
+Spectral Conclave,Mind Mage,Common Unit,False,False,4,2,4,3,Ranged,Resolve,"Magic, Disruption",Illusory Possession
+Storm Goblins,Thrak,Summoner Unit,False,False,1,,11,3,Ranged,"Mercenary, Air, Cunning","Ally Support, Direct Damage, Splash Damage",Circuit; Chain Lightning
+Storm Goblins,Brakka,Champion Unit,False,False,1,4,6,3,Melee,Air,"Movement, Defense",Lightning Speed; Lightning Ward
+Storm Goblins,Ezzik,Champion Unit,False,False,1,4,6,3,Ranged,Cunning,Move Allies,Lightning Pull
+Storm Goblins,Skizz,Champion Unit,False,False,1,4,6,3,Ranged,"Air, Cunning",Direct Damage,Bottled Lightning
+Storm Goblins,Gust Strider,Common Unit,False,False,4,2,5,2,Melee,Air,"Movement, Defense",Tireless; Lightning Ward
+Storm Goblins,Kite Rider,Common Unit,False,False,4,1,4,1,Melee,Air,"Splash Damage, Movement",Flight; Lightning Strike
+Storm Goblins,Storm Witch,Common Unit,False,False,4,1,4,1,Ranged,Cunning,Strength,Lightning Wrath
+Storm Goblins,Voltswapper,Common Unit,False,False,4,0,1,1,Melee,Cunning,Movement,Lightning Step
+Swamp Orcs,Mugglug,Summoner Unit,False,False,1,,13,3,Melee,"Mercenary, Water, Earth","Strength, Attack Range",Reap; Far Strike
+Swamp Orcs,Blub,Champion Unit,False,False,1,5,7,3,Melee,Water,"Strength, Movement",Rush; Aggressive Attack
+Swamp Orcs,Glurp,Champion Unit,False,False,1,6,7,3,Melee,"Water, Earth","Card Advantage, Summoning",Germinate
+Swamp Orcs,Splack,Champion Unit,False,False,1,4,5,3,Melee,Earth,"Extra Attack, Movement",Tireless; Relentless
+Swamp Orcs,Bog Shaman,Common Unit,False,False,4,1,3,2,Ranged,Earth,Boost,Entwine
+Swamp Orcs,Bog Witch,Common Unit,False,False,4,1,2,2,Ranged,Water,"Extra Attack, Boost",Grow; Augment
+Swamp Orcs,Mud Drudger,Common Unit,False,False,4,1,1,3,Melee,Water,"Movement, Defense",Tireless; Prune
+Swamp Orcs,Vinemancer,Common Unit,False,False,4,1,3,2,Melee,Earth,"Move Allies, Push/Pull Enemies, Boost",Grow; Vine Pull
+The Filth,The Demagogue,Summoner Unit,False,False,1,,12,4,Ranged,"Mercenary, Dark, Instinct","Boost, Card Advantage",Flesh Harvest; Mutagist
+The Filth,Bestial Mutant,Champion Unit,False,False,1,3,5,3,Melee,Instinct,"Boost, Summoning",Mutate; Fetch
+The Filth,Incanter Mutant,Champion Unit,False,False,1,3,5,3,Melee,"Dark, Instinct","Ally Support, Summoning",Mutate; Vile Oration
+The Filth,The Abomination,Champion Unit,False,False,1,7,11,1,Melee,Dark,Healing,Malleable
+The Filth,Anointed Cultist,Common Unit,False,False,,0,4,2,Melee,Instinct,"On Death, Drawback",Forsaken
+The Filth,Bursting Mutant,Common Unit,False,True,,2,4,3,Ranged,Dark,"Direct Damage, Splash Damage, Summoning, On Death",Mutate; Burst
+The Filth,Fetid Cultist,Common Unit,False,False,,0,2,2,Melee,Instinct,"Boost, On Death",Empowering Sacrifice
+The Filth,Horror Mutant,Common Unit,False,True,,2,4,3,Melee,Dark,"Defense, Summoning, Disruption",Mutate; Demonic Visage
+The Filth,Malignant Cultist,Common Unit,False,False,,0,2,2,Ranged,Dark,"Card Advantage, On Death",Enlightening Sacrifice
+The Filth,Spew Mutant,Common Unit,False,True,,2,4,3,Ranged,Dark,"Direct Damage, Splash Damage, Summoning",Mutate; Splatter
+The Filth,Tentacle Mutant,Common Unit,False,True,,2,5,2,Melee,Dark,"Attack Range, Summoning",Mutate; Reach
+The Filth,Winged Mutant,Common Unit,False,True,,2,5,2,Melee,Dark,"Movement, Summoning",Mutate; Flight
+The Forged,The Inventor,Summoner Unit,False,False,1,,10,3,Melee,"Mercenary, Logic, Fire","Direct Damage, Structures",Master Builder; Forged in Flames
+The Forged,Hellmaw,Champion Unit,True,False,1,5,8,3,Melee,"Logic, Fire","Movement, Structures, Drawback",Heavy Mobile; Smelt Down
+The Forged,Sprocket,Champion Unit,True,False,1,5,7,3,Melee,Fire,"Movement, Structures, Drawback",Heavy Mobile; Turbo
+The Forged,Titan,Champion Unit,True,False,1,3,6,2,Melee,Logic,"Movement, Move Allies, Structures, Drawback",Heavy Mobile; Relocate
+The Forged,Blastforge Cog,Common Unit,True,False,4,2,4,3,Melee,Fire,"Splash Damage, Movement, Structures, Drawback",Heavy Mobile; Shockwave
+The Forged,Ember Cog,Common Unit,True,False,4,2,5,2,Melee,Fire,"Attack Range, Movement, Structures, Drawback",Heavy Mobile; Reach
+The Forged,Mag Cog,Common Unit,True,False,4,1,2,2,Ranged,Logic,"Movement, Structures",Attract
+The Forged,Sentry Cog,Common Unit,True,False,4,1,3,2,Ranged,Logic,"Direct Damage, Retaliation",Preemptive Fire
+Thornhold Drey,Fenn Timberheart,Summoner Unit,False,False,1,,9,4,Ranged,"Mercenary, Logic, Earth","Move Allies, Boost, Structures",Bolster; Deploy Troops
+Thornhold Drey,The Nutcracker,Champion Unit,True,False,1,5,8,3,Melee,Logic,"Movement, Boost, Structures",Driver's Seat; Smashing Strike
+Thornhold Drey,The Rumblebus,Champion Unit,True,False,1,6,8,2,Ranged,"Logic, Earth","Extra Attack, Movement, Structures",Driver's Seat; Driving Strike
+Thornhold Drey,Vira Ironbranch,Champion Unit,False,False,1,3,3,2,Melee,Earth,"Ally Support, Structures",Take Post; Post Commander
+Thornhold Drey,Bramble Knight,Common Unit,False,False,4,2,4,2,Melee,Earth,"Strength, Movement",Climb; Squadron
+Thornhold Drey,Gladewatch Scout,Common Unit,False,False,4,0,1,2,Ranged,Logic,"Movement, Structures",Take Post; Scurry
+Thornhold Drey,Guild Tinkerer,Common Unit,False,False,4,0,1,2,Ranged,Logic,"Healing, Structures",Take Post; Mend Structure
+Thornhold Drey,Thistle Wizard,Common Unit,False,False,4,1,3,2,Ranged,Earth,"Movement, Boost, Structures",Climb; Store
+Tundra Orcs,Grognack,Summoner Unit,False,False,1,,13,4,Melee,"Mercenary, Instinct, Water","Ally Support, Boost",Restore; Influence
+Tundra Orcs,Ragnor,Champion Unit,False,False,1,5,8,3,Melee,"Instinct, Water",Boost,Blood Bond
+Tundra Orcs,Shonk,Champion Unit,False,False,1,5,11,8,Melee,Instinct,Strength,Wild Strike
+Tundra Orcs,Targan,Champion Unit,False,False,1,5,6,4,Ranged,Water,"Ally Support, Attack Range",Far Shot; Piercing Frost
+Tundra Orcs,Frost Shaman,Common Unit,False,False,4,1,4,3,Ranged,Water,Drawback,Unwieldy Magic
+Tundra Orcs,Smasher,Common Unit,False,False,4,3,6,4,Melee,Water,Drawback,Sluggish
+Tundra Orcs,Tundra Charger,Common Unit,False,False,4,0,2,2,Melee,Instinct,Movement,Blood Rush
+Tundra Orcs,Tundra Fighter,Common Unit,False,False,4,1,3,2,Melee,Instinct,"Extra Attack, Movement",Frenzy
+Vanguards,Sera Eldwyn,Summoner Unit,False,False,1,,12,3,Ranged,"Mercenary, Divine, Light",Card Advantage,The Citadel's Might
+Vanguards,Colleen Brighton,Champion Unit,False,False,1,6,8,3,Melee,Divine,Defense,Divine Shield
+Vanguards,Jacob Eldwyn,Champion Unit,False,False,1,3,5,2,Ranged,Light,"Strength, Ally Support, Magic",Radiant Shot; Bow Captain
+Vanguards,Valna Stoutheart,Champion Unit,False,False,1,6,9,2,Melee,"Divine, Light","Strength, Card Advantage",Guidance; Citadel Champion
+Vanguards,Citadel Archer,Common Unit,False,False,4,2,5,1,Ranged,Light,"Strength, Magic",Arrow of Light
+Vanguards,Citadel Knight,Common Unit,False,False,4,2,5,2,Melee,Divine,"Retaliation, Defense",Engage; Protect
+Vanguards,Citadel Paladin,Common Unit,False,False,4,2,4,3,Melee,Light,Card Advantage,Intercession
+Vanguards,Temple Priest,Common Unit,False,False,4,0,2,2,Melee,Divine,Healing,Heal
+Wayfarers,Celeste,Summoner Unit,False,False,1,,12,3,Ranged,"Mercenary, Spirit, Cunning",Strength,Well-Traveled
+Wayfarers,Boldo,Champion Unit,False,False,1,5,8,3,Melee,Cunning,Movement,Agile
+Wayfarers,Gusto,Champion Unit,False,False,1,4,6,3,Ranged,Spirit,Move Allies,Favorable Winds
+Wayfarers,Tess,Champion Unit,False,False,1,5,7,3,Ranged,"Spirit, Cunning","Movement, Structures",Illusions
+Wayfarers,Eager Adventurer,Common Unit,False,False,4,2,3,3,Melee,Spirit,"Movement, Boost",Well-Prepared; Embark
+Wayfarers,Gem Dancer,Common Unit,False,False,4,2,5,2,Melee,Cunning,"Movement, Push/Pull Enemies",Footwork
+Wayfarers,Spirit Voyager,Common Unit,False,False,4,1,2,3,Ranged,Spirit,Movement,Spirit Leap
+Wayfarers,Wayward Rogue,Common Unit,False,False,4,0,2,2,Melee,Cunning,Attack Range,Sneak Attack
