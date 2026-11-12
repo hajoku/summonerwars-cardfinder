@@ -76,3 +76,12 @@
 .checks li.bad span{color:var(--accent)}
 .checks li.info{color:var(--muted);font-size:13px}
 .tag.stu{border-color:var(--good);color:var(--good);font-weight:700;white-space:nowrap}
+
+.dname{display:grid;gap:4px;max-width:360px}
+.dname input{font:inherit;font-family:var(--display);font-size:22px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:4px 9px}
+.reset.primary{background:var(--accent);border-color:var(--accent);color:var(--stat-ink)}
+.reset[disabled]{opacity:.45;cursor:not-allowed}
+.out{display:grid;gap:6px}
+.out textarea{font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;width:100%;resize:vertical;overflow-wrap:anywhere}
+.incoming{grid-column:1/-1;background:var(--good-soft);border:1px solid var(--good);border-radius:10px;padding:12px 14px;display:grid;gap:8px}
+.incoming p{margin:0}

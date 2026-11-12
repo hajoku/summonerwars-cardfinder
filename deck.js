@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611121049').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611121302').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -176,6 +176,7 @@ function renderDeck(){
   const tot=total();
   const chk=checks(cards);
   $('deckTot').innerHTML=`${tot} cards <span class="legal ${chk.legal?'ok':'bad'}">${chk.legal?'✓ Legal deck':'✗ Not legal yet'}</span>`;
+  lastChk=chk;$('exportDeck').disabled=!chk.legal;$('exportHint').hidden=chk.legal;
   const per=ORDER.map(([cls,l])=>[l,cards.filter(c=>c.cls===cls).reduce((a,c)=>a+DECK[c.n],0)]);
   $('deckSum').innerHTML=per.map(([l,n])=>`<span class="pill">${l} <b>${n}</b></span>`).join('');
   $('deckChecks').innerHTML=chk.list.map(x=>`<li class="${x.ok?'ok':'bad'}"><span aria-hidden="true">${x.ok?'✓':'✗'}</span> ${esc(x.txt)}</li>`).join('')+`<li class="info"><span aria-hidden="true">ℹ</span> Gates (one 10-life, three 5-life) are part of every deck and not listed here.</li>`;
@@ -190,6 +191,84 @@ function renderDeck(){
   if(evs.length)html+=sec('Events',evs.reduce((a,c)=>a+DECK[c.n],0),view==='table'?table(evs,'Event'):evs.map(c=>card(c)).join(''));
   $('list').innerHTML=html;
 }
+// ---- share link & export ----
+let lastChk=null;
+const BYID=Object.fromEntries(D.cards.map(c=>[c.id,c]));
+const crank=c=>({'Summoner Unit':0,'Champion Unit':1,'Common Unit':2,'Epic Event':3,'Standard Event':4})[c.cls];
+const byOrder=(a,b)=>crank(a)-crank(b)||a.id.localeCompare(b.id,undefined,{numeric:true});
+let NAME='';try{NAME=localStorage.getItem('sw-name')||'';}catch(e){}
+$('deckName').value=NAME;
+$('deckName').addEventListener('input',e=>{NAME=e.target.value;try{localStorage.setItem('sw-name',NAME);}catch(e){}});
+function encodeDeck(deck){
+  return Object.keys(deck).map(n=>BY[n]).sort(byOrder).map(c=>c.id+(deck[c.n]>1?'x'+deck[c.n]:'')).join('.');
+}
+function decodeDeck(s){
+  const out={};let bad=0;
+  for(const part of (s||'').split('.')){
+    const m=part.match(/^([a-z]{2}[ue]\d+)(?:x(\d+))?$/);
+    if(!m||!BYID[m[1]]){if(part)bad++;continue;}
+    const c=BYID[m[1]];out[c.n]=(out[c.n]||0)+Math.min(99,Number(m[2]||1));
+  }
+  return {deck:out,bad};
+}
+function showOut(label,text,dl){
+  $('out').hidden=false;$('outLbl').textContent=label;$('outTxt').value=text;$('outMsg').textContent='';
+  $('outDl').hidden=!dl;$('outDl').onclick=dl||null;
+  $('outTxt').rows=Math.min(8,Math.max(2,Math.ceil(text.length/60)));
+}
+async function copyOut(){
+  const v=$('outTxt').value;
+  try{await navigator.clipboard.writeText(v);$('outMsg').textContent='Copied to clipboard.';}
+  catch(e){$('outTxt').focus();$('outTxt').select();$('outMsg').textContent='Copy was blocked by the browser. The text is selected, copy it manually.';}
+}
+$('outCopy').addEventListener('click',copyOut);
+$('outClose').addEventListener('click',()=>{$('out').hidden=true;});
+$('shareDeck').addEventListener('click',()=>{
+  if(!total()){showOut('Share link','Add cards first, then share the deck.');return;}
+  const q=new URLSearchParams();q.set('deck',encodeDeck(DECK));if(NAME.trim())q.set('name',NAME.trim());
+  const url=location.origin+location.pathname+'#'+q.toString();
+  showOut('Share link (works for any deck, legal or not)',url);copyOut();
+});
+$('exportDeck').addEventListener('click',()=>{
+  if(!lastChk||!lastChk.legal)return;
+  const summ=lastChk.summ, start=[...(D.start[summ.f]||[])];
+  // the app's list is the draw pile: no summoner, no starting units, no 10-life gate; plus 3 five-life gates
+  const pile={...DECK};delete pile[summ.n];
+  start.forEach(n=>{pile[n]--;if(!pile[n])delete pile[n];});
+  const codes=[];
+  Object.keys(pile).map(n=>BY[n]).sort(byOrder).forEach(c=>{for(let i=0;i<pile[c.n];i++)codes.push(c.id);});
+  codes.push('g1','g1','g1');
+  const title=NAME.trim()||'New Deck';
+  const json=JSON.stringify({title,deck:{faction:summ.f,deck:codes.join(' ')}});
+  showOut('Export for the app (JSON)',json,()=>{
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([json],{type:'application/json'}));
+    a.download=(title.replace(/[^\w\- ]+/g,'').trim().replace(/\s+/g,'_')||'deck')+'.json';
+    document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+  });
+  copyOut();
+});
+// opening a shared link
+let pending=null;
+function clearHash(){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){location.hash='';}}
+function applyDeck(deck,name){
+  DECK={...deck};saveDeck();
+  if(name!==undefined){NAME=name;$('deckName').value=name;try{localStorage.setItem('sw-name',name);}catch(e){}}
+  badge();render(false);
+}
+function readHash(){
+  const h=location.hash.replace(/^#/,'');if(!h)return;
+  const q=new URLSearchParams(h);if(!q.has('deck'))return;
+  const {deck,bad}=decodeDeck(q.get('deck')),name=q.get('name')||'';
+  clearHash();
+  const n=Object.values(deck).reduce((a,b)=>a+b,0);
+  if(!total()||encodeDeck(deck)===encodeDeck(DECK)){applyDeck(deck,name);setMode('deck');return;}
+  pending={deck,name};
+  $('incomingTxt').textContent=`This link contains a deck${name?` “${name}”`:''} with ${n} cards${bad?` (${bad} unknown card code${bad>1?'s':''} skipped)`:''}. Replace your current deck (${total()} cards)?`;
+  $('incoming').hidden=false;
+}
+$('inReplace').addEventListener('click',()=>{if(pending){applyDeck(pending.deck,pending.name);pending=null;}$('incoming').hidden=true;setMode('deck');});
+$('inKeep').addEventListener('click',()=>{pending=null;$('incoming').hidden=true;});
+window.addEventListener('hashchange',readHash);
 function setMode(m){mode=m;
   $('tabs').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===m));
   document.querySelector('.wrap').classList.toggle('deckmode',m==='deck');
@@ -215,4 +294,5 @@ badge();
 render();
 let m0='search';try{m0=localStorage.getItem('sw-mode')||'search';}catch(e){}
 setMode(m0==='deck'?'deck':'search');
+readHash();
 })();

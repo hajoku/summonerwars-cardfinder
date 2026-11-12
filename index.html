@@ -7,11 +7,15 @@
 <meta name="description" content="Search and filter all Summoner Wars (Second Edition) cards by deck symbol, faction, class, ability groups, cost, life and strength.">
 <link rel="icon" href="img/symbols/Mercenary.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Alegreya+Sans:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="style.css?v=202611121049">
-<link rel="stylesheet" href="deck.css?v=202611121049">
+<link rel="stylesheet" href="style.css?v=202611121302">
+<link rel="stylesheet" href="deck.css?v=202611121302">
 </head>
 <body>
 <div class="wrap">
+  <div class="incoming" id="incoming" hidden role="region" aria-label="Shared deck">
+    <p id="incomingTxt"></p>
+    <div class="dact"><button type="button" class="reset primary" id="inReplace">Replace my deck</button><button type="button" class="reset" id="inKeep">Keep my deck</button></div>
+  </div>
   <header><h1>Deck Builder</h1><span class="count" id="count"></span>
     <div class="modes">
       <div class="seg tabs" id="tabs"><button type="button" data-v="search" aria-pressed="true">Search</button><button type="button" data-v="deck" aria-pressed="false">Deck <span class="badge" id="deckN">0</span></button></div>
@@ -61,10 +65,22 @@
 
   <section class="deckview" id="deckView" hidden aria-label="Current deck">
     <div class="dhead">
+      <label class="dname"><span class="lbl">Deck name</span><input type="text" id="deckName" maxlength="60" placeholder="New Deck" autocomplete="off"></label>
       <div class="dtot" id="deckTot"></div>
       <div class="dsum" id="deckSum"></div>
       <ul class="checks" id="deckChecks" aria-label="Deck rules"></ul>
-      <div class="dact"><button type="button" class="reset" id="clearDeck">Clear deck</button></div>
+      <div class="dact">
+        <button type="button" class="reset" id="shareDeck">Share link</button>
+        <button type="button" class="reset" id="exportDeck">Export for app</button>
+        <button type="button" class="reset" id="clearDeck">Clear deck</button>
+      </div>
+      <p class="hint" id="exportHint" hidden>Export is available once the deck is legal.</p>
+      <div class="out" id="out" hidden>
+        <label class="lbl" for="outTxt" id="outLbl"></label>
+        <textarea id="outTxt" rows="3" readonly></textarea>
+        <div class="dact"><button type="button" class="reset primary" id="outCopy">Copy</button><button type="button" class="reset" id="outDl" hidden>Download .json</button><button type="button" class="reset" id="outClose">Close</button></div>
+        <p class="hint" id="outMsg" aria-live="polite"></p>
+      </div>
     </div>
   </section>
 
@@ -81,6 +97,6 @@
     <p>Summoner Wars, card names, card texts, faction logos and deck symbols © Plaid Hat Games. Card data compiled from <a href="https://sw-zone.com" rel="noopener">sw-zone.com</a> and <a href="https://rulespal.com" rel="noopener">rulespal.com</a>. It may contain errors; the printed cards are authoritative.</p>
   </footer>
 </div>
-<script src="deck.js?v=202611121049" defer></script>
+<script src="deck.js?v=202611121302" defer></script>
 </body>
 </html>
