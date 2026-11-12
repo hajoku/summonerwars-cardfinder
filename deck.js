@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611121309').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611121311').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -176,7 +176,7 @@ function renderDeck(){
   const tot=total();
   const chk=checks(cards);
   $('deckTot').innerHTML=`${tot} cards <span class="legal ${chk.legal?'ok':'bad'}">${chk.legal?'✓ Legal deck':'✗ Not legal yet'}</span>`;
-  lastChk=chk;$('exportDeck').disabled=!chk.legal;$('exportHint').hidden=chk.legal;
+  lastChk=chk;$('exportDeck').hidden=!EXPORT_ON;$('exportHint').hidden=!EXPORT_ON||chk.legal;$('exportDeck').disabled=!chk.legal;
   const per=ORDER.map(([cls,l])=>[l,cards.filter(c=>c.cls===cls).reduce((a,c)=>a+DECK[c.n],0)]);
   $('deckSum').innerHTML=per.map(([l,n])=>`<span class="pill">${l} <b>${n}</b></span>`).join('');
   $('deckChecks').innerHTML=chk.list.map(x=>`<li class="${x.ok?'ok':'bad'}"><span aria-hidden="true">${x.ok?'✓':'✗'}</span> ${esc(x.txt)}</li>`).join('')+`<li class="info"><span aria-hidden="true">ℹ</span> Gates (one 10-life, three 5-life) are part of every deck and not listed here.</li>`;
@@ -192,6 +192,8 @@ function renderDeck(){
   $('list').innerHTML=html;
 }
 // ---- share link & export ----
+// App export is switched off until the official card code list is available.
+const EXPORT_ON=false;
 let lastChk=null;
 const BYID=Object.fromEntries(D.cards.map(c=>[c.id,c]));
 const crank=c=>({'Summoner Unit':0,'Champion Unit':1,'Common Unit':2,'Epic Event':3,'Standard Event':4})[c.cls];
@@ -230,7 +232,7 @@ $('shareDeck').addEventListener('click',()=>{
   showOut('Share link (works for any deck, legal or not)',url);copyOut();
 });
 $('exportDeck').addEventListener('click',()=>{
-  if(!lastChk||!lastChk.legal)return;
+  if(!EXPORT_ON||!lastChk||!lastChk.legal)return;
   const summ=lastChk.summ, start=[...(D.start[summ.f]||[])];
   // the app's list is the draw pile: no summoner, no starting units, no 10-life gate; plus 3 five-life gates
   const pile={...DECK};delete pile[summ.n];
