@@ -2,85 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Summoner Wars Deck Builder</title>
-<meta name="description" content="Search and filter all Summoner Wars (Second Edition) cards by deck symbol, faction, class, ability groups, cost, life and strength.">
-<link rel="icon" href="img/symbols/Mercenary.png">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Alegreya+Sans:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="style.css?v=202611121049">
-<link rel="stylesheet" href="deck.css?v=202611121049">
+<meta http-equiv="refresh" content="0; url=./">
+<link rel="canonical" href="./">
 </head>
-<body>
-<div class="wrap">
-  <header><h1>Deck Builder</h1><span class="count" id="count"></span>
-    <div class="modes">
-      <div class="seg tabs" id="tabs"><button type="button" data-v="search" aria-pressed="true">Search</button><button type="button" data-v="deck" aria-pressed="false">Deck <span class="badge" id="deckN">0</span></button></div>
-      <div class="seg kind" id="kind"><button type="button" data-v="Unit" aria-pressed="true">Units</button><button type="button" data-v="Event" aria-pressed="false">Events</button></div>
-    </div></header>
-
-  <section class="filters" id="fbox" aria-label="Filters">
-    <h2>Filters</h2>
-    <div class="fbody">
-      <div class="grp"><label class="lbl" for="q">Search</label>
-        <input type="search" id="q" placeholder="Name, ability, text …" autocomplete="off"></div>
-
-      <div class="grp"><div class="lbl">Deck symbol</div>
-        <div class="symgrid none" id="symChips"></div></div>
-
-      <div class="grp"><label class="lbl" for="fac">Faction</label>
-        <select id="fac"><option value="">All factions</option></select></div>
-
-      <div class="grp"><div class="lbl">Class</div>
-        <div class="chips" id="cls"></div></div>
-
-      <div class="grp"><div class="lbl">Structure</div>
-        <div class="seg" id="struct"><button type="button" data-v="" aria-pressed="true">Any</button><button type="button" data-v="1" aria-pressed="false">Yes</button><button type="button" data-v="0" aria-pressed="false">No</button></div></div>
-
-      <div class="grp" data-for="Unit"><div class="lbl">Attack</div>
-        <div class="seg" id="mr"><button type="button" data-v="" aria-pressed="true">Any</button><button type="button" data-v="Melee" aria-pressed="false">Melee</button><button type="button" data-v="Ranged" aria-pressed="false">Ranged</button></div></div>
-
-      <div class="grp" data-for="Event" hidden><div class="lbl">Play phase</div>
-        <div class="chips" id="ph"></div></div>
-
-      <details class="grp sub" id="grpBox">
-        <summary class="lbl"><span id="grpLbl">Ability groups</span> <span class="grpn" id="grpN"></span></summary>
-        <p class="hint" id="grpHint">Hover a group to see its abilities.</p>
-        <div class="chips" id="grps"></div>
-      </details>
-
-      <div class="grp"><div class="lbl">Cost</div>
-        <div class="range"><input type="number" id="costMin" inputmode="numeric" placeholder="min" aria-label="Cost minimum"><span>–</span><input type="number" id="costMax" inputmode="numeric" placeholder="max" aria-label="Cost maximum"></div></div>
-      <div class="grp"><div class="lbl">Life</div>
-        <div class="range"><input type="number" id="hpMin" inputmode="numeric" placeholder="min" aria-label="Life minimum"><span>–</span><input type="number" id="hpMax" inputmode="numeric" placeholder="max" aria-label="Life maximum"></div></div>
-      <div class="grp" data-for="Unit"><div class="lbl">Strength</div>
-        <div class="range"><input type="number" id="strMin" inputmode="numeric" placeholder="min" aria-label="Strength minimum"><span>–</span><input type="number" id="strMax" inputmode="numeric" placeholder="max" aria-label="Strength maximum"></div></div>
-
-      <button class="reset" id="reset" type="button">Reset filters</button>
-    </div>
-  </section>
-
-  <section class="deckview" id="deckView" hidden aria-label="Current deck">
-    <div class="dhead">
-      <div class="dtot" id="deckTot"></div>
-      <div class="dsum" id="deckSum"></div>
-      <ul class="checks" id="deckChecks" aria-label="Deck rules"></ul>
-      <div class="dact"><button type="button" class="reset" id="clearDeck">Clear deck</button></div>
-    </div>
-  </section>
-
-  <main class="list">
-    <div class="toolbar"><span class="count" id="count2"></span>
-      <div class="tools"><div class="seg view" id="view"><button type="button" data-v="list" aria-pressed="true">List</button><button type="button" data-v="table" aria-pressed="false">Table</button></div>
-      <label style="display:flex;gap:8px;align-items:center"><span class="lbl">Sort by</span>
-        <select id="sort"><option value="n">Name</option><option value="f">Faction</option><option value="cost">Cost</option><option value="hp">Life</option><option value="str" data-for="Unit">Strength</option></select></label></div></div>
-    <div class="list" id="list"></div>
-  </main>
-
-  <footer class="foot">
-    <p>Unofficial fan-made reference. Not affiliated with or endorsed by Plaid Hat Games. Free and non-commercial.</p>
-    <p>Summoner Wars, card names, card texts, faction logos and deck symbols © Plaid Hat Games. Card data compiled from <a href="https://sw-zone.com" rel="noopener">sw-zone.com</a> and <a href="https://rulespal.com" rel="noopener">rulespal.com</a>. It may contain errors; the printed cards are authoritative.</p>
-  </footer>
-</div>
-<script src="deck.js?v=202611121049" defer></script>
-</body>
+<body><p>The deck builder has moved to the <a href="./">main page</a>.</p></body>
 </html>
