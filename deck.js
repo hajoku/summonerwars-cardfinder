@@ -118,9 +118,7 @@ function renderDeck(){
   const tot=total();
   $('deckTot').textContent=tot===1?'1 card':`${tot} cards`;
   const per=ORDER.map(([cls,l])=>[l,cards.filter(c=>c.cls===cls).reduce((a,c)=>a+DECK[c.n],0)]);
-  const summ=cards.find(c=>c.cls==='Summoner Unit');
-  const sy=summ?`<span class="pill syms">${summ.n}: ${summ.sy.map(s=>`<img src="img/symbols/${s}.png" alt="${s}" title="${s}">`).join('')}</span>`:'';
-  $('deckSum').innerHTML=per.map(([l,n])=>`<span class="pill">${l} <b>${n}</b></span>`).join('')+sy;
+  $('deckSum').innerHTML=per.map(([l,n])=>`<span class="pill">${l} <b>${n}</b></span>`).join('');
   if(!tot){$('deckList').innerHTML=`<div class="dempty">Your deck is empty. Switch to Search and use the + buttons to add cards.</div>`;return;}
   $('deckList').innerHTML=ORDER.map(([cls,l])=>{
     const g=cards.filter(c=>c.cls===cls).sort((a,b)=>(b.cost??-1)-(a.cost??-1)||a.n.localeCompare(b.n));
@@ -132,7 +130,7 @@ function drow(c){
   const st=[];
   if(c.cost!==null)st.push(`<span class="stat"><i>Cost</i>${c.cost}</span>`);
   if(c.hp!==null)st.push(`<span class="stat"><i>Life</i>${c.hp}</span>`);
-  if(c.str!==null)st.push(`<span class="stat"><i>${c.mr==='Ranged'?'Rng':'Mel'}</i>${c.str}</span>`);
+  if(c.str!==null)st.push(`<span class="stat"><i>${c.mr==='Ranged'?'Ranged':'Melee'}</i>${c.str}</span>`);
   const sy=c.sy.map(s=>`<img src="img/symbols/${s}.png" alt="${s}" title="${s}">`).join('');
   const isOpen=open.has(c.n);
   return `<div class="drow">${ctl(c)}<div class="di"><button type="button" data-tx="${esc(c.n)}" aria-expanded="${isOpen}">${esc(c.n)}</button><small>${esc(c.f)}${c.ph?' · '+esc(c.ph):''}</small></div><div class="dr">${st.join('')}<span class="syms">${sy}</span></div>${isOpen?`<p class="dtx">${fmt(c)}</p>`:''}</div>`;
