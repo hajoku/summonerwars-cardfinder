@@ -1,9 +1,11 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611121037').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611121039').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
-for(const k of Object.keys(DECK))if(!BY[k]||!(DECK[k]>0))delete DECK[k];
+const SP='start:';
+const cardOf=k=>BY[k.startsWith(SP)?k.slice(SP.length):k];
+for(const k of Object.keys(DECK))if(!cardOf(k)||!(DECK[k]>0))delete DECK[k];
 const saveDeck=()=>{try{localStorage.setItem('sw-deck',JSON.stringify(DECK));}catch(e){}};
 const cnt=name=>DECK[name]||0;
 let mode='search';
@@ -76,7 +78,7 @@ function render(reset=true){
 }
 function fmt(c){return esc(c.tx).split(' // ').map(p=>{const m=p.match(/^([^.]{2,32})\. (.*)$/);return c.t==='Unit'&&m?`<span class="ab">${m[1]}.</span> ${m[2]}`:p;}).join('<br>');}
 function abNames(c){return c.tx.split(' // ').map(p=>{const i=p.indexOf('. ');const nm=i>0&&i<34?p.slice(0,i):p;return `<span title="${esc(p)}">${esc(nm)}</span>`;}).join(', ');}
-function table(rows,kind=st.kind,fixed=false){
+function table(rows,kind=st.kind,pre=''){
   const U=kind==='Unit', key=$('sort').value;
   const cols=U?[['Name','n'],['Faction','f'],['Class'],['Struct.'],['Cost','cost'],['Life','hp'],['Str.','str'],['Attack'],['Symbols'],['Abilities']]
               :[['Name','n'],['Faction','f'],['Class'],['Struct.'],['Cost','cost'],['Life','hp'],['Phase'],['Symbols'],['Effect']];
@@ -86,11 +88,11 @@ function table(rows,kind=st.kind,fixed=false){
   const body=rows.map(c=>{
     const sy=c.sy.map(s=>`<img src="img/symbols/${s}.png" alt="${s}" title="${s}">`).join('');
     const common=`<td class="nm">${esc(c.n)}</td><td class="fa">${esc(c.f)}</td><td class="cl">${c.c}</td><td class="ctr">${c.st?'<span class="yes">✓</span>':''}</td><td class="num">${v(c.cost)}</td><td class="num">${v(c.hp)}</td>`;
-    return `<tr${fixed?'':` data-card="${esc(c.n)}"`}${fixed||cnt(c.n)?' class="indeck"':''}><td class="dkc">${fixed?'<span class="tag stu">Start</span>':ctl(c)}</td>`+common+(U?`<td class="num">${v(c.str)}</td><td>${c.mr}</td>`:`<td class="cl">${esc((c.ph||'').replace(' Phase',''))}</td>`)+`<td class="sy">${sy}</td>`+`<td class="tx">${fmt(c)}</td></tr>`;}).join('');
+    return `<tr data-card="${esc(pre+c.n)}"${cnt(pre+c.n)?' class="indeck"':''}><td class="dkc">${ctl(c,pre)}</td>`+common+(U?`<td class="num">${v(c.str)}</td><td>${c.mr}</td>`:`<td class="cl">${esc((c.ph||'').replace(' Phase',''))}</td>`)+`<td class="sy">${sy}</td>`+`<td class="tx">${fmt(c)}</td></tr>`;}).join('');
   return `<div class="tbl"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
 }
-function ctl(c){const k=cnt(c.n);return `<div class="dk${k?' on':''}" data-n="${esc(c.n)}"><button type="button" class="dm" aria-label="Remove one ${esc(c.n)}"${k?'':' disabled'}>−</button><span class="dn" aria-live="polite">${k}</span><button type="button" class="dp" aria-label="Add one ${esc(c.n)}">+</button></div>`;}
-function card(c,fixed=false){
+function ctl(c,pre=''){const key=pre+c.n,k=cnt(key);return `<div class="dk${k?' on':''}" data-n="${esc(key)}"><button type="button" class="dm" aria-label="Remove one ${esc(c.n)}"${k?'':' disabled'}>−</button><span class="dn" aria-live="polite">${k}</span><button type="button" class="dp" aria-label="Add one ${esc(c.n)}">+</button></div>`;}
+function card(c,pre=''){
   const syms=c.sy.map(s=>`<img src="img/symbols/${s}.png" alt="${s}" title="${s}">`).join('');
   const stats=[];
   if(c.cost!==null)stats.push(`<span class="stat"><i>Cost</i>${c.cost}</span>`);
@@ -98,33 +100,35 @@ function card(c,fixed=false){
   if(c.str!==null)stats.push(`<span class="stat"><i>${c.mr==='Ranged'?'Ranged':'Melee'}</i>${c.str}</span>`);
   const tags=[];if(c.st)tags.push('Structure');if(c.lim)tags.push('Limited');if(c.ph)tags.push(c.ph);
   const tx=esc(c.tx).split(' // ').map(p=>{const m=p.match(/^([^.]{2,32})\. (.*)$/);return c.t==='Unit'&&m?`<span class="ab">${m[1]}.</span> ${m[2]}`:p;}).join('<br>');
-  return `<article class="card${fixed||cnt(c.n)?' indeck':''}"${fixed?'':` data-card="${esc(c.n)}"`}><div class="top"><div class="nm"><b>${esc(c.n)}</b><small>${esc(c.f)} · ${c.cls}</small></div><div class="syms">${syms}</div>${fixed?'<span class="tag stu">Starting unit</span>':ctl(c)}</div>
+  return `<article class="card${cnt(pre+c.n)?' indeck':''}" data-card="${esc(pre+c.n)}"><div class="top"><div class="nm"><b>${esc(c.n)}</b><small>${esc(c.f)} · ${pre?'Starting unit':c.cls}</small></div><div class="syms">${syms}</div>${ctl(c,pre)}</div>
   <div class="stats">${stats.join('')}${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div><p class="tx">${tx}</p></article>`;
 }
 // ---- deck ----
 const ORDER=[['Summoner Unit','Summoner'],['Champion Unit','Champions'],['Common Unit','Commons'],['Epic Event','Epic Events'],['Standard Event','Standard Events']];
-function change(name,d){
-  const before=cnt(name), k=Math.max(0,before+d);
-  setCount(name,k);
-  // adding a summoner also adds 2 copies of its faction's epic event (can be removed again)
-  const c=BY[name];
-  if(c.cls==='Summoner Unit'&&before===0&&k>0){
+const isStart=k=>k.startsWith(SP);
+function change(key,d){
+  const before=cnt(key), k=Math.max(0,before+d);
+  setCount(key,k);
+  // convenience: adding a summoner also adds its starting units and 2x its epic event (all removable)
+  const c=cardOf(key);
+  if(!isStart(key)&&c.cls==='Summoner Unit'&&before===0&&k>0){
     const epic=D.cards.find(x=>x.cls==='Epic Event'&&x.f===c.f);
     if(epic&&!cnt(epic.n))setCount(epic.n,2);
+    if(!Object.keys(DECK).some(isStart))(D.start[c.f]||[]).forEach(n=>setCount(SP+n,cnt(SP+n)+1));
   }
   badge();
   if(mode==='deck')renderDeck();
 }
-function setCount(name,k){
-  if(k)DECK[name]=k;else delete DECK[name];
+function setCount(key,k){
+  if(k)DECK[key]=k;else delete DECK[key];
   saveDeck();
-  document.querySelectorAll(`.dk[data-n="${CSS.escape(name)}"]`).forEach(el=>{
+  document.querySelectorAll(`.dk[data-n="${CSS.escape(key)}"]`).forEach(el=>{
     el.classList.toggle('on',k>0);el.querySelector('.dn').textContent=k;el.querySelector('.dm').disabled=!k;});
-  document.querySelectorAll(`[data-card="${CSS.escape(name)}"]`).forEach(el=>el.classList.toggle('indeck',k>0));
+  document.querySelectorAll(`[data-card="${CSS.escape(key)}"]`).forEach(el=>el.classList.toggle('indeck',k>0));
 }
 function total(){return Object.values(DECK).reduce((a,b)=>a+b,0);}
-function badge(){const s=Object.keys(DECK).map(n=>BY[n]).filter(c=>c.cls==='Summoner Unit');const st=s.length===1&&D.start[s[0].f]?D.start[s[0].f].length:0;$('deckN').textContent=total()+st;}
-function checks(cards){
+function badge(){$('deckN').textContent=total();}
+function checks(cards,starts){
   const out=[];const add=(ok,txt)=>out.push({ok,txt});
   const of=cls=>cards.filter(c=>c.cls===cls);
   const sum=a=>a.reduce((x,c)=>x+DECK[c.n],0);
@@ -142,6 +146,7 @@ function checks(cards){
   add(nst===6, nst===6?'6 standard events':`Exactly 6 standard events needed (has ${nst})`);
   add(!overS.length, overS.length?`At most 2 copies per standard event (${overS.map(c=>c.n).join(', ')})`:'At most 2 copies per standard event');
   const ne=sum(EP);
+  const stTxt=starts.map(c=>`${DECK[SP+c.n]>1?DECK[SP+c.n]+'× ':''}${c.n}`).join(', ')||'none';
   if(summ){
     const own=D.cards.find(c=>c.cls==='Epic Event'&&c.f===summ.f);
     const ok=ne===2&&EP.length===1&&EP[0]===own;
@@ -149,32 +154,38 @@ function checks(cards){
     const sy=new Set(summ.sy);
     const bad=cards.filter(c=>c.cls!=='Summoner Unit'&&c.cls!=='Epic Event'&&!c.sy.some(s=>sy.has(s)));
     add(!bad.length, bad.length?`Cards without a matching deck symbol: ${bad.map(c=>c.n).join(', ')}`:'All cards share a deck symbol with the summoner');
-    const st=D.start[summ.f];
-    add(!!st, st?`Starting units: ${st.join(', ')} (added automatically)`:`Starting units for ${summ.f} are not in the data yet`);
+    const want=D.start[summ.f];
+    if(want){
+      const ok2=starts.length===want.length&&want.every(n=>DECK[SP+n]===1);
+      add(ok2, ok2?`Starting units: ${want.join(', ')}`:`Starting units must be ${want.join(' and ')} (has ${stTxt})`);
+    }else add(false,`Starting units for ${summ.f} are not in the data yet (has ${stTxt})`);
   }else{
     add(ne===2,`Exactly 2 epic events needed (has ${ne})`);
-    add(false,'Deck symbols can only be checked once a summoner is chosen');
+    add(false,'Deck symbols and starting units can only be checked once a summoner is chosen');
   }
   return {list:out,legal:out.every(x=>x.ok),summ};
 }
 function renderDeck(){
-  const cards=Object.keys(DECK).map(n=>BY[n]);
+  const keys=Object.keys(DECK);
+  const cards=keys.filter(k=>!isStart(k)).map(k=>BY[k]);
+  const starts=keys.filter(isStart).map(cardOf);
   const tot=total();
-  const chk=checks(cards);
-  const start=chk.summ&&D.start[chk.summ.f]?D.start[chk.summ.f].map(n=>BY[n]):[];
-  $('deckTot').innerHTML=`${tot+start.length} cards <span class="legal ${chk.legal?'ok':'bad'}">${chk.legal?'✓ Legal deck':'✗ Not legal yet'}</span>`;
+  const chk=checks(cards,starts);
+  $('deckTot').innerHTML=`${tot} cards <span class="legal ${chk.legal?'ok':'bad'}">${chk.legal?'✓ Legal deck':'✗ Not legal yet'}</span>`;
   const per=ORDER.map(([cls,l])=>[l,cards.filter(c=>c.cls===cls).reduce((a,c)=>a+DECK[c.n],0)]);
-  if(start.length)per.splice(1,0,['Starting units',start.length]);
+  per.splice(1,0,['Starting units',starts.reduce((a,c)=>a+DECK[SP+c.n],0)]);
   $('deckSum').innerHTML=per.map(([l,n])=>`<span class="pill">${l} <b>${n}</b></span>`).join('');
   $('deckChecks').innerHTML=chk.list.map(x=>`<li class="${x.ok?'ok':'bad'}"><span aria-hidden="true">${x.ok?'✓':'✗'}</span> ${esc(x.txt)}</li>`).join('')+`<li class="info"><span aria-hidden="true">ℹ</span> Gates (one 10-life, three 5-life) are part of every deck and not listed here.</li>`;
-  if(!tot){$('count2').textContent='0 cards in deck';$('list').innerHTML=`<div class="empty">Your deck is empty. Switch to Search and use the + buttons to add cards.</div>`;return;}
-  $('count2').textContent=`${tot+start.length} cards in deck`;
+  $('count2').textContent=tot===1?'1 card in deck':`${tot} cards in deck`;
+  // starting-unit rows: current ones plus the summoner's defaults (so removed ones can be added back)
+  const stRows=[...new Set([...starts.map(c=>c.n),...(chk.summ&&D.start[chk.summ.f]||[])])].map(n=>BY[n]);
+  if(!tot&&!stRows.length){$('list').innerHTML=`<div class="empty">Your deck is empty. Switch to Search and use the + buttons to add cards.</div>`;return;}
   const rank=c=>ORDER.findIndex(([cls])=>cls===c.cls);
   const sec=(l,n,body)=>`<section class="dsec"><h3 class="dgh"><span>${l}</span><span>${n}</span></h3>${body}</section>`;
   let html='';
   const units=sortCards(cards.filter(c=>c.t==='Unit')).sort((a,b)=>rank(a)-rank(b));
   if(units.length)html+=sec('Units',units.reduce((a,c)=>a+DECK[c.n],0),view==='table'?table(units,'Unit'):units.map(c=>card(c)).join(''));
-  if(start.length)html+=sec('Starting units',start.length,view==='table'?table(start,'Unit',true):start.map(c=>card(c,true)).join(''));
+  if(stRows.length)html+=sec('Starting units',starts.reduce((a,c)=>a+DECK[SP+c.n],0),view==='table'?table(stRows,'Unit',SP):stRows.map(c=>card(c,SP)).join(''));
   const evs=sortCards(cards.filter(c=>c.t==='Event')).sort((a,b)=>rank(a)-rank(b));
   if(evs.length)html+=sec('Events',evs.reduce((a,c)=>a+DECK[c.n],0),view==='table'?table(evs,'Event'):evs.map(c=>card(c)).join(''));
   $('list').innerHTML=html;
