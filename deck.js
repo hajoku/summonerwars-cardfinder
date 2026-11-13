@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611121311').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611132014').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -169,14 +169,20 @@ function checks(cards){
     add(ne===2,`Exactly 2 epic events needed (has ${ne})`);
     add(false,'Deck symbols and starting units can only be checked once a summoner is chosen');
   }
-  return {list:out,legal:out.every(x=>x.ok),summ};
+  // export needs only what the app derives from the faction: 1 summoner, 2x its epic event, its starting units
+  let exportable=false;
+  if(summ){
+    const own=D.cards.find(c=>c.cls==='Epic Event'&&c.f===summ.f);
+    exportable=!!own&&EP.length===1&&EP[0]===own&&DECK[own.n]===2&&start.every(n=>cnt(n)>=1)&&!!D.start[summ.f];
+  }
+  return {list:out,legal:out.every(x=>x.ok),summ,exportable};
 }
 function renderDeck(){
   const cards=Object.keys(DECK).map(k=>BY[k]);
   const tot=total();
   const chk=checks(cards);
   $('deckTot').innerHTML=`${tot} cards <span class="legal ${chk.legal?'ok':'bad'}">${chk.legal?'✓ Legal deck':'✗ Not legal yet'}</span>`;
-  lastChk=chk;$('exportDeck').hidden=!EXPORT_ON;$('exportHint').hidden=!EXPORT_ON||chk.legal;$('exportDeck').disabled=!chk.legal;
+  lastChk=chk;$('exportDeck').hidden=!EXPORT_ON;$('exportHint').hidden=!EXPORT_ON||chk.exportable;$('exportDeck').disabled=!chk.exportable;
   const per=ORDER.map(([cls,l])=>[l,cards.filter(c=>c.cls===cls).reduce((a,c)=>a+DECK[c.n],0)]);
   $('deckSum').innerHTML=per.map(([l,n])=>`<span class="pill">${l} <b>${n}</b></span>`).join('');
   $('deckChecks').innerHTML=chk.list.map(x=>`<li class="${x.ok?'ok':'bad'}"><span aria-hidden="true">${x.ok?'✓':'✗'}</span> ${esc(x.txt)}</li>`).join('')+`<li class="info"><span aria-hidden="true">ℹ</span> Gates (one 10-life, three 5-life) are part of every deck and not listed here.</li>`;
@@ -232,7 +238,7 @@ $('shareDeck').addEventListener('click',()=>{
   showOut('Share link (works for any deck, legal or not)',url);copyOut();
 });
 $('exportDeck').addEventListener('click',()=>{
-  if(!EXPORT_ON||!lastChk||!lastChk.legal)return;
+  if(!EXPORT_ON||!lastChk||!lastChk.exportable)return;
   const summ=lastChk.summ, start=[...(D.start[summ.f]||[])];
   // the app's list is the draw pile: no summoner, no starting units, no 10-life gate; plus 3 five-life gates
   const pile={...DECK};delete pile[summ.n];
