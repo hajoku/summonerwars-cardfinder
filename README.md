@@ -2,7 +2,7 @@
 
 Search and filter all cards of Summoner Wars (Second Edition): deck symbol, faction, class, structure, attack type, play phase, ability/effect groups, cost, life and strength. List and table view.
 
-Build decks with the + / − buttons on every card. The Deck tab shows the current deck and checks it against the deck construction rules (summoner, champions, commons, standard and epic events, copy limits, deck symbols, starting units). Adding a summoner also adds its starting units and two copies of its epic event. The deck is stored in your browser and can be shared as a link. Decks can be exported as JSON for the Summoner Wars Online app.
+Build decks with the + / − buttons on every card. The Deck tab shows the current deck and checks it against the deck construction rules (summoner, champions, commons, standard and epic events, copy limits, deck symbols, starting units). Adding a summoner also adds its starting units and two copies of its epic event. The deck is stored in your browser and can be shared as a link. Decks can be exported as JSON for the Summoner Wars Online app, and decks exported from the app can be imported.
 
 **Live:** https://hajoku.github.io/summonerwars-cardfinder/
 

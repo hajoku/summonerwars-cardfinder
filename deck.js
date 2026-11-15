@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611151629').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611151631').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -254,6 +254,38 @@ $('exportDeck').addEventListener('click',()=>{
     document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
   });
   copyOut();
+});
+// import a deck exported from the app
+const ALIAS=D.codeAlias||{};
+const cardByCode=code=>BYID[code]||(ALIAS[code]?BY[ALIAS[code]]:null);
+function parseAppDeck(text){
+  let o;
+  try{o=JSON.parse(text.trim());}catch(e){throw new Error('This is not valid JSON. Paste the full text the app exported, starting with { and ending with }.');}
+  const fac=o&&o.deck&&o.deck.faction, list=o&&o.deck&&o.deck.deck;
+  if(typeof fac!=='string'||typeof list!=='string')throw new Error('The JSON needs a "deck" object with "faction" and "deck" fields, as the app exports it.');
+  const summ=D.cards.find(c=>c.cls==='Summoner Unit'&&c.f.toLowerCase()===fac.trim().toLowerCase());
+  if(!summ)throw new Error(`Unknown faction “${fac}”.`);
+  const deck={[summ.n]:1};
+  (D.start[summ.f]||[]).forEach(n=>deck[n]=(deck[n]||0)+1);
+  const unknown=[];let gates=0;
+  for(const code of list.trim().split(/\s+/).filter(Boolean)){
+    if(/^g\d+$/.test(code)){gates++;continue;}
+    const c=cardByCode(code);
+    if(!c){unknown.push(code);continue;}
+    deck[c.n]=(deck[c.n]||0)+1;
+  }
+  return {deck,title:typeof o.title==='string'?o.title:'',unknown,summ};
+}
+$('importDeck').addEventListener('click',()=>{$('out').hidden=true;$('imp').hidden=false;$('impMsg').textContent='Importing replaces your current deck.';$('impTxt').focus();});
+$('impClose').addEventListener('click',()=>{$('imp').hidden=true;});
+$('impGo').addEventListener('click',()=>{
+  try{
+    const r=parseAppDeck($('impTxt').value);
+    applyDeck(r.deck,r.title);
+    $('impTxt').value='';$('imp').hidden=true;
+    renderDeck();
+    if(r.unknown.length){$('out').hidden=false;$('outLbl').textContent='Import finished with warnings';$('outTxt').value=`Unknown card codes skipped: ${r.unknown.join(', ')}`;$('outDl').hidden=true;$('outMsg').textContent='';}
+  }catch(e){$('impMsg').textContent=e.message;}
 });
 // opening a shared link
 let pending=null;
