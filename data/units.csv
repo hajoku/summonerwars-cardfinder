@@ -108,7 +108,6 @@ mru4,Mercenary,Ashia the Silent,Champion Unit,False,False,1,5,3,3,Melee,Mercenar
 mru1,Mercenary,Blacksaber,Champion Unit,False,False,1,1,5,3,Melee,Mercenary,Drawback,Treacherous
 mru3,Mercenary,Brub,Champion Unit,False,False,1,5,7,1,Ranged,Mercenary,Extra Attack,Chain Shot
 mru2,Mercenary,Khan Queso,Champion Unit,False,False,1,4,6,2,Melee,Mercenary,"Direct Damage, Splash Damage",Plague; Spread
-,Mercenary,The Realm Walker,Champion Unit,False,False,1,4,5,3,Melee,Mercenary,Movement,Gatewalk
 mru6,Mercenary,Tress,Champion Unit,False,False,1,4,5,1,Melee,Mercenary,"Strength, Defense",Adapt; Overcome
 mru5,Mercenary,Veldimax the Great,Champion Unit,False,False,1,0,2,2,Ranged,Mercenary,"Magic, Drawback",Magician; Dubious
 mwu1,Moonsteppe Wolves,Luna Nightsong,Summoner Unit,False,False,1,,13,3,Melee,"Mercenary, Spirit, Dark","Healing, Boost",Wax & Wane

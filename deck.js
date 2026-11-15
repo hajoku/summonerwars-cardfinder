@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611151626').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611151629').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -173,7 +173,7 @@ function checks(cards){
   let exportable=false;
   if(summ){
     const own=D.cards.find(c=>c.cls==='Epic Event'&&c.f===summ.f);
-    exportable=!!own&&EP.length===1&&EP[0]===own&&DECK[own.n]===2&&start.every(n=>cnt(n)>=1)&&!!D.start[summ.f]&&!cards.some(c=>c.id.startsWith('x-'));
+    exportable=!!own&&EP.length===1&&EP[0]===own&&DECK[own.n]===2&&start.every(n=>cnt(n)>=1)&&!!D.start[summ.f];
   }
   return {list:out,legal:out.every(x=>x.ok),summ,exportable};
 }
@@ -198,7 +198,7 @@ function renderDeck(){
   $('list').innerHTML=html;
 }
 // ---- share link & export ----
-// Card codes are the app's own; cards the app doesn't know have an id starting with 'x-'.
+// Card codes are the app's own.
 const EXPORT_ON=true;
 let lastChk=null;
 const BYID=Object.fromEntries(D.cards.map(c=>[c.id,c]));
