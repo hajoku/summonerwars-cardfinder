@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611132014').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611151626').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -173,7 +173,7 @@ function checks(cards){
   let exportable=false;
   if(summ){
     const own=D.cards.find(c=>c.cls==='Epic Event'&&c.f===summ.f);
-    exportable=!!own&&EP.length===1&&EP[0]===own&&DECK[own.n]===2&&start.every(n=>cnt(n)>=1)&&!!D.start[summ.f];
+    exportable=!!own&&EP.length===1&&EP[0]===own&&DECK[own.n]===2&&start.every(n=>cnt(n)>=1)&&!!D.start[summ.f]&&!cards.some(c=>c.id.startsWith('x-'));
   }
   return {list:out,legal:out.every(x=>x.ok),summ,exportable};
 }
@@ -198,8 +198,8 @@ function renderDeck(){
   $('list').innerHTML=html;
 }
 // ---- share link & export ----
-// App export is switched off until the official card code list is available.
-const EXPORT_ON=false;
+// Card codes are the app's own; cards the app doesn't know have an id starting with 'x-'.
+const EXPORT_ON=true;
 let lastChk=null;
 const BYID=Object.fromEntries(D.cards.map(c=>[c.id,c]));
 const crank=c=>({'Summoner Unit':0,'Champion Unit':1,'Common Unit':2,'Epic Event':3,'Standard Event':4})[c.cls];
@@ -213,7 +213,7 @@ function encodeDeck(deck){
 function decodeDeck(s){
   const out={};let bad=0;
   for(const part of (s||'').split('.')){
-    const m=part.match(/^([a-z]{2}[ue]\d+)(?:x(\d+))?$/);
+    const m=part.match(/^([a-z0-9-]+?)(?:x(\d+))?$/);
     if(!m||!BYID[m[1]]){if(part)bad++;continue;}
     const c=BYID[m[1]];out[c.n]=(out[c.n]||0)+Math.min(99,Number(m[2]||1));
   }
