@@ -88,3 +88,22 @@
 
 .filters .dact .reset{flex:1}
 .linkbox{font:12.5px ui-monospace,Menlo,monospace;width:100%;padding:6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+
+.dstats{border-top:1px solid var(--line);padding-top:8px}
+.dstats summary{cursor:pointer}
+#statBody{display:grid;gap:12px;margin-top:8px}
+.stl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.stl span{font-weight:400;text-transform:none;letter-spacing:0}
+.curve{display:flex;gap:6px;align-items:flex-end}
+.cb{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;min-width:0}
+.cb .bw{height:102px;width:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px}
+.cb .bar{width:100%;max-width:38px;background:var(--accent);border-radius:4px 4px 0 0;min-height:0}
+.cb .cn{font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink)}
+.cb .cl{font-size:12px;color:var(--muted);border-top:1px solid var(--line);width:100%;text-align:center;padding-top:2px}
+.sgrid{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:14px;color:var(--muted)}
+.sgrid b{color:var(--ink);font-variant-numeric:tabular-nums}
+.stab{border-collapse:collapse;margin-top:8px;font-size:14px;font-variant-numeric:tabular-nums}
+.stab th,.stab td{padding:3px 12px 3px 0;text-align:right}
+.stab thead th{font-size:12px;font-weight:600;color:var(--muted)}
+.stab tbody th{text-align:left;font-weight:400;color:var(--muted)}
+.stab td{font-weight:700;color:var(--ink)}
