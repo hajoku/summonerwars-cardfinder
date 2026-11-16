@@ -120,3 +120,4 @@
 .sline{display:flex;gap:16px;margin-top:6px;font-size:14px;color:var(--muted)}
 .sline b{color:var(--ink);font-variant-numeric:tabular-nums}
 .legend b{color:var(--ink)}
+.starter{display:flex;gap:6px}.starter select{flex:1;min-width:0}.starter .reset{flex:none}

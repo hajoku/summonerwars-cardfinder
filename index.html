@@ -7,8 +7,8 @@
 <meta name="description" content="Search and filter all Summoner Wars (Second Edition) cards by deck symbol, faction, class, ability groups, cost, life and strength.">
 <link rel="icon" href="img/symbols/Mercenary.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Alegreya+Sans:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="style.css?v=202611161214">
-<link rel="stylesheet" href="deck.css?v=202611161214">
+<link rel="stylesheet" href="style.css?v=202611161221">
+<link rel="stylesheet" href="deck.css?v=202611161221">
 </head>
 <body>
 <div class="wrap">
@@ -77,6 +77,7 @@
         <button type="button" class="reset" id="importDeck">Import from app</button>
         <button type="button" class="reset" id="clearDeck">Clear deck</button>
       </div>
+      <div class="starter"><select id="starterSel" aria-label="Faction starter deck"><option value="">Load a faction starter deck…</option></select><button type="button" class="reset" id="loadStarter" disabled>Load</button></div>
       <div class="out" id="imp" hidden>
         <label class="lbl" for="impTxt">Paste a deck exported from the app (JSON)</label>
         <textarea id="impTxt" rows="4" placeholder='{"title":"My Deck","deck":{"faction":"Breakers","deck":"bdu4 mru2 …"}}'></textarea>
@@ -106,6 +107,6 @@
     <p>Summoner Wars, card names, card texts, faction logos and deck symbols © Plaid Hat Games. Card data compiled from <a href="https://sw-zone.com" rel="noopener">sw-zone.com</a> and <a href="https://rulespal.com" rel="noopener">rulespal.com</a>. It may contain errors; the printed cards are authoritative.</p>
   </footer>
 </div>
-<script src="deck.js?v=202611161214" defer></script>
+<script src="deck.js?v=202611161221" defer></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611161214').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611161221').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -326,6 +326,16 @@ $('impGo').addEventListener('click',()=>{
     renderDeck();
     if(r.unknown.length){$('out').hidden=false;$('outLbl').textContent='Import finished with warnings';$('outTxt').value=`Unknown card codes skipped: ${r.unknown.join(', ')}`;$('outDl').hidden=true;$('outMsg').textContent='';}
   }catch(e){$('impMsg').textContent=e.message;}
+});
+// faction starter decks (from the app)
+$('starterSel').innerHTML+=Object.keys(D.starter||{}).map(f=>`<option>${esc(f)}</option>`).join('');
+$('starterSel').addEventListener('change',e=>{$('loadStarter').disabled=!e.target.value;});
+$('loadStarter').addEventListener('click',()=>{
+  const f=$('starterSel').value;if(!f)return;
+  if(total()&&!confirm(`Replace your current deck with the ${f} starter deck?`))return;
+  const r=parseAppDeck(JSON.stringify({title:`${f} (starter)`,deck:{faction:f,deck:D.starter[f]}}));
+  applyDeck(r.deck,r.title);renderDeck();
+  $('starterSel').value='';$('loadStarter').disabled=true;
 });
 // opening a shared link
 let pending=null;
