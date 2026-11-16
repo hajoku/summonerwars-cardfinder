@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611161238').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611161306').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -31,7 +31,6 @@ function setKind(k){st.kind=k;st.cls.clear();st.ph.clear();st.g.clear();st.mr=''
   $('kind').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===k));
   $('q').placeholder=k==='Unit'?'Name, ability, text …':'Name, effect text …';}
 setKind('Unit');
-$('fac').insertAdjacentHTML('beforeend',D.facs.map(f=>`<option>${esc(f)}</option>`).join(''));
 // owned factions (personal setting, stored on the device)
 let UNOWNED=new Set();try{UNOWNED=new Set(JSON.parse(localStorage.getItem('sw-unowned')||'[]'));}catch(e){}
 $('own').innerHTML=D.facs.map(f=>`<button type="button" class="chip" data-f="${esc(f)}" aria-pressed="${!UNOWNED.has(f)}">${esc(f)}</button>`).join('');
@@ -52,11 +51,11 @@ $('grps').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b){t
 $('kind').addEventListener('click',e=>{const b=e.target.closest('button');if(b&&b.dataset.v!==st.kind){setKind(b.dataset.v);render();}});
 $('mr').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;st.mr=b.dataset.v;$('mr').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));render();});
 $('struct').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;st.struct=b.dataset.v;$('struct').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));render();});
-['q','fac','sort','costMin','costMax','strMin','strMax','hpMin','hpMax'].forEach(id=>$(id).addEventListener('input',()=>render()));
+['q','sort','costMin','costMax','strMin','strMax','hpMin','hpMax'].forEach(id=>$(id).addEventListener('input',()=>render()));
 $('reset').addEventListener('click',()=>{st.sy.clear();st.struct='';setKind(st.kind);
   document.querySelectorAll('.sym,.chip').forEach(c=>c.setAttribute('aria-pressed','false'));$('symChips').classList.add('none');
   $('struct').querySelectorAll('button').forEach((x,i)=>x.setAttribute('aria-pressed',i===0));
-  ['q','costMin','costMax','strMin','strMax','hpMin','hpMax'].forEach(id=>$(id).value='');$('fac').value='';render();});
+  ['q','costMin','costMax','strMin','strMax','hpMin','hpMax'].forEach(id=>$(id).value='');render();});
 const n=id=>{const v=$(id).value.trim();return v===''?null:Number(v);};
 function inRange(v,lo,hi){if(lo===null&&hi===null)return true;if(v===null||v===undefined)return false;return (lo===null||v>=lo)&&(hi===null||v<=hi);}
 let limit=60, view='list';
@@ -71,7 +70,7 @@ function render(reset=true){
   if(mode==='deck'){renderDeck();return;}
   syncUrl();
   if(reset)limit=60;
-  const q=$('q').value.trim().toLowerCase(), fac=$('fac').value, key=$('sort').value;
+  const q=$('q').value.trim().toLowerCase(), key=$('sort').value;
   const cm=n('costMin'),cM=n('costMax'),sm=n('strMin'),sM=n('strMax'),hm=n('hpMin'),hM=n('hpMax');
   const r=D.cards.filter(c=>{
     if(c.t!==st.kind)return false;
@@ -81,7 +80,6 @@ function render(reset=true){
     if(st.g.size&&!c.g.some(x=>st.g.has(x)))return false;
     if(st.struct!==''&&c.st!==(st.struct==='1'))return false;
     if(UNOWNED.has(c.f))return false;
-    if(fac&&c.f!==fac)return false;
     if(st.sy.size&&!c.sy.some(s=>st.sy.has(s)))return false;
     if(!inRange(c.cost,cm,cM)||!inRange(c.hp,hm,hM)||!inRange(c.str,sm,sM))return false;
     if(q&&!(c.n+' '+c.f+' '+c.tx+' '+c.cls+' '+(c.ph||'')).toLowerCase().includes(q))return false;
@@ -375,7 +373,7 @@ $('inKeep').addEventListener('click',()=>{pending=null;$('incoming').hidden=true
 window.addEventListener('hashchange',readHash);
 // ---- search state in the URL ----
 let booting=true;
-const SKEYS=['kind','q','sy','fac','cls','ph','g','struct','mr','cost','hp','str','sort','view'];
+const SKEYS=['kind','q','sy','cls','ph','g','struct','mr','cost','hp','str','sort','view'];
 function searchParams(){
   const q=new URLSearchParams();
   const range=(a,b)=>{const x=$(a).value.trim(),y=$(b).value.trim();return x||y?`${x}-${y}`:'';};
@@ -383,7 +381,6 @@ function searchParams(){
   if(st.kind!=='Unit')q.set('kind','event');
   put('q',$('q').value.trim());
   put('sy',[...st.sy].join(','));
-  put('fac',$('fac').value);
   put('cls',[...st.cls].map(c=>c.split(' ')[0].toLowerCase()).join(','));
   put('ph',[...st.ph].map(c=>c.split(' ')[0].toLowerCase()).join(','));
   put('g',[...st.g].join(','));
@@ -413,7 +410,6 @@ function applySearch(q){
   const s=q.get('struct');st.struct=s==='yes'?'1':s==='no'?'0':'';seg('struct',st.struct);
   const m=lc(q.get('mr')||'');st.mr=m==='melee'?'Melee':m==='ranged'?'Ranged':'';seg('mr',st.mr);
   $('q').value=q.get('q')||'';
-  const f=D.facs.find(x=>lc(x)===lc(q.get('fac')||''));$('fac').value=f||'';
   const rng=(k,a,b)=>{const [x='',y='']=(q.get(k)||'').split('-');$(a).value=/^\d+$/.test(x)?x:'';$(b).value=/^\d+$/.test(y)?y:'';};
   rng('cost','costMin','costMax');rng('hp','hpMin','hpMax');rng('str','strMin','strMax');
   const so=q.get('sort');$('sort').value=['f','cost','hp','str'].includes(so)?so:'n';
