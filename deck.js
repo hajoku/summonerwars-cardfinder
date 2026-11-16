@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611161142').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611161144').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -214,7 +214,7 @@ function stats(cards){
     all.forEach(c=>{by[c.cost||0][c.t==='Event'?'e':c.mr==='Ranged'?'r':'m']++;});
     const top=Math.max(...by.map(b=>b.m+b.r+b.e)),px=n=>top?Math.round(n/top*80):0;
     const seg=(k,n,l)=>n?`<span class="bar ${k}" style="height:${px(n)}px" title="${n} ${l}"></span>`:'';
-    h+=`<div class="sgrp"><div class="stl">Cost curve <span>(summoner excluded)</span></div>
+    h+=`<div class="sgrp"><div class="stl">Cost curve</div>
       <div class="legend"><span><i class="m"></i>Melee ${U.filter(c=>c.mr!=='Ranged').length}</span><span><i class="r"></i>Ranged ${U.filter(c=>c.mr==='Ranged').length}</span><span><i class="e"></i>Events ${E.length}</span></div>
       <div class="curve">${by.map((b,i)=>{const n=b.m+b.r+b.e;return `<div class="cb"><div class="bw"><span class="cn">${n||''}</span>${seg('e',b.e,'events')}${seg('r',b.r,'ranged')}${seg('m',b.m,'melee')}</div><span class="cl">${i}</span></div>`;}).join('')}</div></div>`;
   }
