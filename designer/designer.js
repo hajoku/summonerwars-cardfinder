@@ -143,7 +143,7 @@ function draw(){
   // text panel (parchment) with slanted right edge
   const PX=600;
   const pg=ctx.createLinearGradient(0,IY,0,IY+IH);pg.addColorStop(0,'#f4ecdd');pg.addColorStop(1,'#e6dac4');
-  const EY=IY+200,EB=IY+IH,ctrl=[PX+48,(EY+EB)/2];
+  const EY=IY+200,EB=IY+IH,ctrl=[PX-60,(EY+EB)/2];
   ctx.beginPath();ctx.moveTo(IX,IY);ctx.lineTo(PX-30,IY);ctx.lineTo(PX,EY);ctx.quadraticCurveTo(ctrl[0],ctrl[1],PX-14,EB);ctx.lineTo(IX,EB);ctx.closePath();
   ctx.fillStyle=pg;ctx.fill();
   ctx.lineWidth=7;ctx.strokeStyle=c2;ctx.beginPath();ctx.moveTo(PX,EY);ctx.quadraticCurveTo(ctrl[0],ctrl[1],PX-14,EB);ctx.stroke();
@@ -173,7 +173,7 @@ function draw(){
   sx=Math.max(sx,x);
   for(const s of S.sy){const im=symImg[s];if(im&&im.complete&&im.naturalWidth)ctx.drawImage(im,sx,RY+(RH-ss)/2,ss,ss);sx+=ss+8;}
   // abilities / event text, shrunk to fit
-  const TX=48,TW=PX-48-40,TY=RY+RH+30,TH=IY+IH-24-TY;
+  const TX=48,TW=PX-48-62,TY=RY+RH+30,TH=IY+IH-24-TY;
   let k=1,layout;
   for(;k>.45;k-=.04){
     const nf=`${Math.round(36*k)}px ${DISPLAY}`,bf=`${Math.round(28*k)}px ${BODY}`,lh=Math.round(34*k),gap=Math.round(18*k);
