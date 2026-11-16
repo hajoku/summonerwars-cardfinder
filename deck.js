@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611161126').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611161142').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -208,11 +208,19 @@ function stats(cards){
   const avg=(a,k)=>{const v=a.filter(c=>typeof c[k]==='number');return v.length?(v.reduce((s,c)=>s+c[k],0)/v.length).toFixed(1):'–';};
   const sum=(a,k)=>a.reduce((s,c)=>s+(typeof c[k]==='number'?c[k]:0),0);
   let h='';
+  if(U.length||E.length){
+    const all=[...U,...E],max=Math.max(...all.map(c=>c.cost||0),4);
+    const by=Array.from({length:max+1},()=>({m:0,r:0,e:0}));
+    all.forEach(c=>{by[c.cost||0][c.t==='Event'?'e':c.mr==='Ranged'?'r':'m']++;});
+    const top=Math.max(...by.map(b=>b.m+b.r+b.e)),px=n=>top?Math.round(n/top*80):0;
+    const seg=(k,n,l)=>n?`<span class="bar ${k}" style="height:${px(n)}px" title="${n} ${l}"></span>`:'';
+    h+=`<div class="sgrp"><div class="stl">Cost curve <span>(summoner excluded)</span></div>
+      <div class="legend"><span><i class="m"></i>Melee ${U.filter(c=>c.mr!=='Ranged').length}</span><span><i class="r"></i>Ranged ${U.filter(c=>c.mr==='Ranged').length}</span><span><i class="e"></i>Events ${E.length}</span></div>
+      <div class="curve">${by.map((b,i)=>{const n=b.m+b.r+b.e;return `<div class="cb"><div class="bw"><span class="cn">${n||''}</span>${seg('e',b.e,'events')}${seg('r',b.r,'ranged')}${seg('m',b.m,'melee')}</div><span class="cl">${i}</span></div>`;}).join('')}</div></div>`;
+  }
   if(U.length){
-    const max=Math.max(...U.map(c=>c.cost||0),4);const by=Array(max+1).fill(0);U.forEach(c=>by[c.cost||0]++);const top=Math.max(...by);
-    h+=`<div class="sgrp"><div class="stl">Unit cost curve <span>(${U.length} units, summoner excluded)</span></div><div class="curve">${by.map((n,i)=>`<div class="cb"><div class="bw"><span class="cn">${n||''}</span><span class="bar" style="height:${top?Math.round(n/top*80):0}px"></span></div><span class="cl">${i}</span></div>`).join('')}</div></div>`;
     const me=U.filter(c=>c.mr==='Melee').length,ra=U.filter(c=>c.mr==='Ranged').length,stc=U.filter(c=>c.st).length;
-    h+=`<div class="sgrp"><div class="stl">Units</div><div class="sgrid"><span>Melee <b>${me}</b></span><span>Ranged <b>${ra}</b></span>${stc?`<span>Structures <b>${stc}</b></span>`:''}</div>
+    h+=`<div class="sgrp"><div class="stl">Units</div>${stc?`<div class="sgrid"><span>Structures <b>${stc}</b></span></div>`:''}
       <table class="stab"><thead><tr><th></th><th>Cost</th><th>Life</th><th>Strength</th></tr></thead><tbody>
       <tr><th>Average</th><td>${avg(U,'cost')}</td><td>${avg(U,'hp')}</td><td>${avg(U,'str')}</td></tr>
       <tr><th>Total</th><td>${sum(U,'cost')}</td><td>${sum(U,'hp')}</td><td>${sum(U,'str')}</td></tr></tbody></table></div>`;

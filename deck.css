@@ -97,12 +97,19 @@
 .curve{display:flex;gap:6px;align-items:flex-end}
 .cb{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;min-width:0}
 .cb .bw{height:102px;width:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px}
-.cb .bar{width:100%;max-width:38px;background:var(--accent);border-radius:4px 4px 0 0;min-height:0}
+.cb .bar{width:100%;max-width:38px;flex:none}
+.cb .cn+.bar{border-radius:4px 4px 0 0}
+.bar.m,.legend i.m{background:var(--accent)}
+.bar.r,.legend i.r{background:#3f6f8f}
+.bar.e,.legend i.e{background:#c9a24a}
+.cb .bw{gap:0}.cb .cn{margin-bottom:3px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--muted);margin-bottom:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
 .cb .cn{font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink)}
 .cb .cl{font-size:12px;color:var(--muted);border-top:1px solid var(--line);width:100%;text-align:center;padding-top:2px}
 .sgrid{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:14px;color:var(--muted)}
 .sgrid b{color:var(--ink);font-variant-numeric:tabular-nums}
-.stab{border-collapse:collapse;margin-top:8px;font-size:14px;font-variant-numeric:tabular-nums}
+.stab{margin-top:0;border-collapse:collapse;margin-top:8px;font-size:14px;font-variant-numeric:tabular-nums}
 .stab th,.stab td{padding:3px 12px 3px 0;text-align:right}
 .stab thead th{font-size:12px;font-weight:600;color:var(--muted)}
 .stab tbody th{text-align:left;font-weight:400;color:var(--muted)}
