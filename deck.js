@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611160743').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611160747').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -151,8 +151,8 @@ function checks(cards){
   }
   const nc=sum(CH), wantC=3+stC.length;
   add(nc===wantC, nc===wantC?`${wantC} champions${plus(stC.length,3)}`:`Exactly ${wantC} champions needed${plus(stC.length,3)} (has ${nc})`);
-  const dupC=CH.filter(c=>DECK[c.n]>1+extra(c.n));
-  add(!dupC.length, dupC.length?`Each champion only once, plus a starting unit (${dupC.map(c=>c.n).join(', ')})`:'Each champion at most once (starting units extra)');
+  const dupC=CH.filter(c=>DECK[c.n]>1);
+  add(!dupC.length, dupC.length?`Each champion only once, starting units included (${dupC.map(c=>c.n).join(', ')})`:'Each champion at most once');
   const no=sum(CO), want=16+stO.length;
   add(no===want, no===want?`${want} commons${plus(stO.length,16)}`:`Exactly ${want} commons needed${plus(stO.length,16)} (has ${no})`);
   const overC=CO.filter(c=>DECK[c.n]>4+extra(c.n));
