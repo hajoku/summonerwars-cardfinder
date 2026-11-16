@@ -16,3 +16,7 @@ Build decks with the + / − buttons on every card. The Deck tab shows the curre
 The page loads its data with `fetch`, so open it through a web server (e.g. GitHub Pages), not as a local file.
 
 Unofficial fan-made reference. Not affiliated with or endorsed by Plaid Hat Games. Summoner Wars, card names, card texts, faction logos and deck symbols © Plaid Hat Games. Card data compiled from sw-zone.com and rulespal.com; it may contain errors — the printed cards are authoritative.
+
+## Card Designer
+
+`designer/` lets you design fan-made cards (type, name, faction, stats, deck symbols, abilities, colors, your own artwork) and download them as PNG. Designs are kept in the browser and can be saved/loaded as JSON.
