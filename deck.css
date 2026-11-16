@@ -116,3 +116,7 @@
 .stab td{font-weight:700;color:var(--ink)}
 .stab tr.sn td,.stab tr.sn th{font-weight:400;color:var(--muted);font-size:12.5px}
 .sgrp .hint{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+.curve.dense{gap:2px}.curve.dense .cl,.curve.dense .cn{font-size:11px}
+.sline{display:flex;gap:16px;margin-top:6px;font-size:14px;color:var(--muted)}
+.sline b{color:var(--ink);font-variant-numeric:tabular-nums}
+.legend b{color:var(--ink)}

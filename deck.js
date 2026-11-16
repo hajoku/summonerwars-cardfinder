@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611161154').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611161207').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -212,24 +212,24 @@ function stats(cards,summ){
   const avg=(a,k)=>{const v=a.filter(c=>typeof c[k]==='number');return v.length?(v.reduce((s,c)=>s+c[k],0)/v.length).toFixed(1):'–';};
   const sum=(a,k)=>a.reduce((s,c)=>s+(typeof c[k]==='number'?c[k]:0),0);
   let h='';
-  if(U.length||E.length){
-    const all=[...U,...E],max=Math.max(...all.map(c=>c.cost||0),4);
-    const by=Array.from({length:max+1},()=>({m:0,r:0,e:0}));
-    all.forEach(c=>{by[c.cost||0][c.t==='Event'?'e':c.mr==='Ranged'?'r':'m']++;});
-    const top=Math.max(...by.map(b=>b.m+b.r+b.e)),px=n=>top?Math.round(n/top*80):0;
-    const seg=(k,n,l)=>n?`<span class="bar ${k}" style="height:${px(n)}px" title="${n} ${l}"></span>`:'';
-    h+=`<div class="sgrp"><div class="stl">Cost curve</div>
-      <div class="legend"><span><i class="m"></i>Melee ${U.filter(c=>c.mr!=='Ranged').length}</span><span><i class="r"></i>Ranged ${U.filter(c=>c.mr==='Ranged').length}</span><span><i class="e"></i>Events ${E.length}</span></div>
-      <div class="curve">${by.map((b,i)=>{const n=b.m+b.r+b.e;return `<div class="cb"><div class="bw"><span class="cn">${n||''}</span>${seg('e',b.e,'events')}${seg('r',b.r,'ranged')}${seg('m',b.m,'melee')}</div><span class="cl">${i}</span></div>`;}).join('')}</div></div>`;
-  }
-  if(LB.length||SB.length){
+  const typ=c=>c.t==='Event'?'e':c.mr==='Ranged'?'r':'m';
+  const chart=(title,sub,base,k,lo)=>{
+    if(!base.length)return '';
+    const vals=base.map(c=>c[k]);const a=Math.min(lo,...vals),b=Math.max(...vals,4);
+    const by=Array.from({length:b-a+1},()=>({m:0,r:0,e:0}));base.forEach(c=>by[c[k]-a][typ(c)]++);
+    const top=Math.max(...by.map(x=>x.m+x.r+x.e)),px=n=>top?Math.round(n/top*80):0;
+    const seg=(cl,n,l)=>n?`<span class="bar ${cl}" style="height:${px(n)}px" title="${n} ${l}"></span>`:'';
+    const tot=vals.reduce((s,v)=>s+v,0);
+    return `<div class="sgrp"><div class="stl">${title} <span>${sub}</span></div>
+      <div class="curve${by.length>10?' dense':''}">${by.map((x,i)=>{const n=x.m+x.r+x.e;return `<div class="cb"><div class="bw"><span class="cn">${n||''}</span>${seg('e',x.e,'events')}${seg('r',x.r,'ranged')}${seg('m',x.m,'melee')}</div><span class="cl">${i+a}</span></div>`;}).join('')}</div>
+      <div class="sline"><span>Ø <b>${(tot/vals.length).toFixed(1)}</b></span><span>Total <b>${tot}</b></span><span>Cards <b>${vals.length}</b></span></div></div>`;
+  };
+  if(ALL.length){
     const stc=ALL.filter(c=>c.st).length;
-    h+=`<div class="sgrp"><div class="stl">Values</div>${stc?`<div class="sgrid"><span>Structures <b>${stc}</b></span></div>`:''}
-      <table class="stab"><thead><tr><th></th><th>Cost</th><th>Life</th><th>Strength</th></tr></thead><tbody>
-      <tr><th>Average</th><td>${avg(CB,'cost')}</td><td>${avg(LB,'hp')}</td><td>${avg(SB,'str')}</td></tr>
-      <tr><th>Total</th><td>${sum(CB,'cost')}</td><td>${sum(LB,'hp')}</td><td>${sum(SB,'str')}</td></tr>
-      <tr class="sn"><th>Cards</th><td>${CB.length}</td><td>${LB.length}</td><td>${SB.length}</td></tr></tbody></table>
-      <p class="hint">Cost: draw pile (no summoner, no starting units) · Life: all cards with life incl. summoner, starting units and structure events · Strength: all units incl. summoner and starting units · Gates never counted.</p></div>`;
+    h+=`<div class="legend"><span><i class="m"></i>Melee</span><span><i class="r"></i>Ranged</span><span><i class="e"></i>Events</span>${stc?`<span>Structures <b>${stc}</b></span>`:''}</div>`;
+    h+=chart('Cost','(draw pile)',CB,'cost',0);
+    h+=chart('Life','(incl. summoner &amp; structure events)',LB,'hp',1);
+    h+=chart('Strength','(all units incl. summoner)',SB,'str',1);
   }
   if(E.length){
     const ph={};E.forEach(c=>{const k=(c.ph||'Other').replace(' Phase','');ph[k]=(ph[k]||0)+1;});
