@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611151631').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611160743').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -139,20 +139,23 @@ function checks(cards){
   add(ns===1, ns===1?`1 summoner (${S[0].n})`:`Exactly 1 summoner needed (has ${ns})`);
   const summ=ns===1?S[0]:null;
   const start=summ&&D.start[summ.f]||[];
-  const nc=sum(CH), dupC=CH.filter(c=>DECK[c.n]>1);
-  add(nc===3, nc===3?'3 champions':`Exactly 3 champions needed (has ${nc})`);
-  add(!dupC.length, dupC.length?`Each champion only once (${dupC.map(c=>c.n).join(', ')})`:'Each champion at most once');
-  // starting units are ordinary commons; they come on top of the 16 and don't count toward the 4-copy limit
+  // starting units come on top of 3 champions + 16 commons and don't count toward the copy limits
+  const stC=start.filter(n=>BY[n].cls==='Champion Unit'), stO=start.filter(n=>BY[n].cls==='Common Unit');
+  const extra=n=>start.filter(x=>x===n).length;
+  const plus=(k,l)=>k?` (${l} + ${k} starting unit${k>1?'s':''})`:'';
   if(summ){
     if(D.start[summ.f]){
       const miss=start.filter(n=>!cnt(n));
       add(!miss.length, miss.length?`Starting units missing: ${miss.join(', ')}`:`Starting units included: ${start.join(', ')}`);
     }else add(false,`Starting units for ${summ.f} are not in the data yet`);
   }
-  const no=sum(CO), want=16+start.length;
-  add(no===want, no===want?`${want} commons (16 + ${start.length} starting units)`:`Exactly ${want} commons needed${start.length?` (16 + ${start.length} starting units)`:''} (has ${no})`);
-  const lim=c=>4+(start.includes(c.n)?1:0);
-  const overC=CO.filter(c=>DECK[c.n]>lim(c));
+  const nc=sum(CH), wantC=3+stC.length;
+  add(nc===wantC, nc===wantC?`${wantC} champions${plus(stC.length,3)}`:`Exactly ${wantC} champions needed${plus(stC.length,3)} (has ${nc})`);
+  const dupC=CH.filter(c=>DECK[c.n]>1+extra(c.n));
+  add(!dupC.length, dupC.length?`Each champion only once, plus a starting unit (${dupC.map(c=>c.n).join(', ')})`:'Each champion at most once (starting units extra)');
+  const no=sum(CO), want=16+stO.length;
+  add(no===want, no===want?`${want} commons${plus(stO.length,16)}`:`Exactly ${want} commons needed${plus(stO.length,16)} (has ${no})`);
+  const overC=CO.filter(c=>DECK[c.n]>4+extra(c.n));
   add(!overC.length, overC.length?`At most 4 copies per common, plus the starting unit (${overC.map(c=>c.n).join(', ')})`:'At most 4 copies per common (starting units extra)');
   const nst=sum(SE), overS=SE.filter(c=>DECK[c.n]>2);
   add(nst===6, nst===6?'6 standard events':`Exactly 6 standard events needed (has ${nst})`);
