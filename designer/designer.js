@@ -94,11 +94,19 @@ function star(cx,cy,r,col){ctx.beginPath();for(let i=0;i<16;i++){const a=-Math.P
 function heart(cx,cy,s,col){ctx.beginPath();ctx.moveTo(cx,cy+s*.9);ctx.bezierCurveTo(cx-s*1.3,cy,cx-s*.9,cy-s*1.1,cx,cy-s*.45);ctx.bezierCurveTo(cx+s*.9,cy-s*1.1,cx+s*1.3,cy,cx,cy+s*.9);ctx.fillStyle=col;ctx.fill();}
 function sword(cx,cy,s,col){ctx.save();ctx.translate(cx,cy);ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(0,-s);ctx.lineTo(s*.16,-s*.78);ctx.lineTo(s*.12,s*.35);ctx.lineTo(-s*.12,s*.35);ctx.lineTo(-s*.16,-s*.78);ctx.closePath();ctx.fill();
   ctx.fillRect(-s*.42,s*.35,s*.84,s*.14);ctx.fillRect(-s*.08,s*.49,s*.16,s*.32);ctx.beginPath();ctx.arc(0,s*.9,s*.12,0,7);ctx.fill();ctx.restore();}
-function bow(cx,cy,s,col){ctx.save();ctx.translate(cx,cy);ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineCap='round';
-  ctx.lineWidth=s*.16;ctx.beginPath();ctx.arc(-s*.15,0,s*.85,-1.15,1.15);ctx.stroke();
-  ctx.lineWidth=s*.05;ctx.beginPath();const a=1.15,x0=-s*.15+Math.cos(a)*s*.85,y0=Math.sin(a)*s*.85;ctx.moveTo(x0,-y0);ctx.lineTo(x0,y0);ctx.stroke();
-  ctx.lineWidth=s*.08;ctx.beginPath();ctx.moveTo(-s*.75,0);ctx.lineTo(s*.85,0);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(s*1.05,0);ctx.lineTo(s*.7,-s*.2);ctx.lineTo(s*.7,s*.2);ctx.closePath();ctx.fill();ctx.restore();}
+function bow(cx,cy,s,col){
+  // recurve bow (arc bulging left) with grip, string and a short fletched arrow
+  ctx.save();ctx.translate(cx,cy);ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineCap='round';ctx.lineJoin='round';
+  const ox=s*.45,r=s*.95,a=1.0,tx=ox+Math.cos(Math.PI-a)*r,ty=Math.sin(a)*r;
+  ctx.lineWidth=s*.16;ctx.beginPath();ctx.arc(ox,0,r,Math.PI-a,Math.PI+a);ctx.stroke();
+  ctx.lineWidth=s*.09;for(const d of [-1,1]){ctx.beginPath();ctx.moveTo(tx,d*ty);ctx.quadraticCurveTo(tx+s*.02,d*(ty+s*.14),tx+s*.16,d*(ty+s*.16));ctx.stroke();}
+  ctx.fillRect(ox-r-s*.1,-s*.17,s*.2,s*.34);
+  ctx.lineWidth=s*.055;ctx.beginPath();ctx.moveTo(tx+s*.02,-ty);ctx.lineTo(tx+s*.02,ty);ctx.stroke();
+  const ax0=tx-s*.08,ax1=s*.62;
+  ctx.lineWidth=s*.1;ctx.beginPath();ctx.moveTo(ax0,0);ctx.lineTo(ax1,0);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(ax1+s*.32,0);ctx.lineTo(ax1-s*.02,-s*.17);ctx.lineTo(ax1+s*.06,0);ctx.lineTo(ax1-s*.02,s*.17);ctx.closePath();ctx.fill();
+  ctx.lineWidth=s*.075;for(const d of [-1,1])for(const o of [0,s*.13]){ctx.beginPath();ctx.moveTo(ax0+s*.06+o,0);ctx.lineTo(ax0-s*.06+o,d*s*.15);ctx.stroke();}
+  ctx.restore();}
 function crown(cx,cy,s,col){ctx.beginPath();ctx.moveTo(cx-s,cy+s*.6);ctx.lineTo(cx-s,cy-s*.35);ctx.lineTo(cx-s*.5,cy+s*.1);ctx.lineTo(cx,cy-s*.75);ctx.lineTo(cx+s*.5,cy+s*.1);ctx.lineTo(cx+s,cy-s*.35);ctx.lineTo(cx+s,cy+s*.6);ctx.closePath();ctx.fillStyle=col;ctx.fill();}
 
 function wrap(text,font,maxW){
@@ -135,9 +143,10 @@ function draw(){
   // text panel (parchment) with slanted right edge
   const PX=600;
   const pg=ctx.createLinearGradient(0,IY,0,IY+IH);pg.addColorStop(0,'#f4ecdd');pg.addColorStop(1,'#e6dac4');
-  ctx.beginPath();ctx.moveTo(IX,IY);ctx.lineTo(PX-30,IY);ctx.lineTo(PX,IY+200);ctx.lineTo(PX-14,IY+IH);ctx.lineTo(IX,IY+IH);ctx.closePath();
+  const EY=IY+200,EB=IY+IH,ctrl=[PX+48,(EY+EB)/2];
+  ctx.beginPath();ctx.moveTo(IX,IY);ctx.lineTo(PX-30,IY);ctx.lineTo(PX,EY);ctx.quadraticCurveTo(ctrl[0],ctrl[1],PX-14,EB);ctx.lineTo(IX,EB);ctx.closePath();
   ctx.fillStyle=pg;ctx.fill();
-  ctx.lineWidth=7;ctx.strokeStyle=c2;ctx.beginPath();ctx.moveTo(PX,IY+200);ctx.lineTo(PX-14,IY+IH);ctx.stroke();
+  ctx.lineWidth=7;ctx.strokeStyle=c2;ctx.beginPath();ctx.moveTo(PX,EY);ctx.quadraticCurveTo(ctrl[0],ctrl[1],PX-14,EB);ctx.stroke();
   // header band over the art
   const hg=ctx.createLinearGradient(PX-60,0,PX+260,0);hg.addColorStop(0,'rgba(244,236,221,1)');hg.addColorStop(1,'rgba(244,236,221,0)');
   ctx.fillStyle=hg;ctx.fillRect(PX-60,IY,320,128);
@@ -187,8 +196,9 @@ function draw(){
     ctx.lineWidth=6;ctx.strokeStyle=mix(c2,'w',.15);ctx.beginPath();ctx.arc(cx,cy,r-3,0,7);ctx.stroke();
     ctx.lineWidth=2;ctx.strokeStyle='rgba(255,236,210,.45)';ctx.beginPath();ctx.arc(cx,cy,r-12,0,7);ctx.stroke();
     const v=String(S.str===''?0:S.str);ctx.font=`76px ${DISPLAY}`;ctx.fillStyle='#fff6ec';ctx.textBaseline='middle';
-    const w=ctx.measureText(v).width,tot=w+44;const x0=cx-tot/2;ctx.fillText(v,x0,cy+4);ctx.textBaseline='alphabetic';
-    (S.atk==='Ranged'?bow:sword)(x0+w+24,cy,S.atk==='Ranged'?27:30,'#fff6ec');
+    const R=S.atk==='Ranged',s=R?30:30,L=R?.62*s:.42*s,IW2=R?1.6*s:.84*s,gap=R?16:8;
+    const w=ctx.measureText(v).width,tot=w+gap+IW2;const x0=cx-tot/2;ctx.fillText(v,x0,cy+4);ctx.textBaseline='alphabetic';
+    (R?bow:sword)(x0+w+gap+L,cy,s,'#fff6ec');
   }
   ctx.restore();
   // inner frame line
