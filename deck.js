@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611160747').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611161001').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -57,6 +57,7 @@ function sortCards(r){const key=$('sort').value,num=['cost','str','hp'].includes
   return r.sort((a,b)=>{if(num){const x=a[key]??-1,y=b[key]??-1;if(x!==y)return y-x;}else if(key==='f'&&a.f!==b.f)return a.f.localeCompare(b.f);return a.n.localeCompare(b.n);});}
 function render(reset=true){
   if(mode==='deck'){renderDeck();return;}
+  syncUrl();
   if(reset)limit=60;
   const q=$('q').value.trim().toLowerCase(), fac=$('fac').value, key=$('sort').value;
   const cm=n('costMin'),cM=n('costMax'),sm=n('strMin'),sM=n('strMax'),hm=n('hpMin'),hM=n('hpMax');
@@ -300,7 +301,8 @@ function applyDeck(deck,name){
 }
 function readHash(){
   const h=location.hash.replace(/^#/,'');if(!h)return;
-  const q=new URLSearchParams(h);if(!q.has('deck'))return;
+  const q=new URLSearchParams(h);
+  if(!q.has('deck')){if(SKEYS.some(k=>q.has(k))){applySearch(q);setMode('search');}return;}
   const {deck,bad}=decodeDeck(q.get('deck')),name=q.get('name')||'';
   clearHash();
   const n=Object.values(deck).reduce((a,b)=>a+b,0);
@@ -312,6 +314,58 @@ function readHash(){
 $('inReplace').addEventListener('click',()=>{if(pending){applyDeck(pending.deck,pending.name);pending=null;}$('incoming').hidden=true;setMode('deck');});
 $('inKeep').addEventListener('click',()=>{pending=null;$('incoming').hidden=true;});
 window.addEventListener('hashchange',readHash);
+// ---- search state in the URL ----
+let booting=true;
+const SKEYS=['kind','q','sy','fac','cls','ph','g','struct','mr','cost','hp','str','sort','view'];
+function searchParams(){
+  const q=new URLSearchParams();
+  const range=(a,b)=>{const x=$(a).value.trim(),y=$(b).value.trim();return x||y?`${x}-${y}`:'';};
+  const put=(k,v)=>{if(v)q.set(k,v);};
+  if(st.kind!=='Unit')q.set('kind','event');
+  put('q',$('q').value.trim());
+  put('sy',[...st.sy].join(','));
+  put('fac',$('fac').value);
+  put('cls',[...st.cls].map(c=>c.split(' ')[0].toLowerCase()).join(','));
+  put('ph',[...st.ph].map(c=>c.split(' ')[0].toLowerCase()).join(','));
+  put('g',[...st.g].join(','));
+  put('struct',st.struct===''?'':st.struct==='1'?'yes':'no');
+  put('mr',st.mr.toLowerCase());
+  put('cost',range('costMin','costMax'));put('hp',range('hpMin','hpMax'));put('str',range('strMin','strMax'));
+  if($('sort').value!=='n')q.set('sort',$('sort').value);
+  if(view==='table')q.set('view','table');
+  return q;
+}
+function syncUrl(){
+  if(booting||mode!=='search')return;
+  const s=searchParams().toString();
+  try{history.replaceState(null,'',location.pathname+location.search+(s?'#'+s:''));}catch(e){}
+}
+function applySearch(q){
+  setKind(q.get('kind')==='event'?'Event':'Unit');
+  const list=k=>(q.get(k)||'').split(',').map(s=>s.trim()).filter(Boolean);
+  const pick=(set,box,vals,match)=>{set.clear();$(box).querySelectorAll('[data-s]').forEach(b=>{const on=vals.some(v=>match(b.dataset.s,v));if(on)set.add(b.dataset.s);b.setAttribute('aria-pressed',on);});};
+  const lc=s=>s.toLowerCase();
+  pick(st.sy,'symChips',list('sy'),(s,v)=>lc(s)===lc(v));$('symChips').classList.toggle('none',!st.sy.size);
+  pick(st.cls,'cls',list('cls'),(s,v)=>lc(s.split(' ')[0])===lc(v)||lc(s)===lc(v));
+  pick(st.ph,'ph',list('ph'),(s,v)=>lc(s.split(' ')[0])===lc(v)||lc(s)===lc(v));
+  pick(st.g,'grps',list('g'),(s,v)=>lc(s)===lc(v));
+  $('grpN').textContent=st.g.size?`(${st.g.size})`:'';if(st.g.size)$('grpBox').open=true;
+  const seg=(id,val)=>{$(id).querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===val));};
+  const s=q.get('struct');st.struct=s==='yes'?'1':s==='no'?'0':'';seg('struct',st.struct);
+  const m=lc(q.get('mr')||'');st.mr=m==='melee'?'Melee':m==='ranged'?'Ranged':'';seg('mr',st.mr);
+  $('q').value=q.get('q')||'';
+  const f=D.facs.find(x=>lc(x)===lc(q.get('fac')||''));$('fac').value=f||'';
+  const rng=(k,a,b)=>{const [x='',y='']=(q.get(k)||'').split('-');$(a).value=/^\d+$/.test(x)?x:'';$(b).value=/^\d+$/.test(y)?y:'';};
+  rng('cost','costMin','costMax');rng('hp','hpMin','hpMax');rng('str','strMin','strMax');
+  const so=q.get('sort');$('sort').value=['f','cost','hp','str'].includes(so)?so:'n';
+  setView(q.get('view')==='table'?'table':view);
+}
+$('shareSearch').addEventListener('click',async()=>{
+  const url=location.origin+location.pathname+(searchParams().toString()?'#'+searchParams().toString():'');
+  const msg=$('shareSearchMsg');
+  try{await navigator.clipboard.writeText(url);msg.textContent='Link copied.';}
+  catch(e){msg.innerHTML='';const i=document.createElement('input');i.value=url;i.readOnly=true;i.className='linkbox';msg.appendChild(i);i.focus();i.select();}
+});
 function setMode(m){mode=m;
   $('tabs').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===m));
   document.querySelector('.wrap').classList.toggle('deckmode',m==='deck');
@@ -319,6 +373,7 @@ function setMode(m){mode=m;
   document.querySelector('#sort option[value="str"]').hidden=m==='deck'?false:st.kind!=='Unit';
   render(false);
   try{localStorage.setItem('sw-mode',m);}catch(e){}
+  if(m==='deck'&&!booting){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}
 }
 $('tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b&&b.dataset.v!==mode)setMode(b.dataset.v);});
 document.addEventListener('click',e=>{
@@ -338,4 +393,5 @@ render();
 let m0='search';try{m0=localStorage.getItem('sw-mode')||'search';}catch(e){}
 setMode(m0==='deck'?'deck':'search');
 readHash();
+booting=false;syncUrl();
 })();

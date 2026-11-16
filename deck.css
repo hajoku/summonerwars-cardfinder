@@ -85,3 +85,6 @@
 .out textarea{font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;width:100%;resize:vertical;overflow-wrap:anywhere}
 .incoming{grid-column:1/-1;background:var(--good-soft);border:1px solid var(--good);border-radius:10px;padding:12px 14px;display:grid;gap:8px}
 .incoming p{margin:0}
+
+.filters .dact .reset{flex:1}
+.linkbox{font:12.5px ui-monospace,Menlo,monospace;width:100%;padding:6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
