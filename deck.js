@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611161144').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611161154').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -189,7 +189,7 @@ function renderDeck(){
   lastChk=chk;$('exportDeck').hidden=!EXPORT_ON;$('exportHint').hidden=!EXPORT_ON||chk.exportable;$('exportDeck').disabled=!chk.exportable;
   const per=ORDER.map(([cls,l])=>[l,cards.filter(c=>c.cls===cls).reduce((a,c)=>a+DECK[c.n],0)]);
   $('deckSum').innerHTML=per.map(([l,n])=>`<span class="pill">${l} <b>${n}</b></span>`).join('');
-  $('deckStats').hidden=!tot;if(tot)$('statBody').innerHTML=stats(cards);
+  $('deckStats').hidden=!tot;if(tot)$('statBody').innerHTML=stats(cards,chk.summ);
   $('deckChecks').innerHTML=chk.list.map(x=>`<li class="${x.ok?'ok':'bad'}"><span aria-hidden="true">${x.ok?'✓':'✗'}</span> ${esc(x.txt)}</li>`).join('')+`<li class="info"><span aria-hidden="true">ℹ</span> Gates (one 10-life, three 5-life) are part of every deck and not listed here.</li>`;
   $('count2').textContent=tot===1?'1 card in deck':`${tot} cards in deck`;
   if(!tot){$('list').innerHTML=`<div class="empty">Your deck is empty. Switch to Search and use the + buttons to add cards.</div>`;return;}
@@ -202,9 +202,13 @@ function renderDeck(){
   if(evs.length)html+=sec('Events',evs.reduce((a,c)=>a+DECK[c.n],0),view==='table'?table(evs,'Event'):evs.map(c=>card(c)).join(''));
   $('list').innerHTML=html;
 }
-function stats(cards){
-  const U=[],E=[];
-  for(const c of cards){if(c.cls==='Summoner Unit')continue;for(let i=0;i<DECK[c.n];i++)(c.t==='Unit'?U:E).push(c);}
+function stats(cards,summ){
+  // ALL: every copy in the deck (gates are never part of DECK). PILE: draw pile = without summoners and one copy of each starting unit.
+  const ALL=[];for(const c of cards)for(let i=0;i<DECK[c.n];i++)ALL.push(c);
+  const skip={};if(summ)(D.start[summ.f]||[]).forEach(n=>skip[n]=(skip[n]||0)+1);
+  const PILE=ALL.filter(c=>{if(c.cls==='Summoner Unit')return false;if(skip[c.n]){skip[c.n]--;return false;}return true;});
+  const U=PILE.filter(c=>c.t==='Unit'),E=PILE.filter(c=>c.t==='Event');
+  const CB=PILE.filter(c=>typeof c.cost==='number'),LB=ALL.filter(c=>typeof c.hp==='number'),SB=ALL.filter(c=>c.t==='Unit'&&typeof c.str==='number');
   const avg=(a,k)=>{const v=a.filter(c=>typeof c[k]==='number');return v.length?(v.reduce((s,c)=>s+c[k],0)/v.length).toFixed(1):'–';};
   const sum=(a,k)=>a.reduce((s,c)=>s+(typeof c[k]==='number'?c[k]:0),0);
   let h='';
@@ -218,12 +222,14 @@ function stats(cards){
       <div class="legend"><span><i class="m"></i>Melee ${U.filter(c=>c.mr!=='Ranged').length}</span><span><i class="r"></i>Ranged ${U.filter(c=>c.mr==='Ranged').length}</span><span><i class="e"></i>Events ${E.length}</span></div>
       <div class="curve">${by.map((b,i)=>{const n=b.m+b.r+b.e;return `<div class="cb"><div class="bw"><span class="cn">${n||''}</span>${seg('e',b.e,'events')}${seg('r',b.r,'ranged')}${seg('m',b.m,'melee')}</div><span class="cl">${i}</span></div>`;}).join('')}</div></div>`;
   }
-  if(U.length){
-    const me=U.filter(c=>c.mr==='Melee').length,ra=U.filter(c=>c.mr==='Ranged').length,stc=U.filter(c=>c.st).length;
-    h+=`<div class="sgrp"><div class="stl">Units</div>${stc?`<div class="sgrid"><span>Structures <b>${stc}</b></span></div>`:''}
+  if(LB.length||SB.length){
+    const stc=ALL.filter(c=>c.st).length;
+    h+=`<div class="sgrp"><div class="stl">Values</div>${stc?`<div class="sgrid"><span>Structures <b>${stc}</b></span></div>`:''}
       <table class="stab"><thead><tr><th></th><th>Cost</th><th>Life</th><th>Strength</th></tr></thead><tbody>
-      <tr><th>Average</th><td>${avg(U,'cost')}</td><td>${avg(U,'hp')}</td><td>${avg(U,'str')}</td></tr>
-      <tr><th>Total</th><td>${sum(U,'cost')}</td><td>${sum(U,'hp')}</td><td>${sum(U,'str')}</td></tr></tbody></table></div>`;
+      <tr><th>Average</th><td>${avg(CB,'cost')}</td><td>${avg(LB,'hp')}</td><td>${avg(SB,'str')}</td></tr>
+      <tr><th>Total</th><td>${sum(CB,'cost')}</td><td>${sum(LB,'hp')}</td><td>${sum(SB,'str')}</td></tr>
+      <tr class="sn"><th>Cards</th><td>${CB.length}</td><td>${LB.length}</td><td>${SB.length}</td></tr></tbody></table>
+      <p class="hint">Cost: draw pile (no summoner, no starting units) · Life: all cards with life incl. summoner, starting units and structure events · Strength: all units incl. summoner and starting units · Gates never counted.</p></div>`;
   }
   if(E.length){
     const ph={};E.forEach(c=>{const k=(c.ph||'Other').replace(' Phase','');ph[k]=(ph[k]||0)+1;});

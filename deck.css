@@ -114,3 +114,5 @@
 .stab thead th{font-size:12px;font-weight:600;color:var(--muted)}
 .stab tbody th{text-align:left;font-weight:400;color:var(--muted)}
 .stab td{font-weight:700;color:var(--ink)}
+.stab tr.sn td,.stab tr.sn th{font-weight:400;color:var(--muted);font-size:12.5px}
+.sgrp .hint{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
