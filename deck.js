@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611161207').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611161214').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -215,7 +215,7 @@ function stats(cards,summ){
   const typ=c=>c.t==='Event'?'e':c.mr==='Ranged'?'r':'m';
   const chart=(title,sub,base,k,lo)=>{
     if(!base.length)return '';
-    const vals=base.map(c=>c[k]);const a=Math.min(lo,...vals),b=Math.max(...vals,4);
+    const vals=base.map(c=>c[k]);const a=Math.min(...vals),b=Math.max(...vals);
     const by=Array.from({length:b-a+1},()=>({m:0,r:0,e:0}));base.forEach(c=>by[c[k]-a][typ(c)]++);
     const top=Math.max(...by.map(x=>x.m+x.r+x.e)),px=n=>top?Math.round(n/top*80):0;
     const seg=(cl,n,l)=>n?`<span class="bar ${cl}" style="height:${px(n)}px" title="${n} ${l}"></span>`:'';
