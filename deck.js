@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611161221').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611161238').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -32,6 +32,18 @@ function setKind(k){st.kind=k;st.cls.clear();st.ph.clear();st.g.clear();st.mr=''
   $('q').placeholder=k==='Unit'?'Name, ability, text …':'Name, effect text …';}
 setKind('Unit');
 $('fac').insertAdjacentHTML('beforeend',D.facs.map(f=>`<option>${esc(f)}</option>`).join(''));
+// owned factions (personal setting, stored on the device)
+let UNOWNED=new Set();try{UNOWNED=new Set(JSON.parse(localStorage.getItem('sw-unowned')||'[]'));}catch(e){}
+$('own').innerHTML=D.facs.map(f=>`<button type="button" class="chip" data-f="${esc(f)}" aria-pressed="${!UNOWNED.has(f)}">${esc(f)}</button>`).join('');
+function ownSync(){
+  try{localStorage.setItem('sw-unowned',JSON.stringify([...UNOWNED]));}catch(e){}
+  $('own').querySelectorAll('[data-f]').forEach(b=>b.setAttribute('aria-pressed',!UNOWNED.has(b.dataset.f)));
+  $('ownN').textContent=UNOWNED.size?`(${D.facs.length-UNOWNED.size}/${D.facs.length})`:'';
+}
+ownSync();
+$('own').addEventListener('click',e=>{const b=e.target.closest('[data-f]');if(!b)return;const f=b.dataset.f;UNOWNED.has(f)?UNOWNED.delete(f):UNOWNED.add(f);ownSync();render();});
+$('ownAll').addEventListener('click',()=>{UNOWNED.clear();ownSync();render();});
+$('ownNone').addEventListener('click',()=>{UNOWNED=new Set(D.facs);ownSync();render();});
 function toggle(set,btn){const v=btn.dataset.s;set.has(v)?set.delete(v):set.add(v);btn.setAttribute('aria-pressed',set.has(v));$('symChips').classList.toggle('none',st.sy.size===0);render();}
 $('symChips').addEventListener('click',e=>{const b=e.target.closest('.sym');if(b)toggle(st.sy,b);});
 $('cls').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)toggle(st.cls,b);});
@@ -68,6 +80,7 @@ function render(reset=true){
     if(st.mr&&c.mr!==st.mr)return false;
     if(st.g.size&&!c.g.some(x=>st.g.has(x)))return false;
     if(st.struct!==''&&c.st!==(st.struct==='1'))return false;
+    if(UNOWNED.has(c.f))return false;
     if(fac&&c.f!==fac)return false;
     if(st.sy.size&&!c.sy.some(s=>st.sy.has(s)))return false;
     if(!inRange(c.cost,cm,cM)||!inRange(c.hp,hm,hM)||!inRange(c.str,sm,sM))return false;
