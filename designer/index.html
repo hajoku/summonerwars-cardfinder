@@ -7,8 +7,8 @@
 <meta name="description" content="Design your own fan-made Summoner Wars style faction: faction name, deck symbols, colors and logo, then any number of cards with stats, abilities and your own artwork. Download as PNG or ZIP.">
 <link rel="icon" href="../img/symbols/Mercenary.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Alegreya:ital,wght@0,400;0,500;1,400&family=Alegreya+Sans:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../style.css?v=202611171339">
-<link rel="stylesheet" href="designer.css?v=202611171339">
+<link rel="stylesheet" href="../style.css?v=202611171355">
+<link rel="stylesheet" href="designer.css?v=202611171355">
 </head>
 <body>
 <div class="dwrap">
@@ -34,19 +34,21 @@
       <p class="hint">Shown on summoners and epic events instead of the crown, and faded behind the text of every card. A PNG with transparent background looks best.</p></div>
   </section>
 
-  <section class="stage" aria-label="Card preview">
-    <canvas id="cv" width="1050" height="750" role="img" aria-label="Card preview"></canvas>
+  <section class="cards" aria-labelledby="cardH">
+    <h2 id="cardH">Cards <span class="grpn" id="cardN"></span></h2>
+    <div id="cardList" class="clist"></div>
+    <div class="acts">
+      <button type="button" class="reset primary" id="addCard">+ New card</button>
+      <button type="button" class="reset primary" id="zip">Download all (ZIP)</button>
+      <button type="button" class="reset" id="saveJson">Save faction</button>
+      <label class="reset file">Load faction<input type="file" id="loadJson" accept=".json,application/json"></label>
+      <button type="button" class="reset wide" id="newFac">New faction</button>
+    </div>
+    <p class="hint" id="msg" aria-live="polite"></p>
   </section>
 
-  <section class="form cardf" aria-labelledby="cardH">
-    <h2 id="cardH">Cards <span class="grpn" id="cardN"></span></h2>
-    <div class="ctabs" id="ctabs" aria-label="Cards of this faction"></div>
-    <div class="three">
-      <button type="button" class="reset" id="addCard">+ New card</button>
-      <button type="button" class="reset" id="dupCard">Duplicate</button>
-      <button type="button" class="reset" id="delCard">Delete</button>
-    </div>
-
+  <canvas id="cv" width="1050" height="750" role="img" aria-label="Card preview" hidden></canvas>
+  <div class="editor" id="editor" hidden>
     <div class="grp"><div class="lbl">Card type</div>
       <div class="seg wrapseg" id="type">
         <button type="button" data-v="Summoner" aria-pressed="false">Summoner</button>
@@ -90,20 +92,17 @@
       </div>
       <p class="hint">Only use artwork you made yourself or are allowed to use. Images stay on your device.</p></div>
 
-    <div class="acts">
-      <button type="button" class="reset primary" id="png">Download this card</button>
-      <button type="button" class="reset primary" id="zip">Download all (ZIP)</button>
-      <button type="button" class="reset" id="saveJson">Save faction</button>
-      <label class="reset file">Load faction<input type="file" id="loadJson" accept=".json,application/json"></label>
-      <button type="button" class="reset wide" id="newFac">New faction</button>
+    <div class="three">
+      <button type="button" class="reset" id="png">Download</button>
+      <button type="button" class="reset" id="dupCard">Duplicate</button>
+      <button type="button" class="reset" id="delCard">Delete</button>
     </div>
-    <p class="hint" id="msg" aria-live="polite"></p>
-  </section>
+  </div>
 
   <footer class="foot">
     <p>Unofficial fan-made tool for designing custom cards. Not affiliated with or endorsed by Plaid Hat Games. Summoner Wars, the deck symbols and the stat icons © Plaid Hat Games. Your designs are saved only in this browser.</p>
   </footer>
 </div>
-<script src="designer.js?v=202611171339"></script>
+<script src="designer.js?v=202611171355"></script>
 </body>
 </html>

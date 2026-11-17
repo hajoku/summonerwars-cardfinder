@@ -51,26 +51,45 @@ function fillFaction(){
   $('facSyN').textContent=`(${F.sy.length}/2)`;$('noLogo').disabled=!F.logo;presetMark();
 }
 function presetMark(){$('presets').querySelectorAll('button').forEach(b=>{const p=PRESETS[b.dataset.i];b.setAttribute('aria-pressed',p[0]===F.c1&&p[1]===F.c2);});}
-$('facName').addEventListener('input',e=>{F.name=e.target.value;changed();});
+$('facName').addEventListener('input',e=>{F.name=e.target.value;changedFac();});
 $('facSy').addEventListener('click',e=>{const b=e.target.closest('.sym');if(!b)return;const s=b.dataset.s;
   if(F.sy.includes(s))F.sy=F.sy.filter(x=>x!==s);else{F.sy=[...F.sy,s];if(F.sy.length>2)F.sy.shift();}
-  fillFaction();fillCardSy();changed();});
-$('presets').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;[F.c1,F.c2]=PRESETS[b.dataset.i];fillFaction();changed();});
-$('c1').addEventListener('input',e=>{F.c1=e.target.value;presetMark();changed();});
-$('c2').addEventListener('input',e=>{F.c2=e.target.value;presetMark();changed();});
+  fillFaction();fillCardSy();changedFac();});
+$('presets').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;[F.c1,F.c2]=PRESETS[b.dataset.i];fillFaction();changedFac();});
+$('c1').addEventListener('input',e=>{F.c1=e.target.value;presetMark();changedFac();});
+$('c2').addEventListener('input',e=>{F.c2=e.target.value;presetMark();changedFac();});
 $('logo').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
-  try{F.logo=await readFile(f,512,'image/png');await ready(F.logo);fillFaction();changed();}catch(err){$('msg').textContent='This image could not be read. Try a PNG or JPG.';}});
-$('noLogo').addEventListener('click',()=>{F.logo=null;fillFaction();changed();});
+  try{F.logo=await readFile(f,512,'image/png');await ready(F.logo);fillFaction();changedFac();}catch(err){$('msg').textContent='This image could not be read. Try a PNG or JPG.';}});
+$('noLogo').addEventListener('click',()=>{F.logo=null;fillFaction();changedFac();});
 
-// ---------- card list ----------
-function renderTabs(){
-  $('ctabs').innerHTML=F.cards.map((c,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===F.cur}">${esc(c.name||'Unnamed')}<small>${c.type.replace('Standard Event','Event')}</small></button>`).join('');
+// ---------- card list: every card shows its picture; the one being edited gets the live canvas and the editor ----------
+const SNAP=new Map();   // card id -> object URL of a rendered JPEG
+let OPEN=true;
+function snap(c){return new Promise(ok=>{draw(c);cv.toBlob(b=>{const u=URL.createObjectURL(b),old=SNAP.get(c.id);if(old)URL.revokeObjectURL(old);SNAP.set(c.id,u);
+  const im=document.querySelector(`.cblk[data-id="${c.id}"] .pv img`);if(im)im.src=u;ok();},'image/jpeg',.9);draw();});}
+async function snapOthers(){for(const c of [...F.cards]){if(c===card()||!F.cards.includes(c))continue;await ready(c.img).catch(()=>{});await snap(c);}}
+let resnapT;function changedFac(){changed();clearTimeout(resnapT);resnapT=setTimeout(snapOthers,400);}
+const headHtml=c=>`<span class="nm">${esc(c.name||'Unnamed')} <small>${esc(c.type.replace('Standard Event','Event'))}</small></span><span class="ed">Edit</span>`;
+function renderList(){
+  document.body.append(cv,$('editor'));
+  $('cardList').innerHTML=F.cards.map((c,i)=>{const u=SNAP.get(c.id);return `<article class="cblk" data-id="${c.id}" data-i="${i}"><div class="pv">${i===F.cur?'':`<img alt="${esc(c.name||'Card')}"${u?` src="${u}"`:''}>`}</div><details${i===F.cur&&OPEN?' open':''}><summary>${headHtml(c)}</summary></details></article>`;}).join('');
+  const blk=$('cardList').querySelector(`.cblk[data-i="${F.cur}"]`);
+  blk.querySelector('.pv').appendChild(cv);cv.hidden=false;blk.querySelector('details').appendChild($('editor'));$('editor').hidden=false;
   $('cardN').textContent=`(${F.cards.length})`;$('delCard').disabled=F.cards.length<2;
 }
-$('ctabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;F.cur=+b.dataset.i;fillCard();changed();});
-$('addCard').addEventListener('click',()=>{F.cards.push(newCard());F.cur=F.cards.length-1;fillCard();changed();$('name').focus();});
-$('dupCard').addEventListener('click',()=>{const c=structuredClone(card());c.id=uid();c.name=(c.name||'Unnamed')+' (copy)';F.cards.splice(F.cur+1,0,c);F.cur++;fillCard();changed();});
-$('delCard').addEventListener('click',()=>{if(F.cards.length<2)return;if(!confirm(`Delete “${card().name||'Unnamed'}”?`))return;F.cards.splice(F.cur,1);F.cur=Math.min(F.cur,F.cards.length-1);fillCard();changed();});
+function updHead(){const s=$('cardList').querySelector(`.cblk[data-i="${F.cur}"] summary`);if(s)s.innerHTML=headHtml(card());}
+async function switchTo(i){
+  const prev=card();F.cur=i;OPEN=true;snap(prev);renderList();fillCard();changed();
+  $('cardList').querySelector(`.cblk[data-i="${i}"]`).scrollIntoView({block:'start',behavior:'smooth'});
+}
+$('cardList').addEventListener('click',e=>{const s=e.target.closest('summary');if(!s)return;e.preventDefault();const i=+s.closest('.cblk').dataset.i;
+  if(i===F.cur){const d=s.parentElement;d.open=!d.open;OPEN=d.open;}else switchTo(i);});
+$('addCard').addEventListener('click',()=>{const prev=card();F.cards.push(newCard({sy:F.sy.slice(0,1)}));F.cur=F.cards.length-1;OPEN=true;snap(prev);renderList();fillCard();changed();
+  $('cardList').querySelector(`.cblk[data-i="${F.cur}"]`).scrollIntoView({block:'start',behavior:'smooth'});});
+$('dupCard').addEventListener('click',()=>{const prev=card(),c=structuredClone(prev);c.id=uid();c.name=(c.name||'Unnamed')+' (copy)';F.cards.splice(F.cur+1,0,c);F.cur++;snap(prev);renderList();fillCard();changed();
+  $('cardList').querySelector(`.cblk[data-i="${F.cur}"]`).scrollIntoView({block:'start',behavior:'smooth'});});
+$('delCard').addEventListener('click',()=>{if(F.cards.length<2)return;const c=card();if(!confirm(`Delete “${c.name||'Unnamed'}”?`))return;
+  const u=SNAP.get(c.id);if(u){URL.revokeObjectURL(u);SNAP.delete(c.id);}F.cards.splice(F.cur,1);F.cur=Math.min(F.cur,F.cards.length-1);renderList();fillCard();changed();});
 
 // ---------- card form ----------
 function fillCardSy(){
@@ -86,7 +105,7 @@ function fillCard(){
   seg('type',c.type);seg('atk',c.atk);
   for(const k of ['name','cost','life','str','phase'])$(k).value=c[k]??'';
   $('struct').checked=!!c.struct;$('zoom').value=c.zoom;$('ox').value=c.ox;$('oy').value=c.oy;
-  renderTabs();renderAbs();fillCardSy();showFields();
+  updHead();renderAbs();fillCardSy();showFields();
 }
 function showFields(){
   const c=card(),u=isUnit(c);
@@ -96,9 +115,9 @@ function showFields(){
   $('abHint').textContent=u?'Start typing an ability name and pick an existing ability from the suggestions to insert its text. Leave the name empty for plain text. A line break starts a new paragraph.':'Start typing an event name in the name field and pick an existing event to insert its text (the name is then removed). Leave the name empty for plain text, or use e.g. ACTIVE.';
   $('imgCtl').hidden=!c.img;$('noImg').disabled=!c.img;
 }
-$('type').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;card().type=b.dataset.v;seg('type',b.dataset.v);renderTabs();showFields();renderAbs();fillCardSy();changed();});
+$('type').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;card().type=b.dataset.v;seg('type',b.dataset.v);updHead();showFields();renderAbs();fillCardSy();changed();});
 $('atk').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;card().atk=b.dataset.v;seg('atk',b.dataset.v);changed();});
-$('name').addEventListener('input',e=>{card().name=e.target.value;renderTabs();changed();});
+$('name').addEventListener('input',e=>{card().name=e.target.value;updHead();changed();});
 $('phase').addEventListener('input',e=>{card().phase=e.target.value;changed();});
 for(const k of ['cost','life','str'])$(k).addEventListener('input',e=>{card()[k]=e.target.value===''?'':Math.max(0,Math.min(99,parseInt(e.target.value,10)||0));changed();});
 $('struct').addEventListener('change',e=>{card().struct=e.target.checked;showFields();changed();});
@@ -112,7 +131,7 @@ $('noImg').addEventListener('click',()=>{card().img=null;showFields();changed();
 
 // abilities + suggestions (own list: the browser's datalist does not show on many phones)
 let TX={abilities:{},events:{}};
-fetch('texts.json?v=202611171339').then(r=>r.json()).then(j=>{TX=j;}).catch(()=>{});
+fetch('texts.json?v=202611171355').then(r=>r.json()).then(j=>{TX=j;}).catch(()=>{});
 const srcTx=()=>isUnit(card())?TX.abilities:TX.events;
 function pick(box,key){
   const c=card(),a=c.abs[box.dataset.i];a.t=srcTx()[key];a.n=isUnit(c)?key:'';
@@ -155,7 +174,7 @@ $('zip').addEventListener('click',async()=>{
 });
 $('saveJson').addEventListener('click',()=>dl(new Blob([JSON.stringify({swFaction:1,...F})],{type:'application/json'}),slug(F.name||'faction')+'.json'));
 $('loadJson').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
-  try{const o=JSON.parse(await f.text());F=normalize(o);await Promise.all([F.logo,...F.cards.map(c=>c.img)].map(s=>ready(s).catch(()=>{})));fillAll();changed();$('msg').textContent='Faction loaded.';}
+  try{const o=JSON.parse(await f.text());F=normalize(o);await Promise.all([F.logo,...F.cards.map(c=>c.img)].map(s=>ready(s).catch(()=>{})));fillAll();changed();snapOthers();$('msg').textContent='Faction loaded.';}
   catch(err){$('msg').textContent='This file is not a saved faction.';}});
 $('newFac').addEventListener('click',()=>{if(!confirm('Start a new faction? All cards of the current faction will be replaced. Save it first if you want to keep it.'))return;
   F={name:'',sy:[],c1:PRESETS[2][0],c2:PRESETS[2][1],logo:null,cur:0,cards:[newCard({type:'Summoner',cost:'',life:6,str:2})]};fillAll();changed();});
@@ -167,7 +186,7 @@ function normalize(o){
     f.cards=[newCard({type:o.type,name:o.name,cost:o.cost,life:o.life,str:o.str,atk:o.atk,phase:o.phase,struct:!!o.struct,abs:o.abs||[],img:o.img||null,zoom:o.zoom||100,ox:o.ox||0,oy:o.oy||0,sy:null})];f.cur=0;return f;}
   throw new Error('unknown format');
 }
-function fillAll(){fillFaction();fillCard();}
+function fillAll(){for(const u of SNAP.values())URL.revokeObjectURL(u);SNAP.clear();OPEN=true;fillFaction();renderList();fillCard();}
 
 // minimal ZIP writer (stored, no compression; PNGs are already compressed)
 const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}return t;})();
@@ -305,6 +324,6 @@ function draw(C=card()){
   fillAll();draw();
   await Promise.all([F.logo,...F.cards.map(c=>c.img)].map(s=>ready(s).catch(()=>{})));draw();
   try{await Promise.all([document.fonts.load(`66px "Pirata One"`),document.fonts.load('28px Alegreya'),document.fonts.load('italic 28px Alegreya')]);}catch(e){}
-  draw();
+  draw();await Promise.all([...Object.values(symImg),...Object.values(ICON)].map(i=>i.complete?0:new Promise(r=>{i.addEventListener('load',r);i.addEventListener('error',r);})));snapOthers();
 })();
 })();
