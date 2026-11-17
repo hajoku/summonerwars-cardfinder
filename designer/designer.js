@@ -131,7 +131,18 @@ $('noImg').addEventListener('click',()=>{card().img=null;showFields();changed();
 
 // abilities + suggestions (own list: the browser's datalist does not show on many phones)
 let TX={abilities:{},events:{}};
-fetch('texts.json?v=202611171737').then(r=>r.json()).then(j=>{TX=j;}).catch(()=>{});
+// same data as Card Finder & Deck Builder
+function parseCsv(s){const rows=[];let row=[],f='',q=false;s=s.replace(/^﻿/,'');
+  for(let i=0;i<s.length;i++){const ch=s[i];
+    if(q){if(ch==='"'){if(s[i+1]==='"'){f+='"';i++;}else q=false;}else f+=ch;}
+    else if(ch==='"')q=true;else if(ch===','){row.push(f);f='';}else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&s[i+1]==='\n')i++;row.push(f);rows.push(row);row=[];f='';}else f+=ch;}
+  if(f||row.length){row.push(f);rows.push(row);}return rows;}
+Promise.all([fetch('../data/abilities.csv?v=202611171739').then(r=>r.text()),fetch('../data/cards.json?v=202611171739').then(r=>r.json())]).then(([csv,cards])=>{
+  const rows=parseCsv(csv),h=rows[0],ia=h.indexOf('Ability'),it=h.indexOf('Text'),ab={},ev={};
+  for(const r of rows.slice(1))if(r[ia])ab[r[ia].trim()]=(r[it]||'').trim();
+  for(const c of cards.cards)if(c.t==='Event')ev[c.n]=c.tx;
+  TX={abilities:ab,events:ev};
+}).catch(()=>{});
 const srcTx=()=>isUnit(card())?TX.abilities:TX.events;
 function pick(box,key){
   const c=card(),a=c.abs[box.dataset.i];a.t=srcTx()[key];a.n=isUnit(c)?key:'';

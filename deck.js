@@ -1,5 +1,5 @@
 (async()=>{
-const D=await fetch('data/cards.json?v=202611171737').then(r=>r.json());
+const D=await fetch('data/cards.json?v=202611171739').then(r=>r.json());
 const BY=Object.fromEntries(D.cards.map(c=>[c.n,c]));
 let DECK={};
 try{DECK=JSON.parse(localStorage.getItem('sw-deck')||'{}')||{};}catch(e){DECK={};}
@@ -91,7 +91,8 @@ function render(reset=true){
   $('list').innerHTML=shown.length?(view==='table'?table(shown):shown.map(c=>card(c)).join(''))+(r.length>limit?`<button class="more" type="button" id="more">Show ${r.length-limit} more</button>`:''):`<div class="empty">No card matches these filters. Loosen a filter or reset them.</div>`;
   const m=$('more');if(m)m.onclick=()=>{limit+=100;render(false);};
 }
-function fmt(c){return esc(c.tx).split(' // ').map(p=>{const m=p.match(/^([^.]{2,32})\. (.*)$/);return c.t==='Unit'&&m?`<span class="ab">${m[1]}.</span> ${m[2]}`:p;}).join('<br>');}
+const dice=s=>s.replace(/\[(special|melee|ranged)\]/g,'<img class="die" src="img/icons/die_$1.png" alt="$1" title="$1">');
+function fmt(c){return dice(esc(c.tx)).split(' // ').map(p=>{const m=p.match(/^([^.]{2,32})\. (.*)$/);return c.t==='Unit'&&m?`<span class="ab">${m[1]}.</span> ${m[2]}`:p;}).join('<br>');}
 function abNames(c){return c.tx.split(' // ').map(p=>{const i=p.indexOf('. ');const nm=i>0&&i<34?p.slice(0,i):p;return `<span title="${esc(p)}">${esc(nm)}</span>`;}).join(', ');}
 function table(rows,kind=st.kind,pre=''){
   const U=kind==='Unit', key=$('sort').value;
@@ -114,7 +115,7 @@ function card(c,pre=''){
   if(c.hp!==null)stats.push(`<span class="stat"><i>Life</i>${c.hp}</span>`);
   if(c.str!==null)stats.push(`<span class="stat"><i>${c.mr==='Ranged'?'Ranged':'Melee'}</i>${c.str}</span>`);
   const tags=[];if(c.st)tags.push('Structure');if(c.lim)tags.push('Limited');if(c.ph)tags.push(c.ph);
-  const tx=esc(c.tx).split(' // ').map(p=>{const m=p.match(/^([^.]{2,32})\. (.*)$/);return c.t==='Unit'&&m?`<span class="ab">${m[1]}.</span> ${m[2]}`:p;}).join('<br>');
+  const tx=dice(esc(c.tx)).split(' // ').map(p=>{const m=p.match(/^([^.]{2,32})\. (.*)$/);return c.t==='Unit'&&m?`<span class="ab">${m[1]}.</span> ${m[2]}`:p;}).join('<br>');
   return `<article class="card${cnt(pre+c.n)?' indeck':''}" data-card="${esc(pre+c.n)}"><div class="top"><div class="nm"><b>${esc(c.n)}</b><small>${esc(c.f)} · ${c.cls}</small></div><div class="syms">${syms}</div>${ctl(c,pre)}</div>
   <div class="stats">${stats.join('')}${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div><p class="tx">${tx}</p></article>`;
 }

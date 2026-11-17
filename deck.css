@@ -121,3 +121,6 @@
 .sline b{color:var(--ink);font-variant-numeric:tabular-nums}
 .legend b{color:var(--ink)}
 .starter{display:flex;gap:6px}.starter select{flex:1;min-width:0}.starter .reset{flex:none}
+.die{height:1.05em;width:auto;vertical-align:-.18em;margin:0 .05em}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .die{filter:invert(.92)}}
+:root[data-theme="dark"] .die{filter:invert(.92)}
