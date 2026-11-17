@@ -1,16 +1,26 @@
 /* Card designer: preview stays visible (sticky) while editing on a phone; side by side on wide screens */
-.dwrap{max-width:1180px;margin:0 auto;padding:18px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px));display:grid;gap:16px;grid-template-columns:1fr}
-.dhd{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.dwrap{max-width:1180px;margin:0 auto;padding:18px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px));display:grid;gap:16px;grid-template-columns:minmax(0,1fr);grid-template-areas:"hd" "fac" "stage" "card" "foot"}
+.dhd{grid-area:hd;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.fac{grid-area:fac}.cardf{grid-area:card}.foot{grid-area:foot}
 .back{color:var(--accent);font-weight:700;text-decoration:none}
 .back:hover{text-decoration:underline}
-.stage{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0}
+.stage{grid-area:stage;position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0;align-self:start}
 .stage canvas{display:block;width:100%;height:auto;max-width:760px;margin:0 auto;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-.form{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:14px;min-width:0}
+.form{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:14px;min-width:0;align-content:start}
+.form h2{font-family:var(--display);font-weight:400;font-size:22px;margin:0}
 @media (min-width:980px){
-  .dwrap{grid-template-columns:minmax(0,1fr) 380px;align-items:start}
-  .dhd,.foot{grid-column:1/-1}
-  .stage{top:12px;padding:0}
+  .dwrap{grid-template-columns:minmax(0,1fr) 400px;grid-template-areas:"hd hd" "stage fac" "stage card" "foot foot";align-items:start}
+  .stage{top:12px;padding:0;grid-row:2/4}
 }
+.ctabs{display:flex;flex-wrap:wrap;gap:6px}
+.ctabs button{all:unset;cursor:pointer;padding:6px 11px;border-radius:7px;border:1px solid var(--line);background:var(--chip);font-size:13.5px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ctabs button small{color:var(--muted);margin-left:5px}
+.ctabs button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--stat-ink);font-weight:700}
+.ctabs button[aria-pressed="true"] small{color:inherit;opacity:.8}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cardsy{display:flex;gap:8px}
+.cardsy .sym{width:48px}
+.acts .wide{grid-column:1/-1}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 input[type=text],textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;width:100%;min-width:0}
@@ -40,6 +50,7 @@ textarea{resize:vertical;min-height:64px;line-height:1.35}
 .sliders label{display:grid;grid-template-columns:96px 1fr;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
 .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .foot{font-size:12.5px;color:var(--muted)}
+.fac .symgrid .sym[data-s="Mercenary"]{display:none}
 .check{display:flex;align-items:center;gap:8px;font-size:15px;cursor:pointer}
 .check input{width:20px;height:20px;accent-color:var(--accent)}
 .sugg{display:grid;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--panel);box-shadow:0 4px 10px rgba(0,0,0,.12)}

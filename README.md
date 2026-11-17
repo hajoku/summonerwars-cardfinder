@@ -19,4 +19,4 @@ Unofficial fan-made reference. Not affiliated with or endorsed by Plaid Hat Game
 
 ## Card Designer
 
-`designer/` lets you design fan-made cards (type, name, faction, stats, deck symbols, abilities, colors, your own artwork) and download them as PNG. Designs are kept in the browser and can be saved/loaded as JSON.
+`designer/` lets you design a fan-made faction (name, two deck symbols, colors, optional logo) and any number of cards for it (type, name, stats, structure, abilities with suggestions from existing ones, your own artwork). Download single cards as PNG or all cards as ZIP. The faction is kept in the browser (IndexedDB) and can be saved/loaded as JSON.

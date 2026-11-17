@@ -4,21 +4,49 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Summoner Wars Card Designer</title>
-<meta name="description" content="Design your own fan-made Summoner Wars style cards: colors, faction, stats, abilities and your own artwork. Download as PNG.">
+<meta name="description" content="Design your own fan-made Summoner Wars style faction: faction name, deck symbols, colors and logo, then any number of cards with stats, abilities and your own artwork. Download as PNG or ZIP.">
 <link rel="icon" href="../img/symbols/Mercenary.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Alegreya:ital,wght@0,400;0,500;1,400&family=Alegreya+Sans:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../style.css?v=202611170748">
-<link rel="stylesheet" href="designer.css?v=202611170748">
+<link rel="stylesheet" href="../style.css?v=202611171339">
+<link rel="stylesheet" href="designer.css?v=202611171339">
 </head>
 <body>
 <div class="dwrap">
   <header class="dhd"><h1>Card Designer</h1><a href="../" class="back">← Card Finder &amp; Deck Builder</a></header>
 
+  <section class="form fac" aria-labelledby="facH">
+    <h2 id="facH">Faction</h2>
+    <div class="grp"><label class="lbl" for="facName">Faction name</label><input type="text" id="facName" maxlength="40" autocomplete="off"></div>
+    <div class="grp"><div class="lbl">Deck symbols <span class="grpn" id="facSyN"></span></div>
+      <div class="symgrid" id="facSy"></div>
+      <p class="hint">Pick two. The summoner always gets the Mercenary symbol as third symbol.</p></div>
+    <div class="grp"><div class="lbl">Colors</div>
+      <div class="presets" id="presets"></div>
+      <div class="two">
+        <label class="color"><input type="color" id="c1"> <span>Banner</span></label>
+        <label class="color"><input type="color" id="c2"> <span>Frame</span></label>
+      </div></div>
+    <div class="grp"><div class="lbl">Faction logo (optional)</div>
+      <div class="two">
+        <label class="reset file">Upload logo<input type="file" id="logo" accept="image/*"></label>
+        <button type="button" class="reset" id="noLogo" disabled>Remove logo</button>
+      </div>
+      <p class="hint">Shown on summoners and epic events instead of the crown, and faded behind the text of every card. A PNG with transparent background looks best.</p></div>
+  </section>
+
   <section class="stage" aria-label="Card preview">
     <canvas id="cv" width="1050" height="750" role="img" aria-label="Card preview"></canvas>
   </section>
 
-  <section class="form" aria-label="Card settings">
+  <section class="form cardf" aria-labelledby="cardH">
+    <h2 id="cardH">Cards <span class="grpn" id="cardN"></span></h2>
+    <div class="ctabs" id="ctabs" aria-label="Cards of this faction"></div>
+    <div class="three">
+      <button type="button" class="reset" id="addCard">+ New card</button>
+      <button type="button" class="reset" id="dupCard">Duplicate</button>
+      <button type="button" class="reset" id="delCard">Delete</button>
+    </div>
+
     <div class="grp"><div class="lbl">Card type</div>
       <div class="seg wrapseg" id="type">
         <button type="button" data-v="Summoner" aria-pressed="false">Summoner</button>
@@ -28,10 +56,7 @@
         <button type="button" data-v="Epic Event" aria-pressed="false">Epic Event</button>
       </div></div>
 
-    <div class="two">
-      <div class="grp"><label class="lbl" for="name">Name</label><input type="text" id="name" maxlength="40" autocomplete="off"></div>
-      <div class="grp"><label class="lbl" for="faction">Faction</label><input type="text" id="faction" maxlength="40" autocomplete="off"></div>
-    </div>
+    <div class="grp"><label class="lbl" for="name">Card name</label><input type="text" id="name" maxlength="40" autocomplete="off"></div>
 
     <div class="stats">
       <div class="grp" data-show="cost"><label class="lbl" for="cost">Cost</label><input type="number" id="cost" min="0" max="99" inputmode="numeric"></div>
@@ -44,20 +69,14 @@
     <div class="grp" data-show="unit"><div class="lbl">Attack</div>
       <div class="seg" id="atk"><button type="button" data-v="Melee" aria-pressed="true">Melee</button><button type="button" data-v="Ranged" aria-pressed="false">Ranged</button></div></div>
 
-    <div class="grp"><div class="lbl">Deck symbols</div>
-      <div class="symgrid" id="syms"></div></div>
+    <div class="grp" data-show="cardsy"><div class="lbl">Deck symbols on this card</div>
+      <div class="cardsy" id="cardSy"></div></div>
+    <p class="hint" data-show="summsy">Summoners show both faction symbols plus Mercenary.</p>
 
     <div class="grp"><div class="lbl" id="abLbl">Abilities</div>
       <div id="abs" class="abs"></div>
       <button type="button" class="reset" id="addAb">+ Add ability</button>
       <p class="hint" id="abHint"></p></div>
-
-    <div class="grp"><div class="lbl">Colors</div>
-      <div class="presets" id="presets"></div>
-      <div class="two">
-        <label class="color"><input type="color" id="c1"> <span>Banner</span></label>
-        <label class="color"><input type="color" id="c2"> <span>Frame</span></label>
-      </div></div>
 
     <div class="grp"><div class="lbl">Artwork</div>
       <div class="two">
@@ -72,10 +91,11 @@
       <p class="hint">Only use artwork you made yourself or are allowed to use. Images stay on your device.</p></div>
 
     <div class="acts">
-      <button type="button" class="reset primary" id="png">Download PNG</button>
-      <button type="button" class="reset" id="saveJson">Save design</button>
-      <label class="reset file">Load design<input type="file" id="loadJson" accept=".json,application/json"></label>
-      <button type="button" class="reset" id="newCard">New card</button>
+      <button type="button" class="reset primary" id="png">Download this card</button>
+      <button type="button" class="reset primary" id="zip">Download all (ZIP)</button>
+      <button type="button" class="reset" id="saveJson">Save faction</button>
+      <label class="reset file">Load faction<input type="file" id="loadJson" accept=".json,application/json"></label>
+      <button type="button" class="reset wide" id="newFac">New faction</button>
     </div>
     <p class="hint" id="msg" aria-live="polite"></p>
   </section>
@@ -84,6 +104,6 @@
     <p>Unofficial fan-made tool for designing custom cards. Not affiliated with or endorsed by Plaid Hat Games. Summoner Wars, the deck symbols and the stat icons © Plaid Hat Games. Your designs are saved only in this browser.</p>
   </footer>
 </div>
-<script src="designer.js?v=202611170748"></script>
+<script src="designer.js?v=202611171339"></script>
 </body>
 </html>
