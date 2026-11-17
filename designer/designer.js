@@ -17,7 +17,7 @@ $('syms').innerHTML=SYMS.map(s=>`<button type="button" class="sym" data-s="${s}"
 $('presets').innerHTML=PRESETS.map(([a,b],i)=>`<button type="button" data-i="${i}" aria-label="Color preset ${i+1}" style="background:linear-gradient(135deg,${a} 50%,${b} 50%)"></button>`).join('');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function renderAbs(){
-  $('abs').innerHTML=S.abs.map((a,i)=>`<div class="ab" data-i="${i}"><div class="row"><input type="text" data-k="n" list="abList" autocomplete="off" value="${esc(a.n)}" placeholder="${isUnit()?'Ability name':'Name (optional, e.g. ACTIVE)'}" aria-label="Ability ${i+1} name"><button type="button" data-del="${i}" aria-label="Remove ability ${i+1}">✕</button></div><textarea data-k="t" rows="3" placeholder="Text" aria-label="Ability ${i+1} text">${esc(a.t)}</textarea></div>`).join('');
+  $('abs').innerHTML=S.abs.map((a,i)=>`<div class="ab" data-i="${i}"><div class="row"><input type="text" data-k="n" autocomplete="off" autocorrect="off" spellcheck="false" value="${esc(a.n)}" placeholder="${isUnit()?'Ability name':'Name (optional, e.g. ACTIVE)'}" aria-label="Ability ${i+1} name"><button type="button" data-del="${i}" aria-label="Remove ability ${i+1}">✕</button></div><div class="sugg" hidden></div><textarea data-k="t" rows="3" placeholder="Text" aria-label="Ability ${i+1} text">${esc(a.t)}</textarea></div>`).join('');
 }
 function fill(){
   seg('type',S.type);seg('atk',S.atk);
@@ -32,8 +32,7 @@ function showFields(){
   const u=isUnit();
   document.querySelectorAll('[data-show]').forEach(el=>{const k=el.dataset.show;el.hidden=k==='unit'?!u:k==='event'?u:k==='cost'?S.type==='Summoner':k==='life'?!(u||S.struct):false;});
   $('abLbl').textContent=u?'Abilities':'Event text';
-  $('abList').innerHTML=Object.keys(u?TX.abilities:TX.events).map(n=>`<option value="${esc(n)}">`).join('');
-  $('abHint').textContent=u?'Type an existing ability name (or pick it from the suggestions) to insert its text. Leave the name empty for plain text. A line break starts a new paragraph.':'Type an existing event name in the name field to insert its text (the name is then removed). Leave the name empty for plain text, or use e.g. ACTIVE.';
+  $('abHint').textContent=u?'Start typing an ability name and pick an existing ability from the suggestions to insert its text. Leave the name empty for plain text. A line break starts a new paragraph.':'Start typing an event name in the name field and pick an existing event to insert its text (the name is then removed). Leave the name empty for plain text, or use e.g. ACTIVE.';
   $('imgCtl').hidden=!S.img;$('noImg').disabled=!S.img;
 }
 function presetMark(){$('presets').querySelectorAll('button').forEach(b=>{const p=PRESETS[b.dataset.i];b.setAttribute('aria-pressed',p[0]===S.c1&&p[1]===S.c2);});}
@@ -54,9 +53,24 @@ $('abs').addEventListener('input',e=>{
   if(e.target.dataset.k==='n'){
     const src=isUnit()?TX.abilities:TX.events,key=Object.keys(src).find(k=>k.toLowerCase()===e.target.value.trim().toLowerCase());
     const ta=box.querySelector('textarea');
-    if(key){a.t=src[key];ta.value=a.t;if(isUnit()){a.n=key;e.target.value=key;}else{a.n='';e.target.value='';}}
+    if(key)pick(box,key);else suggest(box,e.target.value);
   }
   changed();});
+// own suggestion list (the browser's datalist does not show on many phones)
+function pick(box,key){
+  const a=S.abs[box.dataset.i],src=isUnit()?TX.abilities:TX.events,inp=box.querySelector('input'),ta=box.querySelector('textarea');
+  a.t=src[key];ta.value=a.t;a.n=isUnit()?key:'';inp.value=a.n;box.querySelector('.sugg').hidden=true;changed();
+}
+function suggest(box,q){
+  const sg=box.querySelector('.sugg');q=q.trim().toLowerCase();
+  if(q.length<2){sg.hidden=true;return;}
+  const names=Object.keys(isUnit()?TX.abilities:TX.events);
+  const hit=[...names.filter(n=>n.toLowerCase().startsWith(q)),...names.filter(n=>!n.toLowerCase().startsWith(q)&&n.toLowerCase().includes(q))].slice(0,8);
+  sg.innerHTML=hit.map(n=>`<button type="button" data-pick="${esc(n)}">${esc(n)}</button>`).join('');sg.hidden=!hit.length;
+}
+$('abs').addEventListener('pointerdown',e=>{const b=e.target.closest('[data-pick]');if(b){e.preventDefault();pick(b.closest('.ab'),b.dataset.pick);}});
+$('abs').addEventListener('focusout',e=>{const box=e.target.closest('.ab');if(box&&e.target.dataset.k==='n')setTimeout(()=>{const s=box.querySelector('.sugg');if(s)s.hidden=true;},150);});
+$('abs').addEventListener('keydown',e=>{if(e.key==='Escape'){const s=e.target.closest('.ab')?.querySelector('.sugg');if(s)s.hidden=true;}});
 $('abs').addEventListener('click',e=>{const b=e.target.closest('[data-del]');if(!b)return;S.abs.splice(+b.dataset.del,1);renderAbs();changed();});
 $('addAb').addEventListener('click',()=>{S.abs.push({n:'',t:''});renderAbs();changed();const t=$('abs').querySelectorAll('.ab');t[t.length-1].querySelector('input').focus();});
 $('presets').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;[S.c1,S.c2]=PRESETS[b.dataset.i];$('c1').value=S.c1;$('c2').value=S.c2;presetMark();changed();});
@@ -206,7 +220,7 @@ function draw(){
 // ---------- start ----------
 let TX={abilities:{},events:{}};
 fill();
-fetch('texts.json?v=202611170626').then(r=>r.json()).then(j=>{TX=j;showFields();}).catch(()=>{});
+fetch('texts.json?v=202611170748').then(r=>r.json()).then(j=>{TX=j;showFields();}).catch(()=>{});
 (async()=>{
   if(S.img){try{IMG=await loadImg(S.img);}catch(e){S.img=null;}showFields();}
   draw();
