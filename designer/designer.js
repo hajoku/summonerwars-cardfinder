@@ -4,7 +4,7 @@ const $=id=>document.getElementById(id);
 const cv=$('cv'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
 const SYMS=['Air','Cunning','Dark','Divine','Earth','Fire','Instinct','Light','Logic','Mercenary','Resolve','Spirit','Water'];
 const PRESETS=[['#b3283a','#4a1a24'],['#2f7a3a','#1d3a20'],['#2b6a9a','#16314a'],['#c08a1e','#4d3612'],['#6e3b9a','#2e1a45'],['#4f5d6b','#22282e'],['#b8562a','#3f2214'],['#1f8a85','#123a38']];
-const DEF={type:'Common',name:'Ember Guard',faction:'Ashen Vale',cost:2,life:4,str:2,atk:'Melee',phase:'Summon Phase',sy:['Fire'],
+const DEF={type:'Common',name:'Ember Guard',faction:'Ashen Vale',cost:2,life:4,str:2,atk:'Melee',phase:'Summon Phase',struct:false,sy:['Fire'],
   abs:[{n:'Flame Ward',t:'When this unit is attacked, the attacker takes 1 damage after the attack.'}],c1:PRESETS[0][0],c2:PRESETS[0][1],img:null,zoom:100,ox:0,oy:0};
 let S;
 try{S=JSON.parse(localStorage.getItem('swd-card')||'null');}catch(e){}
@@ -17,11 +17,12 @@ $('syms').innerHTML=SYMS.map(s=>`<button type="button" class="sym" data-s="${s}"
 $('presets').innerHTML=PRESETS.map(([a,b],i)=>`<button type="button" data-i="${i}" aria-label="Color preset ${i+1}" style="background:linear-gradient(135deg,${a} 50%,${b} 50%)"></button>`).join('');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function renderAbs(){
-  $('abs').innerHTML=S.abs.map((a,i)=>`<div class="ab" data-i="${i}"><div class="row"><input type="text" data-k="n" value="${esc(a.n)}" placeholder="${isUnit()?'Ability name':'Name (optional, e.g. ACTIVE)'}" aria-label="Ability ${i+1} name"><button type="button" data-del="${i}" aria-label="Remove ability ${i+1}">✕</button></div><textarea data-k="t" rows="3" placeholder="Text" aria-label="Ability ${i+1} text">${esc(a.t)}</textarea></div>`).join('');
+  $('abs').innerHTML=S.abs.map((a,i)=>`<div class="ab" data-i="${i}"><div class="row"><input type="text" data-k="n" list="abList" autocomplete="off" value="${esc(a.n)}" placeholder="${isUnit()?'Ability name':'Name (optional, e.g. ACTIVE)'}" aria-label="Ability ${i+1} name"><button type="button" data-del="${i}" aria-label="Remove ability ${i+1}">✕</button></div><textarea data-k="t" rows="3" placeholder="Text" aria-label="Ability ${i+1} text">${esc(a.t)}</textarea></div>`).join('');
 }
 function fill(){
   seg('type',S.type);seg('atk',S.atk);
   for(const k of ['name','faction','cost','life','str','phase'])$(k).value=S[k]??'';
+  $('struct').checked=!!S.struct;
   $('c1').value=S.c1;$('c2').value=S.c2;
   $('syms').querySelectorAll('.sym').forEach(b=>b.setAttribute('aria-pressed',S.sy.includes(b.dataset.s)));
   $('zoom').value=S.zoom;$('ox').value=S.ox;$('oy').value=S.oy;
@@ -29,8 +30,10 @@ function fill(){
 }
 function showFields(){
   const u=isUnit();
-  document.querySelectorAll('[data-show]').forEach(el=>{const k=el.dataset.show;el.hidden=k==='unit'?!u:k==='event'?u:k==='cost'?S.type==='Summoner':false;});
+  document.querySelectorAll('[data-show]').forEach(el=>{const k=el.dataset.show;el.hidden=k==='unit'?!u:k==='event'?u:k==='cost'?S.type==='Summoner':k==='life'?!(u||S.struct):false;});
   $('abLbl').textContent=u?'Abilities':'Event text';
+  $('abList').innerHTML=Object.keys(u?TX.abilities:TX.events).map(n=>`<option value="${esc(n)}">`).join('');
+  $('abHint').textContent=u?'Type an existing ability name (or pick it from the suggestions) to insert its text. Leave the name empty for plain text. A line break starts a new paragraph.':'Type an existing event name in the name field to insert its text (the name is then removed). Leave the name empty for plain text, or use e.g. ACTIVE.';
   $('imgCtl').hidden=!S.img;$('noImg').disabled=!S.img;
 }
 function presetMark(){$('presets').querySelectorAll('button').forEach(b=>{const p=PRESETS[b.dataset.i];b.setAttribute('aria-pressed',p[0]===S.c1&&p[1]===S.c2);});}
@@ -40,12 +43,20 @@ function save(){
   try{localStorage.setItem('swd-card',JSON.stringify(S));$('msg').textContent='';}
   catch(e){try{localStorage.setItem('swd-card',JSON.stringify({...S,img:null}));}catch(_){}$('msg').textContent='The image is too large to keep after a reload. Use “Save design” to keep it.';}
 }
+$('struct').addEventListener('change',e=>{S.struct=e.target.checked;showFields();changed();});
 $('type').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.type=b.dataset.v;seg('type',S.type);showFields();renderAbs();changed();});
 $('atk').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.atk=b.dataset.v;seg('atk',S.atk);changed();});
 for(const k of ['name','faction','phase'])$(k).addEventListener('input',e=>{S[k]=e.target.value;changed();});
 for(const k of ['cost','life','str'])$(k).addEventListener('input',e=>{S[k]=e.target.value===''?'':Math.max(0,Math.min(99,parseInt(e.target.value,10)||0));changed();});
 $('syms').addEventListener('click',e=>{const b=e.target.closest('.sym');if(!b)return;const s=b.dataset.s;S.sy=S.sy.includes(s)?S.sy.filter(x=>x!==s):[...S.sy,s].sort((a,b)=>SYMS.indexOf(a)-SYMS.indexOf(b));b.setAttribute('aria-pressed',S.sy.includes(s));changed();});
-$('abs').addEventListener('input',e=>{const box=e.target.closest('.ab');if(!box)return;S.abs[box.dataset.i][e.target.dataset.k]=e.target.value;changed();});
+$('abs').addEventListener('input',e=>{
+  const box=e.target.closest('.ab');if(!box)return;const a=S.abs[box.dataset.i];a[e.target.dataset.k]=e.target.value;
+  if(e.target.dataset.k==='n'){
+    const src=isUnit()?TX.abilities:TX.events,key=Object.keys(src).find(k=>k.toLowerCase()===e.target.value.trim().toLowerCase());
+    const ta=box.querySelector('textarea');
+    if(key){a.t=src[key];ta.value=a.t;if(isUnit()){a.n=key;e.target.value=key;}else{a.n='';e.target.value='';}}
+  }
+  changed();});
 $('abs').addEventListener('click',e=>{const b=e.target.closest('[data-del]');if(!b)return;S.abs.splice(+b.dataset.del,1);renderAbs();changed();});
 $('addAb').addEventListener('click',()=>{S.abs.push({n:'',t:''});renderAbs();changed();const t=$('abs').querySelectorAll('.ab');t[t.length-1].querySelector('input').focus();});
 $('presets').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;[S.c1,S.c2]=PRESETS[b.dataset.i];$('c1').value=S.c1;$('c2').value=S.c2;presetMark();changed();});
@@ -143,7 +154,7 @@ function draw(){
   const name=S.name||'Unnamed';const ns=fitText(name,DISPLAY,66,PX+180-50);
   ctx.fillStyle=INK;ctx.font=`${ns}px ${DISPLAY}`;ctx.textBaseline='alphabetic';ctx.fillText(name,48,98);
   // class line
-  const cls=isUnit()?`${S.type} Unit • ${S.faction||'Faction'}`:`${S.type} • ${S.phase}`;
+  const st=S.struct?' • Structure':'';const cls=isUnit()?`${S.type} Unit${st} • ${S.faction||'Faction'}`:`${S.type}${st} • ${S.phase}`;
   const cs=fitText(cls,`italic ${BODY}`,27,PX+150-50);ctx.font=`italic ${cs}px ${BODY}`;ctx.fillStyle='#fff4e8';ctx.fillText(cls,48,139);
   // stat row
   const RY=154,RH=66;
@@ -153,7 +164,7 @@ function draw(){
   const num=(v,bx,cy)=>{ctx.font=`50px ${DISPLAY}`;ctx.fillStyle='#fff6ec';ctx.textBaseline='middle';ctx.fillText(String(v),bx+16,cy+3);const w=ctx.measureText(String(v)).width;ctx.textBaseline='alphabetic';return bx+16+w;};
   if(hasEmblem())box(84,(bx,cy)=>crown(bx+42,cy+2,24,'#fff1d6'));
   if(S.type!=='Summoner'){const v=S.cost===''?0:S.cost;ctx.font=`50px ${DISPLAY}`;const w=ctx.measureText(String(v)).width;box(w+16+6+iconW('cost',42)+14,(bx,cy)=>{const e=num(v,bx,cy);icon('cost',e+6,cy,42);});}
-  if(isUnit()){const v=S.life===''?0:S.life;ctx.font=`50px ${DISPLAY}`;const w=ctx.measureText(String(v)).width;box(w+16+6+iconW('life',40)+14,(bx,cy)=>{const e=num(v,bx,cy);icon('life',e+6,cy+1,40);});}
+  if(isUnit()||S.struct){const v=S.life===''?0:S.life;ctx.font=`50px ${DISPLAY}`;const w=ctx.measureText(String(v)).width;box(w+16+6+iconW('life',40)+14,(bx,cy)=>{const e=num(v,bx,cy);icon('life',e+6,cy+1,40);});}
   // deck symbols, right-aligned in the stat row
   const ss=46;let sx=PX-12-S.sy.length*(ss+8);
   sx=Math.max(sx,x);
@@ -193,7 +204,9 @@ function draw(){
 }
 
 // ---------- start ----------
+let TX={abilities:{},events:{}};
 fill();
+fetch('texts.json?v=202611170626').then(r=>r.json()).then(j=>{TX=j;showFields();}).catch(()=>{});
 (async()=>{
   if(S.img){try{IMG=await loadImg(S.img);}catch(e){S.img=null;}showFields();}
   draw();
