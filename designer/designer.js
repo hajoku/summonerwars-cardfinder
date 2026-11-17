@@ -131,7 +131,7 @@ $('noImg').addEventListener('click',()=>{card().img=null;showFields();changed();
 
 // abilities + suggestions (own list: the browser's datalist does not show on many phones)
 let TX={abilities:{},events:{}};
-fetch('texts.json?v=202611171733').then(r=>r.json()).then(j=>{TX=j;}).catch(()=>{});
+fetch('texts.json?v=202611171737').then(r=>r.json()).then(j=>{TX=j;}).catch(()=>{});
 const srcTx=()=>isUnit(card())?TX.abilities:TX.events;
 function pick(box,key){
   const c=card(),a=c.abs[box.dataset.i];a.t=srcTx()[key];a.n=isUnit(c)?key:'';
