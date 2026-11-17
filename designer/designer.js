@@ -98,7 +98,7 @@ function fillCardSy(){
 }
 function renderAbs(){
   const c=card();
-  $('abs').innerHTML=c.abs.map((a,i)=>`<div class="ab" data-i="${i}"><div class="row"><input type="text" data-k="n" autocomplete="off" autocorrect="off" spellcheck="false" value="${esc(a.n)}" placeholder="${isUnit(c)?'Ability name':'Name (optional, e.g. ACTIVE)'}" aria-label="Ability ${i+1} name"><button type="button" data-del="${i}" aria-label="Remove ability ${i+1}">✕</button></div><div class="sugg" hidden></div><textarea data-k="t" rows="3" placeholder="Text" aria-label="Ability ${i+1} text">${esc(a.t)}</textarea></div>`).join('');
+  $('abs').innerHTML=c.abs.map((a,i)=>`<div class="ab" data-i="${i}"><div class="row"><input type="text" data-k="n" autocomplete="off" autocorrect="off" spellcheck="false" value="${esc(a.n)}" placeholder="${isUnit(c)?'Ability name':'Name (optional, e.g. ACTIVE)'}" aria-label="Ability ${i+1} name"><button type="button" data-del="${i}" aria-label="Remove ability ${i+1}">✕</button></div><div class="sugg" hidden></div><textarea data-k="t" rows="3" placeholder="Text" aria-label="Ability ${i+1} text">${esc(a.t)}</textarea><div class="dice"><span>Insert:</span>${['special','melee','ranged'].map(n=>`<button type="button" data-die="${n}" aria-label="Insert ${n} symbol" title="[${n}]"><img src="../img/icons/die_${n}.png" alt=""></button>`).join('')}</div></div>`).join('');
 }
 function fillCard(){
   const c=card();
@@ -112,7 +112,7 @@ function showFields(){
   document.querySelectorAll('[data-show]').forEach(el=>{const k=el.dataset.show;
     el.hidden=k==='unit'?!u:k==='event'?u:k==='cost'?c.type==='Summoner':k==='life'?!(u||c.struct):k==='cardsy'?c.type==='Summoner':k==='summsy'?c.type!=='Summoner':false;});
   $('abLbl').textContent=u?'Abilities':'Event text';
-  $('abHint').textContent=u?'Start typing an ability name and pick an existing ability from the suggestions to insert its text. Leave the name empty for plain text. A line break starts a new paragraph.':'Start typing an event name in the name field and pick an existing event to insert its text (the name is then removed). Leave the name empty for plain text, or use e.g. ACTIVE.';
+  $('abHint').textContent=u?'Start typing an ability name and pick an existing ability from the suggestions to insert its text. Leave the name empty for plain text. A line break starts a new paragraph. Dice symbols: use the buttons below the text, or type [special], [melee], [ranged].':'Start typing an event name in the name field and pick an existing event to insert its text (the name is then removed). Leave the name empty for plain text, or use e.g. ACTIVE. Dice symbols: use the buttons below the text, or type [special], [melee], [ranged].';
   $('imgCtl').hidden=!c.img;$('noImg').disabled=!c.img;
 }
 $('type').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;card().type=b.dataset.v;seg('type',b.dataset.v);updHead();showFields();renderAbs();fillCardSy();changed();});
@@ -131,7 +131,7 @@ $('noImg').addEventListener('click',()=>{card().img=null;showFields();changed();
 
 // abilities + suggestions (own list: the browser's datalist does not show on many phones)
 let TX={abilities:{},events:{}};
-fetch('texts.json?v=202611171355').then(r=>r.json()).then(j=>{TX=j;}).catch(()=>{});
+fetch('texts.json?v=202611171733').then(r=>r.json()).then(j=>{TX=j;}).catch(()=>{});
 const srcTx=()=>isUnit(card())?TX.abilities:TX.events;
 function pick(box,key){
   const c=card(),a=c.abs[box.dataset.i];a.t=srcTx()[key];a.n=isUnit(c)?key:'';
@@ -149,6 +149,11 @@ $('abs').addEventListener('input',e=>{
   if(e.target.dataset.k==='n'){const key=Object.keys(srcTx()).find(k=>k.toLowerCase()===e.target.value.trim().toLowerCase());if(key){pick(box,key);return;}suggest(box,e.target.value);}
   changed();});
 $('abs').addEventListener('pointerdown',e=>{const b=e.target.closest('[data-pick]');if(b){e.preventDefault();pick(b.closest('.ab'),b.dataset.pick);}});
+// dice buttons: insert the token at the cursor (pointerdown keeps the textarea's selection)
+$('abs').addEventListener('pointerdown',e=>{const b=e.target.closest('[data-die]');if(!b)return;e.preventDefault();
+  const box=b.closest('.ab'),ta=box.querySelector('textarea'),a=card().abs[box.dataset.i],tok=`[${b.dataset.die}]`;
+  const s=ta.selectionStart??ta.value.length,en=ta.selectionEnd??s,before=ta.value.slice(0,s),sp=before&&!/\s$/.test(before)?' ':'';
+  ta.value=before+sp+tok+ta.value.slice(en);a.t=ta.value;const pos=s+sp.length+tok.length;ta.focus();ta.setSelectionRange(pos,pos);changed();});
 $('abs').addEventListener('focusout',e=>{const box=e.target.closest('.ab');if(box&&e.target.dataset.k==='n')setTimeout(()=>{const s=box.querySelector('.sugg');if(s)s.hidden=true;},150);});
 $('abs').addEventListener('keydown',e=>{if(e.key==='Escape'){const s=e.target.closest('.ab')?.querySelector('.sugg');if(s)s.hidden=true;}});
 $('abs').addEventListener('click',e=>{const b=e.target.closest('[data-del]');if(!b)return;card().abs.splice(+b.dataset.del,1);renderAbs();changed();});
@@ -218,11 +223,20 @@ const iconW=(n,h)=>{const i=ICON[n];return i&&i.naturalWidth?i.naturalWidth/i.na
 function icon(n,x,cy,h){const i=ICON[n];if(i&&i.complete&&i.naturalWidth)ctx.drawImage(i,x,cy-h/2,iconW(n,h),h);}
 function crown(cx,cy,s,col){ctx.beginPath();ctx.moveTo(cx-s,cy+s*.6);ctx.lineTo(cx-s,cy-s*.35);ctx.lineTo(cx-s*.5,cy+s*.1);ctx.lineTo(cx,cy-s*.75);ctx.lineTo(cx+s*.5,cy+s*.1);ctx.lineTo(cx+s,cy-s*.35);ctx.lineTo(cx+s,cy+s*.6);ctx.closePath();ctx.fillStyle=col;ctx.fill();}
 function fitIn(img,cx,cy,mw,mh,alpha=1){const k=Math.min(mw/img.naturalWidth,mh/img.naturalHeight),w=img.naturalWidth*k,h=img.naturalHeight*k;ctx.save();ctx.globalAlpha=alpha;ctx.drawImage(img,cx-w/2,cy-h/2,w,h);ctx.restore();}
+// dice symbols inside ability text: [special] [melee] [ranged]
+const DIE={};['special','melee','ranged'].forEach(n=>{const i=new Image();i.onload=()=>draw();i.src=`../img/icons/die_${n}.png`;DIE[n]=i;});
+const DIE_RE=/(\[(?:special|melee|ranged)\])/i;
+const fontPx=f=>parseFloat(f)||28;
+function dieW(n,px){const i=DIE[n];return (i&&i.naturalWidth?i.naturalWidth/i.naturalHeight:0.6)*px*0.95+px*0.12;}
+function measure(str){const px=fontPx(ctx.font);let w=0;for(const s of String(str).split(DIE_RE)){if(!s)continue;const m=s.match(/^\[(\w+)\]$/);w+=m&&DIE[m[1].toLowerCase()]?dieW(m[1].toLowerCase(),px):ctx.measureText(s).width;}return w;}
+function drawRich(str,x,y){const px=fontPx(ctx.font);for(const s of String(str).split(DIE_RE)){if(!s)continue;const m=s.match(/^\[(\w+)\]$/),n=m&&m[1].toLowerCase();
+  if(n&&DIE[n]){const i=DIE[n],h=px*0.95;if(i.complete&&i.naturalWidth)ctx.drawImage(i,x+px*0.06,y-px*0.8,i.naturalWidth/i.naturalHeight*h,h);x+=dieW(n,px);}
+  else{ctx.fillText(s,x,y);x+=ctx.measureText(s).width;}}}
 function wrap(text,font,maxW){
   ctx.font=font;const lines=[];
   for(const para of String(text).split(/\n/)){
     let line='';
-    for(const w of para.split(/\s+/).filter(Boolean)){const t=line?line+' '+w:w;if(ctx.measureText(t).width>maxW&&line){lines.push(line);line=w;}else line=t;}
+    for(const w of para.split(/\s+/).filter(Boolean)){const t=line?line+' '+w:w;if(measure(t)>maxW&&line){lines.push(line);line=w;}else line=t;}
     lines.push(line);
   }
   return lines;
@@ -297,7 +311,7 @@ function draw(C=card()){
     if(h<=TH)break;
   }
   ctx.fillStyle=INK;ctx.textBaseline='alphabetic';
-  for(const l of layout){ctx.font=l.f;ctx.fillText(l.t,TX,TY+l.y-10);}
+  for(const l of layout){ctx.font=l.f;drawRich(l.t,TX,TY+l.y-10);}
   // strength disc
   if(U){
     const cx=850,cy=600,r=74;
